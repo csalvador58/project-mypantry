@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 export default function FabAdd() {
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       {/* TODO: Fix theme type in GlobalStyles */}
       <GlobalStyles
@@ -16,7 +16,7 @@ export default function FabAdd() {
       />
 
       <Fab
-      data-testid='fab-add'
+        data-testid='fab-add'
         color='secondary'
         sx={{
           position: 'absolute',
@@ -26,6 +26,6 @@ export default function FabAdd() {
       >
         <AddIcon />
       </Fab>
-    </React.Fragment>
+    </>
   );
 }

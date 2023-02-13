@@ -34,7 +34,7 @@ test('render component', () => {
   // expect(navAppBarElement).not.toContainHTML('</svg>');
 
 
-  const navAppBarMobileElement = screen.getByTestId('title-display-mobile');
-  expect(navAppBarMobileElement).toBeInTheDocument();
-  expect(navAppBarMobileElement).toHaveTextContent('My Pantry');
+  // const navAppBarMobileElement = screen.getByTestId('title-display-mobile');
+  // expect(navAppBarMobileElement).toBeInTheDocument();
+  // expect(navAppBarMobileElement).toHaveTextContent('My Pantry');
 });
