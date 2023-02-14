@@ -1,69 +1,50 @@
 import React from 'react';
-import { Box, Grid, InputBase, Stack, Typography } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
+import { Autocomplete, Box, Grid, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
+import ListData from '../components/ListData';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+const listDemo = [
+  { title: 'listItem1' },
+  { title: 'listItem2' },
+  { title: 'listItem3' },
+  { title: 'listItem4' },
+  { title: 'listItem5' },
+  { title: 'listItem6' },
+  { title: 'listItem7' },
+  { title: 'listItem8' },
+  { title: 'listItem9' },
+];
 
 export default function MainLayout({ header, listItems }) {
   return (
-    <Box display='flex' sx={{ width: '100%' }}>
-      <Stack data-testid='main-section' spacing={2}>
-        <Typography component='p'>{header}</Typography>
-        <Box>
-          <Search data-testid='search-input'>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder='Search…'
-              inputProps={{ 'aria-label': 'search' }}
+    <Grid data-testid='main-section' container columns={12}>
+      <Grid item xs={12} textAlign='center'>
+        <Typography component='h2'>{header}</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Autocomplete
+          freeSolo
+          id='search-input'
+          data-testid='search-input'
+          disableClearable
+          options={listDemo.map((option) => option.title)}
+          //   options={listDemo}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label='Search input'
+              InputProps={{
+                ...params.InputProps,
+                type: 'search',
+              }}
             />
-          </Search>
-        </Box>
-
-        <Box data-testid='list'>List</Box>
-      </Stack>
-    </Box>
+          )}
+        />
+      </Grid>
+      <Grid item container xs={12}>
+        <ListData data-testid='list' data={listDemo} />
+      </Grid>
+    </Grid>
   );
 }
 
