@@ -44,7 +44,7 @@ function NavAppBar({ title }) {
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item>Hello</Grid>
+              {/* <Grid item>Hello</Grid> */}
             </Grid>
           </Toolbar>
         </Container>

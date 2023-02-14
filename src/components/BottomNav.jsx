@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Tab, Tabs, Toolbar } from '@mui/material';
-import PhoneIcon from '@mui/icons-material/Phone';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import DoorSlidingIcon from '@mui/icons-material/DoorSliding';
+import CreateIcon from '@mui/icons-material/Create';
 
 export default function BottomNav() {
   const [value, setValue] = useState(0);
@@ -13,22 +13,26 @@ export default function BottomNav() {
   return (
     <Toolbar disableGutters>
       <Tabs
-      data-testid='bottom-nav'
+        data-testid='bottom-nav'
         value={value}
         onChange={handleChange}
         aria-label='icon label tabs example'
         textColor='inherit'
         indicatorColor='secondary'
       >
-        <Tab sx={{ fontSize: '0.4em' }} icon={<PhoneIcon />} label='Pantry' />
         <Tab
           sx={{ fontSize: '0.4em' }}
-          icon={<FavoriteIcon />}
+          icon={<DoorSlidingIcon />}
+          label='Pantry'
+        />
+        <Tab
+          sx={{ fontSize: '0.4em' }}
+          icon={<MenuBookIcon />}
           label='Receipe'
         />
         <Tab
           sx={{ fontSize: '0.4em' }}
-          icon={<PersonPinIcon />}
+          icon={<CreateIcon />}
           label='Create Recipe'
         />
       </Tabs>
