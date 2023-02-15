@@ -1,5 +1,11 @@
 import React from 'react';
-import { Autocomplete, Box, Grid, TextField, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Grid,
+  List,
+  TextField,
+  Typography,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 import ListData from '../components/ListData';
 
@@ -42,7 +48,11 @@ export default function MainLayout({ header, listItems }) {
         />
       </Grid>
       <Grid item container xs={12}>
-        <ListData data-testid='list' data={listDemo} />
+        <Grid item minwidth='345px' xs={6}>
+          <List data-testid='list'>
+            <ListData data={listDemo} />
+          </List>
+        </Grid>
       </Grid>
     </Grid>
   );
