@@ -8,6 +8,7 @@ export default function ListData({ data }) {
     return (
       <ListItem
         key={index}
+        xs={6}
         secondaryAction={
           <IconButton edge='end' aria-label='delete' onClick={onClickHandler}>
             <DeleteIcon
@@ -21,7 +22,7 @@ export default function ListData({ data }) {
       >
         <ListItemText primary={`Item ${index + 1}`} secondary='Line 2' />
       </ListItem>
-    );
+    )
   });
 
   return <List data-testid='data-list'>{renderRow};</List>;

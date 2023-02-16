@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Autocomplete,
-  Grid,
-  List,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Grid, List, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import ListData from '../components/ListData';
 
@@ -27,7 +21,7 @@ export default function MainLayout({ header, listItems }) {
       <Grid item xs={12} textAlign='center'>
         <Typography component='h2'>{header}</Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={8}>
         <Autocomplete
           freeSolo
           id='search-input'
@@ -47,9 +41,17 @@ export default function MainLayout({ header, listItems }) {
           )}
         />
       </Grid>
-      <Grid item container xs={12}>
-        <Grid item minwidth='345px' xs={6}>
-          <List data-testid='list'>
+      <Grid item container spacing={2}>
+        <Grid item minwidth='345px' xs={12}>
+          <List
+            data-testid='list'
+            sx={{
+              maxHeight: '50vh',
+              overflow: 'auto',
+              display: 'flex',
+              flexWrap: 'wrap',
+            }}
+          >
             <ListData data={listDemo} />
           </List>
         </Grid>
