@@ -65,7 +65,7 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
           color="text.secondary"
           variant="body2"
         >
-          demo@devias.io
+          {user.email}
         </Typography>
       </Box>
       <Divider />
@@ -112,29 +112,6 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
             primary={(
               <Typography variant="body1">
                 Settings
-              </Typography>
-            )}
-          />
-        </ListItemButton>
-        <ListItemButton
-          component={RouterLink}
-          href={paths.index}
-          onClick={onClose}
-          sx={{
-            borderRadius: 1,
-            px: 1,
-            py: 0.5
-          }}
-        >
-          <ListItemIcon>
-            <SvgIcon fontSize="small">
-              <CreditCard01Icon />
-            </SvgIcon>
-          </ListItemIcon>
-          <ListItemText
-            primary={(
-              <Typography variant="body1">
-                Billing
               </Typography>
             )}
           />
