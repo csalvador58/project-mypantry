@@ -114,12 +114,8 @@ export const CustomerListSearch: FC<CustomerListSearchProps> = (props) => {
 
   const handleTabsChange = useCallback(
     (event: ChangeEvent<any>, value: TabValue): void => {
-      console.log('value')
-      console.log(value)
       setCurrentTab(value);
       setFilters((prevState) => {
-        console.log('prevState')
-        console.log(prevState)
         const updatedFilters: Filters = {
           ...prevState,
           inPantry1: undefined,
@@ -132,8 +128,6 @@ export const CustomerListSearch: FC<CustomerListSearchProps> = (props) => {
         if (value !== 'all') {
           updatedFilters[value] = true;
         }
-        console.log('updatedFilters')
-        console.log(updatedFilters)
         return updatedFilters;
       });
     },
