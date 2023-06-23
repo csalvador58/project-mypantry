@@ -21,7 +21,7 @@ export const routes: RouteObject[] = [
         element: <HomePage />
       },
       {
-        path: '/blank',
+        path: '/pantry',
         element: <PantryPage />
       }
     ]

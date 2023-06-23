@@ -42,7 +42,7 @@ export const OverviewSales: FC<OverviewSalesProps> = (props) => {
             color="text.secondary"
             variant="body2"
           >
-            Sales
+            Current Deals
           </Typography>
           <Typography
             color="text.primary"
@@ -63,7 +63,7 @@ export const OverviewSales: FC<OverviewSalesProps> = (props) => {
           )}
           size="small"
         >
-          See all sales
+          See all deals
         </Button>
       </CardActions>
     </Card>

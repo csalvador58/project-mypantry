@@ -41,8 +41,8 @@ export const useSections = () => {
               )
             },
             {
-              title: 'Blank',
-              path: paths.blank,
+              title: 'Pantry',
+              path: paths.pantry,
               icon: (
                 <SvgIcon fontSize="small">
                   <File01Icon />

@@ -1,5 +1,5 @@
 export const paths = {
   index: '/',
-  blank: '/blank',
+  pantry: '/pantry',
   docs: 'https://material-kit-pro-react-docs.devias.io'
 };
