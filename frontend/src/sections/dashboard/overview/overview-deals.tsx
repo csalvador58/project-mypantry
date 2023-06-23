@@ -10,11 +10,11 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-interface OverviewSalesProps {
+interface OverviewDealsProps {
   amount: number;
 }
 
-export const OverviewSales: FC<OverviewSalesProps> = (props) => {
+export const OverviewDeals: FC<OverviewDealsProps> = (props) => {
   const { amount } = props;
 
   return (
@@ -70,6 +70,6 @@ export const OverviewSales: FC<OverviewSalesProps> = (props) => {
   );
 };
 
-OverviewSales.propTypes = {
+OverviewDeals.propTypes = {
   amount: PropTypes.number.isRequired
 };

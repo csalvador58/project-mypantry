@@ -5,6 +5,7 @@ import { SvgIcon } from '@mui/material';
 
 import File01Icon from 'src/icons/untitled-ui/duocolor/file-01';
 import HomeSmileIcon from 'src/icons/untitled-ui/duocolor/home-smile';
+import Users03Icon from 'src/icons/untitled-ui/duocolor/users-03';
 import { tokens } from 'src/locales/tokens';
 import { paths } from 'src/paths';
 
@@ -42,13 +43,27 @@ export const useSections = () => {
             },
             {
               title: 'Pantry',
-              path: paths.pantry,
+              path: paths.customers.index,
               icon: (
                 <SvgIcon fontSize="small">
-                  <File01Icon />
+                  <Users03Icon />
                 </SvgIcon>
-              )
-            }
+              ),
+              items: [
+                {
+                  title: 'List',
+                  path: paths.customers.index
+                },
+                {
+                  title: 'Details',
+                  path: paths.customers.details
+                },
+                {
+                  title: 'Edit',
+                  path: paths.customers.edit
+                }
+              ]
+            },
           ]
         }
       ];

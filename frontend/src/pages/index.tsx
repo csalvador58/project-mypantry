@@ -13,7 +13,7 @@ import { useSettings } from 'src/hooks/use-settings';
 import { OverviewPantryItems } from 'src/sections/dashboard/overview/overview-pantry-items';
 import { OverviewPlannedMeals } from 'src/sections/dashboard/overview/overview-planned-meals';
 import { OverviewToBuy } from 'src/sections/dashboard/overview/overview-to-buy';
-import { OverviewSales } from 'src/sections/dashboard/overview/overview-sales';
+import { OverviewDeals } from 'src/sections/dashboard/overview/overview-deals';
 import { OverviewRecipeSuggestions } from 'src/sections/dashboard/overview/overview-recipe-suggestions';
 
 const now = new Date();
@@ -86,7 +86,7 @@ const Page = () => {
               xs={12}
               md={4}
             >
-              <OverviewSales amount={5} />
+              <OverviewDeals amount={5} />
             </Grid>
             <Grid
               xs={12}
