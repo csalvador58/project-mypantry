@@ -8,9 +8,11 @@ import { customer, customers, emails, invoices, logs } from './data';
 type GetCustomersRequest = {
   filters?: {
     query?: string;
-    hasAcceptedMarketing?: boolean;
-    isProspect?: boolean;
-    isReturning?: boolean;
+    inPantry1?: boolean;
+    inPantry2?: boolean;
+    inPantry3?: boolean;
+    freezer?: boolean;
+    other?: boolean;
   };
   page?: number;
   rowsPerPage?: number;
@@ -63,20 +65,30 @@ class CustomersApi {
           }
         }
 
-        if (typeof filters.hasAcceptedMarketing !== 'undefined') {
-          if (customer.hasAcceptedMarketing !== filters.hasAcceptedMarketing) {
+        if (typeof filters.inPantry1 !== 'undefined') {
+          if (customer.inPantry1 !== filters.inPantry1) {
+            return false;
+          }
+        }
+        if (typeof filters.inPantry2 !== 'undefined') {
+          if (customer.inPantry2 !== filters.inPantry2) {
+            return false;
+          }
+        }
+        if (typeof filters.inPantry3 !== 'undefined') {
+          if (customer.inPantry3 !== filters.inPantry3) {
             return false;
           }
         }
 
-        if (typeof filters.isProspect !== 'undefined') {
-          if (customer.isProspect !== filters.isProspect) {
+        if (typeof filters.freezer !== 'undefined') {
+          if (customer.freezer !== filters.freezer) {
             return false;
           }
         }
 
-        if (typeof filters.isReturning !== 'undefined') {
-          if (customer.isReturning !== filters.isReturning) {
+        if (typeof filters.other !== 'undefined') {
+          if (customer.other !== filters.other) {
             return false;
           }
         }

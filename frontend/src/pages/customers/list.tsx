@@ -22,9 +22,11 @@ import type { Customer } from 'src/types/customer';
 
 interface Filters {
   query?: string;
-  hasAcceptedMarketing?: boolean;
-  isProspect?: boolean;
-  isReturning?: boolean;
+  inPantry1?: boolean;
+  inPantry2?: boolean;
+  inPantry3?: boolean;
+  freezer?: boolean;
+  other?: boolean;
 }
 
 interface CustomersSearchState {
@@ -39,9 +41,11 @@ const useCustomersSearch = () => {
   const [state, setState] = useState<CustomersSearchState>({
     filters: {
       query: undefined,
-      hasAcceptedMarketing: undefined,
-      isProspect: undefined,
-      isReturning: undefined
+      inPantry1: undefined,
+      inPantry2: undefined,
+      inPantry3: undefined,
+      freezer: undefined,
+      other: undefined
     },
     page: 0,
     rowsPerPage: 5,

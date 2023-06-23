@@ -128,10 +128,10 @@ export const CustomerListTable: FC<CustomerListTableProps> = (props) => {
                 Location
               </TableCell>
               <TableCell>
-                Orders
+                Quantity
               </TableCell>
               <TableCell>
-                Spent
+                Cost
               </TableCell>
               <TableCell align="right">
                 Actions

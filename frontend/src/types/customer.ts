@@ -8,10 +8,12 @@ export interface Customer {
   country?: string;
   currency?: string;
   email: string;
-  hasAcceptedMarketing?: boolean;
+  inPantry1?: boolean;
+  inPantry2?: boolean;
+  inPantry3?: boolean;
   hasDiscount?: boolean;
-  isProspect?: boolean;
-  isReturning?: boolean;
+  freezer?: boolean;
+  other?: boolean;
   isVerified?: boolean;
   name: string;
   phone?: string;

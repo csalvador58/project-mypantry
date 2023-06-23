@@ -16,12 +16,14 @@ import { useUpdateEffect } from 'src/hooks/use-update-effect';
 
 interface Filters {
   query?: string;
-  hasAcceptedMarketing?: boolean;
-  isProspect?: boolean;
-  isReturning?: boolean;
+  inPantry1?: boolean;
+  inPantry2?: boolean;
+  inPantry3?: boolean;
+  freezer?: boolean;
+  other?: boolean;
 }
 
-type TabValue = 'all' | 'hasAcceptedMarketing' | 'isProspect' | 'isReturning';
+type TabValue = 'all' | 'inPantry1' | 'inPantry2' | 'inPantry3' | 'freezer' | 'other';
 
 interface TabOption {
   label: string;
@@ -34,16 +36,24 @@ const tabs: TabOption[] = [
     value: 'all'
   },
   {
-    label: 'Accepts Marketing',
-    value: 'hasAcceptedMarketing'
+    label: 'Pantry 1',
+    value: 'inPantry1'
   },
   {
-    label: 'Prospect',
-    value: 'isProspect'
+    label: 'Pantry 2',
+    value: 'inPantry2'
   },
   {
-    label: 'Returning',
-    value: 'isReturning'
+    label: 'Pantry 3',
+    value: 'inPantry3'
+  },
+  {
+    label: 'Freezer',
+    value: 'freezer'
+  },
+  {
+    label: 'Other',
+    value: 'other'
   }
 ];
 
@@ -104,19 +114,26 @@ export const CustomerListSearch: FC<CustomerListSearchProps> = (props) => {
 
   const handleTabsChange = useCallback(
     (event: ChangeEvent<any>, value: TabValue): void => {
+      console.log('value')
+      console.log(value)
       setCurrentTab(value);
       setFilters((prevState) => {
+        console.log('prevState')
+        console.log(prevState)
         const updatedFilters: Filters = {
           ...prevState,
-          hasAcceptedMarketing: undefined,
-          isProspect: undefined,
-          isReturning: undefined
+          inPantry1: undefined,
+          inPantry2: undefined,
+          inPantry3: undefined,
+          freezer: undefined,
+          other: undefined
         };
 
         if (value !== 'all') {
           updatedFilters[value] = true;
         }
-
+        console.log('updatedFilters')
+        console.log(updatedFilters)
         return updatedFilters;
       });
     },
