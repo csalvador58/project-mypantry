@@ -52,7 +52,7 @@ class CustomersApi {
       data = data.filter((customer) => {
         if (typeof filters.query !== 'undefined' && filters.query !== '') {
           let queryMatched = false;
-          const properties: ('email' | 'name')[] = ['email', 'name'];
+          const properties: ('note' | 'name')[] = ['note', 'name'];
 
           properties.forEach((property) => {
             if ((customer[property]).toLowerCase().includes(filters.query!.toLowerCase())) {

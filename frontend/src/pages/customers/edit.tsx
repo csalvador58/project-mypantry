@@ -112,7 +112,7 @@ const Page = () => {
                   </Avatar>
                   <Stack spacing={1}>
                     <Typography variant="h4">
-                      {customer.email}
+                      {customer.note}
                     </Typography>
                     <Stack
                       alignItems="center"

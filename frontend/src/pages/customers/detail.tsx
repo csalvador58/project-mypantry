@@ -196,7 +196,7 @@ const Page = () => {
                   </Avatar>
                   <Stack spacing={1}>
                     <Typography variant="h4">
-                      {customer.email}
+                      {customer.note}
                     </Typography>
                     <Stack
                       alignItems="center"
@@ -277,7 +277,7 @@ const Page = () => {
                       address1={customer.address1}
                       address2={customer.address2}
                       country={customer.country}
-                      email={customer.email}
+                      note={customer.note}
                       isVerified={!!customer.isVerified}
                       phone={customer.phone}
                       state={customer.state}

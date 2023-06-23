@@ -7,7 +7,7 @@ export interface Customer {
   city?: string;
   country?: string;
   currency?: string;
-  email: string;
+  note: string;
   inPantry1?: boolean;
   inPantry2?: boolean;
   inPantry3?: boolean;

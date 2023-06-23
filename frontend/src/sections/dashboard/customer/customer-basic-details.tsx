@@ -12,14 +12,14 @@ interface CustomerBasicDetailsProps {
   address1?: string;
   address2?: string;
   country?: string;
-  email: string;
+  note: string;
   isVerified: boolean;
   phone?: string;
   state?: string;
 }
 
 export const CustomerBasicDetails: FC<CustomerBasicDetailsProps> = (props) => {
-  const { address1, address2, country, email, isVerified, phone, state, ...other } = props;
+  const { address1, address2, country, note, isVerified, phone, state, ...other } = props;
 
   return (
     <Card {...other}>
@@ -27,8 +27,8 @@ export const CustomerBasicDetails: FC<CustomerBasicDetailsProps> = (props) => {
       <PropertyList>
         <PropertyListItem
           divider
-          label="Email"
-          value={email}
+          label="Note"
+          value={note}
         />
         <PropertyListItem
           divider
@@ -72,7 +72,7 @@ CustomerBasicDetails.propTypes = {
   address1: PropTypes.string,
   address2: PropTypes.string,
   country: PropTypes.string,
-  email: PropTypes.string.isRequired,
+  note: PropTypes.string.isRequired,
   isVerified: PropTypes.bool.isRequired,
   phone: PropTypes.string,
   state: PropTypes.string

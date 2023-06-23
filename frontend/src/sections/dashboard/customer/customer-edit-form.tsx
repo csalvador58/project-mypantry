@@ -30,7 +30,7 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
       address1: customer.address1 || '',
       address2: customer.address2 || '',
       country: customer.country || '',
-      email: customer.email || '',
+      note: customer.note || '',
       hasDiscount: customer.hasDiscount || false,
       isVerified: customer.isVerified || false,
       name: customer.name || '',
@@ -42,11 +42,10 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
       address1: Yup.string().max(255),
       address2: Yup.string().max(255),
       country: Yup.string().max(255),
-      email: Yup
+      note: Yup
         .string()
-        .email('Must be a valid email')
         .max(255)
-        .required('Email is required'),
+        .required('note is required'),
       hasDiscount: Yup.bool(),
       isVerified: Yup.bool(),
       name: Yup
@@ -106,15 +105,15 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
               md={6}
             >
               <TextField
-                error={!!(formik.touched.email && formik.errors.email)}
+                error={!!(formik.touched.note && formik.errors.note)}
                 fullWidth
-                helperText={formik.touched.email && formik.errors.email}
-                label="Email address"
-                name="email"
+                helperText={formik.touched.note && formik.errors.note}
+                label="Note"
+                name="note"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 required
-                value={formik.values.email}
+                value={formik.values.note}
               />
             </Grid>
             <Grid
