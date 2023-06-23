@@ -1,25 +1,15 @@
 import type { FC } from 'react';
 import PropTypes from 'prop-types';
-import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import type { SxProps } from '@mui/system/styleFunctionSx';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
-
-import { usePopover } from 'src/hooks/use-popover';
-
-import { TenantPopover } from './tenant-popover';
-
-const tenants: string[] = ['Devias', 'Acme Corp'];
 
 interface TenantSwitchProps {
   sx?: SxProps;
 }
 
 export const TenantSwitch: FC<TenantSwitchProps> = (props) => {
-  const popover = usePopover<HTMLButtonElement>();
 
   return (
     <>
@@ -34,31 +24,16 @@ export const TenantSwitch: FC<TenantSwitchProps> = (props) => {
             color="inherit"
             variant="h6"
           >
-            Devias
+            My Pantry
           </Typography>
           <Typography
             color="neutral.400"
             variant="body2"
           >
-            Production
+            v.1.0.0
           </Typography>
         </Box>
-        <IconButton
-          onClick={popover.handleOpen}
-          ref={popover.anchorRef}
-        >
-          <SvgIcon sx={{ fontSize: 16 }}>
-            <ChevronDownIcon />
-          </SvgIcon>
-        </IconButton>
       </Stack>
-      <TenantPopover
-        anchorEl={popover.anchorRef.current}
-        onChange={popover.handleClose}
-        onClose={popover.handleClose}
-        open={popover.open}
-        tenants={tenants}
-      />
     </>
   );
 };
