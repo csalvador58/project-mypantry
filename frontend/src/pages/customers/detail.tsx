@@ -26,17 +26,12 @@ import { paths } from 'src/paths';
 import { CustomerBasicDetails } from 'src/sections/dashboard/customer/customer-basic-details';
 import { CustomerDataManagement } from 'src/sections/dashboard/customer/customer-data-management';
 import { CustomerEmailsSummary } from 'src/sections/dashboard/customer/customer-emails-summary';
-import { CustomerInvoices } from 'src/sections/dashboard/customer/customer-invoices';
 import { CustomerPayment } from 'src/sections/dashboard/customer/customer-payment';
-import { CustomerLogs } from 'src/sections/dashboard/customer/customer-logs';
 import type { Customer } from 'src/types/customer';
-import { CustomerInvoice, CustomerLog } from 'src/types/customer';
 import { getInitials } from 'src/utils/get-initials';
 
 const tabs = [
   { label: 'Details', value: 'details' },
-  { label: 'Invoices', value: 'invoices' },
-  { label: 'Logs', value: 'logs' }
 ];
 
 const useCustomer = (): Customer | null => {
@@ -66,65 +61,9 @@ const useCustomer = (): Customer | null => {
   return customer;
 };
 
-const useInvoices = (): CustomerInvoice[] => {
-  const isMounted = useMounted();
-  const [invoices, setInvoices] = useState<CustomerInvoice[]>([]);
-
-  const handleInvoicesGet = useCallback(async () => {
-    try {
-      const response = await customersApi.getInvoices();
-
-      if (isMounted()) {
-        setInvoices(response);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [isMounted]);
-
-  useEffect(
-    () => {
-      handleInvoicesGet();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
-  return invoices;
-};
-
-const useLogs = (): CustomerLog[] => {
-  const isMounted = useMounted();
-  const [logs, setLogs] = useState<CustomerLog[]>([]);
-
-  const handleLogsGet = useCallback(async () => {
-    try {
-      const response = await customersApi.getLogs();
-
-      if (isMounted()) {
-        setLogs(response);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [isMounted]);
-
-  useEffect(
-    () => {
-      handleLogsGet();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
-  return logs;
-};
-
 const Page = () => {
   const [currentTab, setCurrentTab] = useState<string>('details');
   const customer = useCustomer();
-  const invoices = useInvoices();
-  const logs = useLogs();
 
   usePageView();
 
@@ -138,6 +77,33 @@ const Page = () => {
   if (!customer) {
     return null;
   }
+
+  const data = {
+    'Pantry 1': customer.inPantry1 || false,
+    'Pantry 2': customer.inPantry2 || false,
+    'Pantry 3': customer.inPantry3 || false,
+    'Freezer': customer.freezer || false,
+    'Other': customer.other || false,
+  };
+  const locationString: string[] = [];
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      locationString.push(key);
+    }
+  });
+  const location = locationString.join(', ');
+
+  const time = customer.updatedAt? new Date(customer.updatedAt).toLocaleString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+    timeZoneName: 'short',
+  }) : '';
+
+  
 
   return (
     <>
@@ -167,7 +133,7 @@ const Page = () => {
                     <ArrowLeftIcon />
                   </SvgIcon>
                   <Typography variant="subtitle2">
-                    Customers
+                    Pantry
                   </Typography>
                 </Link>
               </div>
@@ -185,18 +151,9 @@ const Page = () => {
                   direction="row"
                   spacing={2}
                 >
-                  <Avatar
-                    src={customer.avatar}
-                    sx={{
-                      height: 64,
-                      width: 64
-                    }}
-                  >
-                    {getInitials(customer.name)}
-                  </Avatar>
                   <Stack spacing={1}>
                     <Typography variant="h4">
-                      {customer.note}
+                      {customer.name}
                     </Typography>
                     <Stack
                       alignItems="center"
@@ -204,7 +161,7 @@ const Page = () => {
                       spacing={1}
                     >
                       <Typography variant="subtitle2">
-                        user_id:
+                        item_id:
                       </Typography>
                       <Chip
                         label={customer.id}
@@ -230,7 +187,7 @@ const Page = () => {
                   >
                     Edit
                   </Button>
-                  <Button
+                  {/* <Button
                     endIcon={(
                       <SvgIcon>
                         <ChevronDownIcon />
@@ -239,7 +196,7 @@ const Page = () => {
                     variant="contained"
                   >
                     Actions
-                  </Button>
+                  </Button> */}
                 </Stack>
               </Stack>
               <div>
@@ -274,13 +231,11 @@ const Page = () => {
                     lg={4}
                   >
                     <CustomerBasicDetails
-                      address1={customer.address1}
-                      address2={customer.address2}
-                      country={customer.country}
+                      location={location}
                       note={customer.note}
-                      isVerified={!!customer.isVerified}
-                      phone={customer.phone}
-                      state={customer.state}
+                      quantity={customer.totalOrders}
+                      price={customer.totalSpent}
+                      lastUpdated={time}
                     />
                   </Grid>
                   <Grid
@@ -288,16 +243,12 @@ const Page = () => {
                     lg={8}
                   >
                     <Stack spacing={4}>
-                      <CustomerPayment />
-                      <CustomerEmailsSummary />
                       <CustomerDataManagement />
                     </Stack>
                   </Grid>
                 </Grid>
               </div>
             )}
-            {currentTab === 'invoices' && <CustomerInvoices invoices={invoices} />}
-            {currentTab === 'logs' && <CustomerLogs logs={logs} />}
           </Stack>
         </Container>
       </Box>

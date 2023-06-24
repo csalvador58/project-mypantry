@@ -9,71 +9,36 @@ import { PropertyList } from 'src/components/property-list';
 import { PropertyListItem } from 'src/components/property-list-item';
 
 interface CustomerBasicDetailsProps {
-  address1?: string;
-  address2?: string;
-  country?: string;
+  location: string;
   note: string;
-  isVerified: boolean;
-  phone?: string;
-  state?: string;
+  quantity?: number;
+  price?: number;
+  lastUpdated?: string;
 }
 
 export const CustomerBasicDetails: FC<CustomerBasicDetailsProps> = (props) => {
-  const { address1, address2, country, note, isVerified, phone, state, ...other } = props;
+  const { location, note, quantity, price, lastUpdated } = props;
+  console.log('location, note, quantity, price, lastUpdated')
+  console.log(location, note, quantity, price, lastUpdated)
 
   return (
-    <Card {...other}>
-      <CardHeader title="Basic Details" />
+    <Card>
+      {/* <CardHeader title="Basic Details" /> */}
       <PropertyList>
-        <PropertyListItem
-          divider
-          label="Note"
-          value={note}
-        />
-        <PropertyListItem
-          divider
-          label="Phone"
-          value={phone}
-        />
-        <PropertyListItem
-          divider
-          label="Country"
-          value={country}
-        />
-        <PropertyListItem
-          divider
-          label="State/Region"
-          value={state}
-        />
-        <PropertyListItem
-          divider
-          label="Address 1"
-          value={state}
-        />
-        <PropertyListItem
-          divider
-          label="Address 2"
-          value={address2}
-        />
+        <PropertyListItem divider label='Note' value={note} />
+        <PropertyListItem divider label='Quantity' value={quantity?.toString()} />
+        <PropertyListItem divider label='Location' value={location} />
+        <PropertyListItem divider label='Price Tracker' value={price?.toString()} />
+        <PropertyListItem divider label='Last Updated' value={lastUpdated} />
       </PropertyList>
-      <CardActions>
-        <Button
-          color="inherit"
-          size="small"
-        >
-          Reset Password
-        </Button>
-      </CardActions>
     </Card>
   );
 };
 
 CustomerBasicDetails.propTypes = {
-  address1: PropTypes.string,
-  address2: PropTypes.string,
-  country: PropTypes.string,
+  location: PropTypes.string.isRequired,
   note: PropTypes.string.isRequired,
-  isVerified: PropTypes.bool.isRequired,
-  phone: PropTypes.string,
-  state: PropTypes.string
+  quantity: PropTypes.number,
+  price: PropTypes.number,
+  lastUpdated: PropTypes.string,
 };
