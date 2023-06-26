@@ -1,28 +1,20 @@
 export interface Customer {
   id: string;
-  address1?: string;
-  address2?: string;
-  avatar?: string;
-  balance?: number;
-  city?: string;
-  country?: string;
+  price?: string;
+  location?: string;
   currency?: string;
   note: string;
   inPantry1?: boolean;
   inPantry2?: boolean;
   inPantry3?: boolean;
-  hasDiscount?: boolean;
+  favorite?: boolean;
   freezer?: boolean;
   other?: boolean;
-  isVerified?: boolean;
   name: string;
-  phone?: string;
-  state?: string;
+  quantity?: string;
   totalSpent?: number;
   totalOrders?: number;
   updatedAt?: number;
-  vatRate?: number;
-  zipCode?: string;
 }
 
 export interface CustomerLog {

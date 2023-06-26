@@ -27,17 +27,17 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
   const { customer, ...other } = props;
   const formik = useFormik({
     initialValues: {
-      price: customer.address1 || '',
-      country: customer.country || '',
+      price: customer.price || '',
+      location: customer.location || '',
       note: customer.note || '',
-      favorite: customer.hasDiscount || false,
+      favorite: customer.favorite || false,
       name: customer.name || '',
-      quantity: customer.phone || '',
+      quantity: customer.quantity || '',
       submit: null
     },
     validationSchema: Yup.object({
       price: Yup.string().max(255),
-      country: Yup.string().max(255),
+      location: Yup.string().max(255),
       note: Yup
         .string()
         .max(255)
@@ -114,14 +114,14 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
               md={6}
             >
               <TextField
-                error={!!(formik.touched.country && formik.errors.country)}
+                error={!!(formik.touched.location && formik.errors.location)}
                 fullWidth
-                helperText={formik.touched.country && formik.errors.country}
+                helperText={formik.touched.location && formik.errors.location}
                 label="Location"
-                name="country"
+                name="location"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                value={formik.values.country}
+                value={formik.values.location}
               />
             </Grid>
             <Grid
