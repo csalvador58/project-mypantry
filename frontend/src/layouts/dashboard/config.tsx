@@ -43,7 +43,7 @@ export const useSections = () => {
             },
             {
               title: 'Pantry',
-              path: paths.customers.index,
+              path: paths.myPantry.index,
               icon: (
                 <SvgIcon fontSize="small">
                   <Users03Icon />
@@ -52,15 +52,15 @@ export const useSections = () => {
               items: [
                 {
                   title: 'List',
-                  path: paths.customers.index
+                  path: paths.myPantry.index
                 },
                 {
                   title: 'Details',
-                  path: paths.customers.details
+                  path: paths.myPantry.details
                 },
                 {
                   title: 'Edit',
-                  path: paths.customers.edit
+                  path: paths.myPantry.edit
                 }
               ]
             },

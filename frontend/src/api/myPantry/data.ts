@@ -1,10 +1,10 @@
 import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
 
-import type { Pantry, PantryEmail, PantryInvoice, PantryLog } from 'src/types/customer';
+import type { Pantry, PantryEmail, PantryInvoice, PantryLog } from 'src/types/pantry';
 
 const now = new Date();
 
-export const customers: Pantry[] = [
+export const myPantry: Pantry[] = [
   {
     id: '5e887ac47eed253091be10cb',
     location: 'USA',
@@ -187,7 +187,7 @@ export const customers: Pantry[] = [
   }
 ];
 
-export const customer: Pantry = {
+export const pantry: Pantry = {
   id: '5e8680e60cba5019c5ca6fda',
   location: 'Pantry 1',
   currency: '$',

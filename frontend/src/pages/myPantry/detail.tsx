@@ -17,7 +17,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 
-import { customersApi } from 'src/api/customers';
+import { myPantryApi } from 'src/api/myPantry';
 import { RouterLink } from 'src/components/router-link';
 import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
@@ -27,7 +27,7 @@ import { PantryBasicDetails } from 'src/sections/dashboard/pantry/pantry-basic-d
 import { PantryDataManagement } from 'src/sections/dashboard/pantry/pantry-data-management';
 import { PantryEmailsSummary } from 'src/sections/dashboard/pantry/pantry-emails-summary';
 import { PantryPayment } from 'src/sections/dashboard/pantry/pantry-payment';
-import type { Pantry } from 'src/types/customer';
+import type { Pantry } from 'src/types/pantry';
 import { getInitials } from 'src/utils/get-initials';
 
 const tabs = [
@@ -36,11 +36,11 @@ const tabs = [
 
 const usePantry = (): Pantry | null => {
   const isMounted = useMounted();
-  const [customer, setPantry] = useState<Pantry | null>(null);
+  const [pantry, setPantry] = useState<Pantry | null>(null);
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const response = await customersApi.getPantry();
+      const response = await myPantryApi.getPantry();
 
       if (isMounted()) {
         setPantry(response);
@@ -58,12 +58,12 @@ const usePantry = (): Pantry | null => {
     []
   );
 
-  return customer;
+  return pantry;
 };
 
 const Page = () => {
   const [currentTab, setCurrentTab] = useState<string>('details');
-  const customer = usePantry();
+  const pantry = usePantry();
 
   usePageView();
 
@@ -74,16 +74,16 @@ const Page = () => {
     []
   );
 
-  if (!customer) {
+  if (!pantry) {
     return null;
   }
 
   const data = {
-    'Pantry 1': customer.inPantry1 || false,
-    'Pantry 2': customer.inPantry2 || false,
-    'Pantry 3': customer.inPantry3 || false,
-    'Freezer': customer.freezer || false,
-    'Other': customer.other || false,
+    'Pantry 1': pantry.inPantry1 || false,
+    'Pantry 2': pantry.inPantry2 || false,
+    'Pantry 3': pantry.inPantry3 || false,
+    'Freezer': pantry.freezer || false,
+    'Other': pantry.other || false,
   };
   const locationString: string[] = [];
   Object.entries(data).forEach(([key, value]) => {
@@ -93,7 +93,7 @@ const Page = () => {
   });
   const location = locationString.join(', ');
 
-  const time = customer.updatedAt? new Date(customer.updatedAt).toLocaleString('en-US', {
+  const time = pantry.updatedAt? new Date(pantry.updatedAt).toLocaleString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -122,7 +122,7 @@ const Page = () => {
                 <Link
                   color="text.primary"
                   component={RouterLink}
-                  href={paths.customers.index}
+                  href={paths.myPantry.index}
                   sx={{
                     alignItems: 'center',
                     display: 'inline-flex'
@@ -153,7 +153,7 @@ const Page = () => {
                 >
                   <Stack spacing={1}>
                     <Typography variant="h4">
-                      {customer.name}
+                      {pantry.name}
                     </Typography>
                     <Stack
                       alignItems="center"
@@ -164,7 +164,7 @@ const Page = () => {
                         item_id:
                       </Typography>
                       <Chip
-                        label={customer.id}
+                        label={pantry.id}
                         size="small"
                       />
                     </Stack>
@@ -183,7 +183,7 @@ const Page = () => {
                         <Edit02Icon />
                       </SvgIcon>
                     )}
-                    href={paths.customers.edit}
+                    href={paths.myPantry.edit}
                   >
                     Edit
                   </Button>
@@ -232,9 +232,9 @@ const Page = () => {
                   >
                     <PantryBasicDetails
                       location={location}
-                      note={customer.note}
-                      quantity={customer.totalOrders}
-                      price={customer.totalSpent}
+                      note={pantry.note}
+                      quantity={pantry.totalOrders}
+                      price={pantry.totalSpent}
                       lastUpdated={time}
                     />
                   </Grid>

@@ -1,9 +1,9 @@
 export const paths = {
   index: '/',
-  customers: {
-    index: '/customers',
-    details: '/customers/:customerId',
-    edit: '/customers/:customerId/edit'
+  myPantry: {
+    index: '/myPantry',
+    details: '/myPantry/:pantryId',
+    edit: '/myPantry/:pantryId/edit'
   },
   docs: 'https://material-kit-pro-react-docs.devias.io',
   notAuthorized: '/401',

@@ -1,9 +1,9 @@
-import type { Pantry, PantryEmail, PantryInvoice, PantryLog } from 'src/types/customer';
+import type { Pantry, PantryEmail, PantryInvoice, PantryLog } from 'src/types/pantry';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { applySort } from 'src/utils/apply-sort';
 import { deepCopy } from 'src/utils/deep-copy';
 
-import { customer, customers, emails, invoices, logs } from './data';
+import { pantry, myPantry, emails, invoices, logs } from './data';
 
 type GetMyPantryRequest = {
   filters?: {
@@ -45,17 +45,17 @@ class MyPantryApi {
   getMyPantry(request: GetMyPantryRequest = {}): GetMyPantryResponse {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;
 
-    let data = deepCopy(customers) as Pantry[];
+    let data = deepCopy(myPantry) as Pantry[];
     let count = data.length;
 
     if (typeof filters !== 'undefined') {
-      data = data.filter((customer) => {
+      data = data.filter((pantry) => {
         if (typeof filters.query !== 'undefined' && filters.query !== '') {
           let queryMatched = false;
           const properties: ('note' | 'name')[] = ['note', 'name'];
 
           properties.forEach((property) => {
-            if ((customer[property]).toLowerCase().includes(filters.query!.toLowerCase())) {
+            if ((pantry[property]).toLowerCase().includes(filters.query!.toLowerCase())) {
               queryMatched = true;
             }
           });
@@ -66,29 +66,29 @@ class MyPantryApi {
         }
 
         if (typeof filters.inPantry1 !== 'undefined') {
-          if (customer.inPantry1 !== filters.inPantry1) {
+          if (pantry.inPantry1 !== filters.inPantry1) {
             return false;
           }
         }
         if (typeof filters.inPantry2 !== 'undefined') {
-          if (customer.inPantry2 !== filters.inPantry2) {
+          if (pantry.inPantry2 !== filters.inPantry2) {
             return false;
           }
         }
         if (typeof filters.inPantry3 !== 'undefined') {
-          if (customer.inPantry3 !== filters.inPantry3) {
+          if (pantry.inPantry3 !== filters.inPantry3) {
             return false;
           }
         }
 
         if (typeof filters.freezer !== 'undefined') {
-          if (customer.freezer !== filters.freezer) {
+          if (pantry.freezer !== filters.freezer) {
             return false;
           }
         }
 
         if (typeof filters.other !== 'undefined') {
-          if (customer.other !== filters.other) {
+          if (pantry.other !== filters.other) {
             return false;
           }
         }
@@ -113,7 +113,7 @@ class MyPantryApi {
   }
 
   getPantry(request?: GetPantryRequest): GetPantryResponse {
-    return Promise.resolve(deepCopy(customer));
+    return Promise.resolve(deepCopy(pantry));
   }
 
   getEmails(request?: GetPantryEmailsRequest): GetPantryEmailsResponse {
@@ -129,4 +129,4 @@ class MyPantryApi {
   }
 }
 
-export const customersApi = new MyPantryApi();
+export const myPantryApi = new MyPantryApi();

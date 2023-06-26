@@ -9,22 +9,22 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-import { customersApi } from 'src/api/customers';
+import { myPantryApi } from 'src/api/myPantry';
 import { RouterLink } from 'src/components/router-link';
 import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
 import { PantryEditForm } from 'src/sections/dashboard/pantry/pantry-edit-form';
-import type { Pantry } from 'src/types/customer';
+import type { Pantry } from 'src/types/pantry';
 
 const usePantry = (): Pantry | null => {
   const isMounted = useMounted();
-  const [customer, setPantry] = useState<Pantry | null>(null);
+  const [pantry, setPantry] = useState<Pantry | null>(null);
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const response = await customersApi.getPantry();
+      const response = await myPantryApi.getPantry();
 
       if (isMounted()) {
         setPantry(response);
@@ -42,15 +42,15 @@ const usePantry = (): Pantry | null => {
     []
   );
 
-  return customer;
+  return pantry;
 };
 
 const Page = () => {
-  const customer = usePantry();
+  const pantry = usePantry();
 
   usePageView();
 
-  if (!customer) {
+  if (!pantry) {
     return null;
   }
 
@@ -71,7 +71,7 @@ const Page = () => {
                 <Link
                   color="text.primary"
                   component={RouterLink}
-                  href={paths.customers.index}
+                  href={paths.myPantry.index}
                   sx={{
                     alignItems: 'center',
                     display: 'inline-flex'
@@ -102,7 +102,7 @@ const Page = () => {
                 >
                   <Stack spacing={1}>
                     <Typography variant="h4">
-                      {customer.note}
+                      {pantry.note}
                     </Typography>
                     <Stack
                       alignItems="center"
@@ -113,7 +113,7 @@ const Page = () => {
                         user_id:
                       </Typography>
                       <Chip
-                        label={customer.id}
+                        label={pantry.id}
                         size="small"
                       />
                     </Stack>
@@ -121,7 +121,7 @@ const Page = () => {
                 </Stack>
               </Stack>
             </Stack>
-            <PantryEditForm customer={customer} />
+            <PantryEditForm pantry={pantry} />
           </Stack>
         </Container>
       </Box>

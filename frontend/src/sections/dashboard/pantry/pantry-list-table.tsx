@@ -22,21 +22,21 @@ import Typography from '@mui/material/Typography';
 import { RouterLink } from 'src/components/router-link';
 import { Scrollbar } from 'src/components/scrollbar';
 import { paths } from 'src/paths';
-import type { Pantry } from 'src/types/customer';
+import type { Pantry } from 'src/types/pantry';
 import { getInitials } from 'src/utils/get-initials';
 
 interface PantryListTableProps {
   count?: number;
   items?: Pantry[];
   onDeselectAll?: () => void;
-  onDeselectOne?: (customerId: string) => void;
+  onDeselectOne?: (pantryId: string) => void;
   onPageChange?: (
     event: MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => void;
   onRowsPerPageChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onSelectAll?: () => void;
-  onSelectOne?: (customerId: string) => void;
+  onSelectOne?: (pantryId: string) => void;
   page?: number;
   rowsPerPage?: number;
   selected?: string[];
@@ -125,14 +125,14 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((customer) => {
-              const isSelected = selected.includes(customer.id);
+            {items.map((pantry) => {
+              const isSelected = selected.includes(pantry.id);
               const data = {
-                'Pantry 1': customer.inPantry1 || false,
-                'Pantry 2': customer.inPantry2 || false,
-                'Pantry 3': customer.inPantry3 || false,
-                'Freezer': customer.freezer || false,
-                'Other': customer.other || false,
+                'Pantry 1': pantry.inPantry1 || false,
+                'Pantry 2': pantry.inPantry2 || false,
+                'Pantry 3': pantry.inPantry3 || false,
+                'Freezer': pantry.freezer || false,
+                'Other': pantry.other || false,
               };
               const locationString: string[] = [];
               Object.entries(data).forEach(([key, value]) => {
@@ -141,12 +141,12 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                 }
               });
               const location = locationString.join(', ');
-              const totalSpent = numeral(customer.totalSpent).format(
-                `${customer.currency}0,0.00`
+              const totalSpent = numeral(pantry.totalSpent).format(
+                `${pantry.currency}0,0.00`
               );
 
               return (
-                <TableRow hover key={customer.id} selected={isSelected}>
+                <TableRow hover key={pantry.id} selected={isSelected}>
                   <TableCell padding='checkbox'>
                     <Checkbox
                       checked={isSelected}
@@ -154,9 +154,9 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                         event: ChangeEvent<HTMLInputElement>
                       ): void => {
                         if (event.target.checked) {
-                          onSelectOne?.(customer.id);
+                          onSelectOne?.(pantry.id);
                         } else {
-                          onDeselectOne?.(customer.id);
+                          onDeselectOne?.(pantry.id);
                         }
                       }}
                       value={isSelected}
@@ -165,38 +165,38 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                   <TableCell>
                     <Stack alignItems='center' direction='row' spacing={1}>
                       {/* <Avatar
-                        src={customer.avatar}
+                        src={pantry.avatar}
                         sx={{
                           height: 42,
                           width: 42
                         }}
                       >
-                        {getInitials(customer.name)}
+                        {getInitials(pantry.name)}
                       </Avatar> */}
                       <div>
                         <Link
                           color='inherit'
                           component={RouterLink}
-                          href={paths.customers.details}
+                          href={paths.myPantry.details}
                           variant='subtitle2'
                         >
-                          {customer.name}
+                          {pantry.name}
                         </Link>
                         <Typography color='text.secondary' variant='body2'>
-                          {customer.note}
+                          {pantry.note}
                         </Typography>
                       </div>
                     </Stack>
                   </TableCell>
                   <TableCell>{location}</TableCell>
-                  <TableCell>{customer.totalOrders}</TableCell>
+                  <TableCell>{pantry.totalOrders}</TableCell>
                   <TableCell>
                     <Typography variant='subtitle2'>{totalSpent}</Typography>
                   </TableCell>
                   <TableCell align='right'>
                     <IconButton
                       component={RouterLink}
-                      href={paths.customers.edit}
+                      href={paths.myPantry.edit}
                     >
                       <SvgIcon>
                         <Edit02Icon />
@@ -204,7 +204,7 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                     </IconButton>
                     <IconButton
                       component={RouterLink}
-                      href={paths.customers.details}
+                      href={paths.myPantry.details}
                     >
                       <SvgIcon>
                         <ArrowRightIcon />

@@ -50,7 +50,7 @@ export const OverviewPantryItems: FC<OverviewPantryItemsProps> = (props) => {
       <CardActions>
         <Button
           component={RouterLink}
-          href={paths.customers.index}
+          href={paths.myPantry.index}
           color='inherit'
           endIcon={
             <SvgIcon>

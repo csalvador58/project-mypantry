@@ -193,7 +193,7 @@ export const PantryListSearch: FC<PantryListSearchProps> = (props) => {
             defaultValue=""
             fullWidth
             inputProps={{ ref: queryRef }}
-            placeholder="Search customers"
+            placeholder="Search myPantry"
             startAdornment={(
               <InputAdornment position="start">
                 <SvgIcon>

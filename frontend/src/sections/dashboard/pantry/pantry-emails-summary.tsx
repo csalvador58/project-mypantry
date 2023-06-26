@@ -16,9 +16,9 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { customersApi } from 'src/api/customers';
+import { myPantryApi } from 'src/api/myPantry';
 import { useMounted } from 'src/hooks/use-mounted';
-import type { PantryEmail } from 'src/types/customer';
+import type { PantryEmail } from 'src/types/pantry';
 
 const emailOptions: string[] = [
   'Resend last invoice',
@@ -32,7 +32,7 @@ const useEmails = (): PantryEmail[] => {
 
   const handleEmailsGet = useCallback(async () => {
     try {
-      const response = await customersApi.getEmails();
+      const response = await myPantryApi.getEmails();
 
       if (isMounted()) {
         setEmails(response);

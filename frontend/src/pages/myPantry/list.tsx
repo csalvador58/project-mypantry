@@ -11,14 +11,14 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-import { customersApi } from 'src/api/customers';
+import { myPantryApi } from 'src/api/myPantry';
 import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { useSelection } from 'src/hooks/use-selection';
 import { PantryListSearch } from 'src/sections/dashboard/pantry/pantry-list-search';
 import { PantryListTable } from 'src/sections/dashboard/pantry/pantry-list-table';
-import type { Pantry } from 'src/types/customer';
+import type { Pantry } from 'src/types/pantry';
 
 interface Filters {
   query?: string;
@@ -104,26 +104,26 @@ const useMyPantrySearch = () => {
 };
 
 interface MyPantryStoreState {
-  customers: Pantry[];
-  customersCount: number;
+  myPantry: Pantry[];
+  myPantryCount: number;
 }
 
 const useMyPantryStore = (searchState: MyPantrySearchState) => {
   const isMounted = useMounted();
   const [state, setState] = useState<MyPantryStoreState>({
-    customers: [],
-    customersCount: 0
+    myPantry: [],
+    myPantryCount: 0
   });
 
   const handleMyPantryGet = useCallback(
     async () => {
       try {
-        const response = await customersApi.getMyPantry(searchState);
+        const response = await myPantryApi.getMyPantry(searchState);
 
         if (isMounted()) {
           setState({
-            customers: response.data,
-            customersCount: response.count
+            myPantry: response.data,
+            myPantryCount: response.count
           });
         }
       } catch (err) {
@@ -146,20 +146,20 @@ const useMyPantryStore = (searchState: MyPantrySearchState) => {
   };
 };
 
-const useMyPantryIds = (customers: Pantry[] = []) => {
+const useMyPantryIds = (myPantry: Pantry[] = []) => {
   return useMemo(
     () => {
-      return customers.map((customer) => customer.id);
+      return myPantry.map((pantry) => pantry.id);
     },
-    [customers]
+    [myPantry]
   );
 };
 
 const Page = () => {
-  const customersSearch = useMyPantrySearch();
-  const customersStore = useMyPantryStore(customersSearch.state);
-  const customersIds = useMyPantryIds(customersStore.customers);
-  const customersSelection = useSelection<string>(customersIds);
+  const myPantrySearch = useMyPantrySearch();
+  const myPantryStore = useMyPantryStore(myPantrySearch.state);
+  const myPantryIds = useMyPantryIds(myPantryStore.myPantry);
+  const myPantrySelection = useSelection<string>(myPantryIds);
 
   usePageView();
 
@@ -204,23 +204,23 @@ const Page = () => {
             </Stack>
             <Card>
               <PantryListSearch
-                onFiltersChange={customersSearch.handleFiltersChange}
-                onSortChange={customersSearch.handleSortChange}
-                sortBy={customersSearch.state.sortBy}
-                sortDir={customersSearch.state.sortDir}
+                onFiltersChange={myPantrySearch.handleFiltersChange}
+                onSortChange={myPantrySearch.handleSortChange}
+                sortBy={myPantrySearch.state.sortBy}
+                sortDir={myPantrySearch.state.sortDir}
               />
               <PantryListTable
-                count={customersStore.customersCount}
-                items={customersStore.customers}
-                onDeselectAll={customersSelection.handleDeselectAll}
-                onDeselectOne={customersSelection.handleDeselectOne}
-                onPageChange={customersSearch.handlePageChange}
-                onRowsPerPageChange={customersSearch.handleRowsPerPageChange}
-                onSelectAll={customersSelection.handleSelectAll}
-                onSelectOne={customersSelection.handleSelectOne}
-                page={customersSearch.state.page}
-                rowsPerPage={customersSearch.state.rowsPerPage}
-                selected={customersSelection.selected}
+                count={myPantryStore.myPantryCount}
+                items={myPantryStore.myPantry}
+                onDeselectAll={myPantrySelection.handleDeselectAll}
+                onDeselectOne={myPantrySelection.handleDeselectOne}
+                onPageChange={myPantrySearch.handlePageChange}
+                onRowsPerPageChange={myPantrySearch.handleRowsPerPageChange}
+                onSelectAll={myPantrySelection.handleSelectAll}
+                onSelectOne={myPantrySelection.handleSelectOne}
+                page={myPantrySearch.state.page}
+                rowsPerPage={myPantrySearch.state.rowsPerPage}
+                selected={myPantrySelection.selected}
               />
             </Card>
           </Stack>

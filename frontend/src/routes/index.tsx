@@ -11,9 +11,9 @@ const Error404Page = lazy(() => import('src/pages/404'));
 const Error500Page = lazy(() => import('src/pages/500'));
 
 // Pantry
-const PantryListPage = lazy(() => import('src/pages/customers/list'));
-const PantryDetailPage = lazy(() => import('src/pages/customers/detail'));
-const PantryEditPage = lazy(() => import('src/pages/customers/edit'));
+const PantryListPage = lazy(() => import('src/pages/myPantry/list'));
+const PantryDetailPage = lazy(() => import('src/pages/myPantry/detail'));
+const PantryEditPage = lazy(() => import('src/pages/myPantry/edit'));
 
 export const routes: RouteObject[] = [
   {
@@ -30,18 +30,18 @@ export const routes: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: 'customers',
+        path: 'myPantry',
         children: [
           {
             index: true,
             element: <PantryListPage />,
           },
           {
-            path: ':customerId',
+            path: ':pantryId',
             element: <PantryDetailPage />,
           },
           {
-            path: ':customerId/edit',
+            path: ':pantryId/edit',
             element: <PantryEditPage />,
           },
         ],

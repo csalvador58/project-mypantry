@@ -18,7 +18,7 @@ import { RouterLink } from 'src/components/router-link';
 import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
 import { paths } from 'src/paths';
-import type { PantryInvoice } from 'src/types/customer';
+import type { PantryInvoice } from 'src/types/pantry';
 
 interface PantryInvoicesProps {
   invoices?: PantryInvoice[];

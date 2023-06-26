@@ -16,23 +16,23 @@ import Typography from '@mui/material/Typography';
 
 import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
-import type { Pantry } from 'src/types/customer';
+import type { Pantry } from 'src/types/pantry';
 import { wait } from 'src/utils/wait';
 
 interface PantryEditFormProps {
-  customer: Pantry;
+  pantry: Pantry;
 }
 
 export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
-  const { customer, ...other } = props;
+  const { pantry, ...other } = props;
   const formik = useFormik({
     initialValues: {
-      price: customer.price || '',
-      location: customer.location || '',
-      note: customer.note || '',
-      favorite: customer.favorite || false,
-      name: customer.name || '',
-      quantity: customer.quantity || '',
+      price: pantry.price || '',
+      location: pantry.location || '',
+      note: pantry.note || '',
+      favorite: pantry.favorite || false,
+      name: pantry.name || '',
+      quantity: pantry.quantity || '',
       submit: null
     },
     validationSchema: Yup.object({
@@ -206,7 +206,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
             color="inherit"
             component={RouterLink}
             disabled={formik.isSubmitting}
-            href={paths.customers.details}
+            href={paths.myPantry.details}
           >
             Cancel
           </Button>
@@ -218,5 +218,5 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
 
 PantryEditForm.propTypes = {
   // @ts-ignore
-  customer: PropTypes.object.isRequired
+  pantry: PropTypes.object.isRequired
 };

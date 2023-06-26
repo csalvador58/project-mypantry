@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import { MoreMenu } from 'src/components/more-menu';
 import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
-import type { PantryLog } from 'src/types/customer';
+import type { PantryLog } from 'src/types/pantry';
 
 interface PantryLogsProps {
   logs?: PantryLog[];
