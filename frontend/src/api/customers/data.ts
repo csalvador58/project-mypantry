@@ -1,10 +1,10 @@
 import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
 
-import type { Customer, CustomerEmail, CustomerInvoice, CustomerLog } from 'src/types/customer';
+import type { Pantry, PantryEmail, PantryInvoice, PantryLog } from 'src/types/customer';
 
 const now = new Date();
 
-export const customers: Customer[] = [
+export const customers: Pantry[] = [
   {
     id: '5e887ac47eed253091be10cb',
     location: 'USA',
@@ -187,7 +187,7 @@ export const customers: Customer[] = [
   }
 ];
 
-export const customer: Customer = {
+export const customer: Pantry = {
   id: '5e8680e60cba5019c5ca6fda',
   location: 'Pantry 1',
   currency: '$',
@@ -206,7 +206,7 @@ export const customer: Customer = {
   quantity: '4',
 };
 
-export const emails: CustomerEmail[] = [
+export const emails: PantryEmail[] = [
   {
     id: '5ece2ce3613486d95ffaea58',
     createdAt: subDays(subHours(subMinutes(now, 34), 5), 3).getTime(),
@@ -219,7 +219,7 @@ export const emails: CustomerEmail[] = [
   }
 ];
 
-export const invoices: CustomerInvoice[] = [
+export const invoices: PantryInvoice[] = [
   {
     id: '528651571NT',
     issueDate: now.getTime(),
@@ -234,7 +234,7 @@ export const invoices: CustomerInvoice[] = [
   }
 ];
 
-export const logs: CustomerLog[] = [
+export const logs: PantryLog[] = [
   {
     id: '5ece2cfeb6e2ac847bba11ce',
     createdAt: subDays(subMinutes(subSeconds(now, 56), 2), 2).getTime(),

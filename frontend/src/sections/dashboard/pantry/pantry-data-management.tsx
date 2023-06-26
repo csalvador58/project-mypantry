@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 
-export const CustomerDataManagement: FC = (props) => (
+export const PantryDataManagement: FC = (props) => (
   <Card {...props}>
     <CardHeader title="Item Management" />
     <CardContent sx={{ pt: 0 }}>

@@ -1,4 +1,4 @@
-export interface Customer {
+export interface Pantry {
   id: string;
   price?: string;
   location?: string;
@@ -17,7 +17,7 @@ export interface Customer {
   updatedAt?: number;
 }
 
-export interface CustomerLog {
+export interface PantryLog {
   id: string;
   createdAt: number;
   description: string;
@@ -27,13 +27,13 @@ export interface CustomerLog {
   status: number;
 }
 
-export interface CustomerEmail {
+export interface PantryEmail {
   id: string;
   description: string;
   createdAt: number;
 }
 
-export interface CustomerInvoice {
+export interface PantryInvoice {
   id: string;
   issueDate: number;
   status: string;

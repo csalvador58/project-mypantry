@@ -23,27 +23,27 @@ import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
-import { CustomerBasicDetails } from 'src/sections/dashboard/customer/customer-basic-details';
-import { CustomerDataManagement } from 'src/sections/dashboard/customer/customer-data-management';
-import { CustomerEmailsSummary } from 'src/sections/dashboard/customer/customer-emails-summary';
-import { CustomerPayment } from 'src/sections/dashboard/customer/customer-payment';
-import type { Customer } from 'src/types/customer';
+import { PantryBasicDetails } from 'src/sections/dashboard/pantry/pantry-basic-details';
+import { PantryDataManagement } from 'src/sections/dashboard/pantry/pantry-data-management';
+import { PantryEmailsSummary } from 'src/sections/dashboard/pantry/pantry-emails-summary';
+import { PantryPayment } from 'src/sections/dashboard/pantry/pantry-payment';
+import type { Pantry } from 'src/types/customer';
 import { getInitials } from 'src/utils/get-initials';
 
 const tabs = [
   { label: 'Details', value: 'details' },
 ];
 
-const useCustomer = (): Customer | null => {
+const usePantry = (): Pantry | null => {
   const isMounted = useMounted();
-  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [customer, setPantry] = useState<Pantry | null>(null);
 
-  const handleCustomerGet = useCallback(async () => {
+  const handlePantryGet = useCallback(async () => {
     try {
-      const response = await customersApi.getCustomer();
+      const response = await customersApi.getPantry();
 
       if (isMounted()) {
-        setCustomer(response);
+        setPantry(response);
       }
     } catch (err) {
       console.error(err);
@@ -52,7 +52,7 @@ const useCustomer = (): Customer | null => {
 
   useEffect(
     () => {
-      handleCustomerGet();
+      handlePantryGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -63,7 +63,7 @@ const useCustomer = (): Customer | null => {
 
 const Page = () => {
   const [currentTab, setCurrentTab] = useState<string>('details');
-  const customer = useCustomer();
+  const customer = usePantry();
 
   usePageView();
 
@@ -107,7 +107,7 @@ const Page = () => {
 
   return (
     <>
-      <Seo title="Dashboard: Customer Details" />
+      <Seo title="Dashboard: Pantry Details" />
       <Box
         component="main"
         sx={{
@@ -230,7 +230,7 @@ const Page = () => {
                     xs={12}
                     lg={4}
                   >
-                    <CustomerBasicDetails
+                    <PantryBasicDetails
                       location={location}
                       note={customer.note}
                       quantity={customer.totalOrders}
@@ -243,7 +243,7 @@ const Page = () => {
                     lg={8}
                   >
                     <Stack spacing={4}>
-                      <CustomerDataManagement />
+                      <PantryDataManagement />
                     </Stack>
                   </Grid>
                 </Grid>

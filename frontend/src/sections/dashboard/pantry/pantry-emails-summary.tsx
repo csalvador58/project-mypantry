@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 
 import { customersApi } from 'src/api/customers';
 import { useMounted } from 'src/hooks/use-mounted';
-import type { CustomerEmail } from 'src/types/customer';
+import type { PantryEmail } from 'src/types/customer';
 
 const emailOptions: string[] = [
   'Resend last invoice',
@@ -26,9 +26,9 @@ const emailOptions: string[] = [
   'Send verification'
 ];
 
-const useEmails = (): CustomerEmail[] => {
+const useEmails = (): PantryEmail[] => {
   const isMounted = useMounted();
-  const [emails, setEmails] = useState<CustomerEmail[]>([]);
+  const [emails, setEmails] = useState<PantryEmail[]>([]);
 
   const handleEmailsGet = useCallback(async () => {
     try {
@@ -53,7 +53,7 @@ const useEmails = (): CustomerEmail[] => {
   return emails;
 };
 
-export const CustomerEmailsSummary: FC = (props) => {
+export const PantryEmailsSummary: FC = (props) => {
   const [emailOption, setEmailOption] = useState<string>(emailOptions[0]);
   const emails = useEmails();
 

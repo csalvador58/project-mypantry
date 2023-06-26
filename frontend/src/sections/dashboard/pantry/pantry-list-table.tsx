@@ -22,12 +22,12 @@ import Typography from '@mui/material/Typography';
 import { RouterLink } from 'src/components/router-link';
 import { Scrollbar } from 'src/components/scrollbar';
 import { paths } from 'src/paths';
-import type { Customer } from 'src/types/customer';
+import type { Pantry } from 'src/types/customer';
 import { getInitials } from 'src/utils/get-initials';
 
-interface CustomerListTableProps {
+interface PantryListTableProps {
   count?: number;
-  items?: Customer[];
+  items?: Pantry[];
   onDeselectAll?: () => void;
   onDeselectOne?: (customerId: string) => void;
   onPageChange?: (
@@ -42,7 +42,7 @@ interface CustomerListTableProps {
   selected?: string[];
 }
 
-export const CustomerListTable: FC<CustomerListTableProps> = (props) => {
+export const PantryListTable: FC<PantryListTableProps> = (props) => {
   const {
     count = 0,
     items = [],
@@ -230,7 +230,7 @@ export const CustomerListTable: FC<CustomerListTableProps> = (props) => {
   );
 };
 
-CustomerListTable.propTypes = {
+PantryListTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,

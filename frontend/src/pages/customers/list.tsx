@@ -16,9 +16,9 @@ import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { useSelection } from 'src/hooks/use-selection';
-import { CustomerListSearch } from 'src/sections/dashboard/customer/customer-list-search';
-import { CustomerListTable } from 'src/sections/dashboard/customer/customer-list-table';
-import type { Customer } from 'src/types/customer';
+import { PantryListSearch } from 'src/sections/dashboard/pantry/pantry-list-search';
+import { PantryListTable } from 'src/sections/dashboard/pantry/pantry-list-table';
+import type { Pantry } from 'src/types/customer';
 
 interface Filters {
   query?: string;
@@ -29,7 +29,7 @@ interface Filters {
   other?: boolean;
 }
 
-interface CustomersSearchState {
+interface MyPantrySearchState {
   filters: Filters;
   page: number;
   rowsPerPage: number;
@@ -37,8 +37,8 @@ interface CustomersSearchState {
   sortDir: 'asc' | 'desc';
 }
 
-const useCustomersSearch = () => {
-  const [state, setState] = useState<CustomersSearchState>({
+const useMyPantrySearch = () => {
+  const [state, setState] = useState<MyPantrySearchState>({
     filters: {
       query: undefined,
       inPantry1: undefined,
@@ -103,22 +103,22 @@ const useCustomersSearch = () => {
   };
 };
 
-interface CustomersStoreState {
-  customers: Customer[];
+interface MyPantryStoreState {
+  customers: Pantry[];
   customersCount: number;
 }
 
-const useCustomersStore = (searchState: CustomersSearchState) => {
+const useMyPantryStore = (searchState: MyPantrySearchState) => {
   const isMounted = useMounted();
-  const [state, setState] = useState<CustomersStoreState>({
+  const [state, setState] = useState<MyPantryStoreState>({
     customers: [],
     customersCount: 0
   });
 
-  const handleCustomersGet = useCallback(
+  const handleMyPantryGet = useCallback(
     async () => {
       try {
-        const response = await customersApi.getCustomers(searchState);
+        const response = await customersApi.getMyPantry(searchState);
 
         if (isMounted()) {
           setState({
@@ -135,7 +135,7 @@ const useCustomersStore = (searchState: CustomersSearchState) => {
 
   useEffect(
     () => {
-      handleCustomersGet();
+      handleMyPantryGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchState]
@@ -146,7 +146,7 @@ const useCustomersStore = (searchState: CustomersSearchState) => {
   };
 };
 
-const useCustomersIds = (customers: Customer[] = []) => {
+const useMyPantryIds = (customers: Pantry[] = []) => {
   return useMemo(
     () => {
       return customers.map((customer) => customer.id);
@@ -156,9 +156,9 @@ const useCustomersIds = (customers: Customer[] = []) => {
 };
 
 const Page = () => {
-  const customersSearch = useCustomersSearch();
-  const customersStore = useCustomersStore(customersSearch.state);
-  const customersIds = useCustomersIds(customersStore.customers);
+  const customersSearch = useMyPantrySearch();
+  const customersStore = useMyPantryStore(customersSearch.state);
+  const customersIds = useMyPantryIds(customersStore.customers);
   const customersSelection = useSelection<string>(customersIds);
 
   usePageView();
@@ -203,13 +203,13 @@ const Page = () => {
               </Stack>
             </Stack>
             <Card>
-              <CustomerListSearch
+              <PantryListSearch
                 onFiltersChange={customersSearch.handleFiltersChange}
                 onSortChange={customersSearch.handleSortChange}
                 sortBy={customersSearch.state.sortBy}
                 sortDir={customersSearch.state.sortDir}
               />
-              <CustomerListTable
+              <PantryListTable
                 count={customersStore.customersCount}
                 items={customersStore.customers}
                 onDeselectAll={customersSelection.handleDeselectAll}

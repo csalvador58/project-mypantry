@@ -85,14 +85,14 @@ const sortOptions: SortOption[] = [
 
 type SortDir = 'asc' | 'desc';
 
-interface CustomerListSearchProps {
+interface PantryListSearchProps {
   onFiltersChange?: (filters: Filters) => void;
   onSortChange?: (sort: { sortBy: string; sortDir: SortDir }) => void;
   sortBy?: string;
   sortDir?: SortDir;
 }
 
-export const CustomerListSearch: FC<CustomerListSearchProps> = (props) => {
+export const PantryListSearch: FC<PantryListSearchProps> = (props) => {
   const { onFiltersChange, onSortChange, sortBy, sortDir } = props;
   const queryRef = useRef<HTMLInputElement | null>(null);
   const [currentTab, setCurrentTab] = useState<TabValue>('all');
@@ -225,7 +225,7 @@ export const CustomerListSearch: FC<CustomerListSearchProps> = (props) => {
   );
 };
 
-CustomerListSearch.propTypes = {
+PantryListSearch.propTypes = {
   onFiltersChange: PropTypes.func,
   onSortChange: PropTypes.func,
   sortBy: PropTypes.string,

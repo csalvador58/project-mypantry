@@ -15,19 +15,19 @@ import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
-import { CustomerEditForm } from 'src/sections/dashboard/customer/customer-edit-form';
-import type { Customer } from 'src/types/customer';
+import { PantryEditForm } from 'src/sections/dashboard/pantry/pantry-edit-form';
+import type { Pantry } from 'src/types/customer';
 
-const useCustomer = (): Customer | null => {
+const usePantry = (): Pantry | null => {
   const isMounted = useMounted();
-  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [customer, setPantry] = useState<Pantry | null>(null);
 
-  const handleCustomerGet = useCallback(async () => {
+  const handlePantryGet = useCallback(async () => {
     try {
-      const response = await customersApi.getCustomer();
+      const response = await customersApi.getPantry();
 
       if (isMounted()) {
-        setCustomer(response);
+        setPantry(response);
       }
     } catch (err) {
       console.error(err);
@@ -36,7 +36,7 @@ const useCustomer = (): Customer | null => {
 
   useEffect(
     () => {
-      handleCustomerGet();
+      handlePantryGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -46,7 +46,7 @@ const useCustomer = (): Customer | null => {
 };
 
 const Page = () => {
-  const customer = useCustomer();
+  const customer = usePantry();
 
   usePageView();
 
@@ -121,7 +121,7 @@ const Page = () => {
                 </Stack>
               </Stack>
             </Stack>
-            <CustomerEditForm customer={customer} />
+            <PantryEditForm customer={customer} />
           </Stack>
         </Container>
       </Box>

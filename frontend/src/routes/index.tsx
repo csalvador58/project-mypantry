@@ -10,10 +10,10 @@ const Error401Page = lazy(() => import('src/pages/401'));
 const Error404Page = lazy(() => import('src/pages/404'));
 const Error500Page = lazy(() => import('src/pages/500'));
 
-// Customer
-const CustomerListPage = lazy(() => import('src/pages/customers/list'));
-const CustomerDetailPage = lazy(() => import('src/pages/customers/detail'));
-const CustomerEditPage = lazy(() => import('src/pages/customers/edit'));
+// Pantry
+const PantryListPage = lazy(() => import('src/pages/customers/list'));
+const PantryDetailPage = lazy(() => import('src/pages/customers/detail'));
+const PantryEditPage = lazy(() => import('src/pages/customers/edit'));
 
 export const routes: RouteObject[] = [
   {
@@ -34,15 +34,15 @@ export const routes: RouteObject[] = [
         children: [
           {
             index: true,
-            element: <CustomerListPage />,
+            element: <PantryListPage />,
           },
           {
             path: ':customerId',
-            element: <CustomerDetailPage />,
+            element: <PantryDetailPage />,
           },
           {
             path: ':customerId/edit',
-            element: <CustomerEditPage />,
+            element: <PantryEditPage />,
           },
         ],
       },

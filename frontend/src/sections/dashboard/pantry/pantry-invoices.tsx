@@ -1,89 +1,90 @@
 import type { FC } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
+import IconButton from '@mui/material/IconButton';
+import SvgIcon from '@mui/material/SvgIcon';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 
 import { MoreMenu } from 'src/components/more-menu';
+import { RouterLink } from 'src/components/router-link';
 import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
-import type { CustomerLog } from 'src/types/customer';
+import { paths } from 'src/paths';
+import type { PantryInvoice } from 'src/types/customer';
 
-interface CustomerLogsProps {
-  logs?: CustomerLog[];
+interface PantryInvoicesProps {
+  invoices?: PantryInvoice[];
 }
 
-export const CustomerLogs: FC<CustomerLogsProps> = (props) => {
-  const { logs = [], ...other } = props;
+export const PantryInvoices: FC<PantryInvoicesProps> = (props) => {
+  const { invoices = [], ...other } = props;
 
   return (
     <Card {...other}>
       <CardHeader
         action={<MoreMenu />}
-        title="Recent Logs"
+        title="Recent Invoices"
       />
       <Scrollbar>
-        <Table sx={{ minWidth: 700 }}>
+        <Table sx={{ minWidth: 600 }}>
           <TableHead>
             <TableRow>
               <TableCell>
-                Method
-              </TableCell>
-              <TableCell>
-                Status
-              </TableCell>
-              <TableCell>
-                Path
-              </TableCell>
-              <TableCell>
-                Event
-              </TableCell>
-              <TableCell>
-                Ip
+                ID
               </TableCell>
               <TableCell>
                 Date
               </TableCell>
+              <TableCell>
+                Total
+              </TableCell>
+              <TableCell>
+                Status
+              </TableCell>
+              <TableCell align="right">
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {logs.map((log) => {
-              const statusColor = log.status >= 200 && log.status < 300 ? 'success' : 'error';
-              const createdAt = format(log.createdAt, 'yyyy/MM/dd HH:mm:ss');
+            {invoices.map((invoice) => {
+              const issueDate = format(invoice.issueDate, 'MMM dd,yyyy');
+              const statusColor = invoice.status === 'paid' ? 'success' : 'error';
 
               return (
-                <TableRow key={log.id}>
-                  <TableCell width="100">
-                    <Typography
-                      color="text.secondary"
-                      variant="caption"
-                    >
-                      {log.method}
-                    </Typography>
+                <TableRow key={invoice.id}>
+                  <TableCell>
+                    #
+                    {invoice.id}
                   </TableCell>
-                  <TableCell width="64">
+                  <TableCell>
+                    {issueDate}
+                  </TableCell>
+                  <TableCell>
+                    {invoice.amount}
+                  </TableCell>
+                  <TableCell>
                     <SeverityPill color={statusColor}>
-                      {log.status}
+                      {invoice.status}
                     </SeverityPill>
                   </TableCell>
-                  <TableCell>
-                    {log.route}
-                  </TableCell>
-                  <TableCell>
-                    {log.description}
-                  </TableCell>
-                  <TableCell>
-                    {log.ip}
-                  </TableCell>
-                  <TableCell>
-                    {createdAt}
+                  <TableCell align="right">
+                    <IconButton
+                      component={RouterLink}
+                      href={paths.dashboard.invoices.details}
+                    >
+                      <SvgIcon>
+                        <ArrowRightIcon />
+                      </SvgIcon>
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               );
@@ -93,17 +94,17 @@ export const CustomerLogs: FC<CustomerLogsProps> = (props) => {
       </Scrollbar>
       <TablePagination
         component="div"
-        count={logs.length}
+        count={invoices.length}
         onPageChange={(): void => {}}
         onRowsPerPageChange={(): void => {}}
         page={0}
-        rowsPerPage={10}
+        rowsPerPage={5}
         rowsPerPageOptions={[5, 10, 25]}
       />
     </Card>
   );
 };
 
-CustomerLogs.propTypes = {
-  logs: PropTypes.array
+PantryInvoices.propTypes = {
+  invoices: PropTypes.array
 };

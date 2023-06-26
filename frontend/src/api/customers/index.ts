@@ -1,11 +1,11 @@
-import type { Customer, CustomerEmail, CustomerInvoice, CustomerLog } from 'src/types/customer';
+import type { Pantry, PantryEmail, PantryInvoice, PantryLog } from 'src/types/customer';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { applySort } from 'src/utils/apply-sort';
 import { deepCopy } from 'src/utils/deep-copy';
 
 import { customer, customers, emails, invoices, logs } from './data';
 
-type GetCustomersRequest = {
+type GetMyPantryRequest = {
   filters?: {
     query?: string;
     inPantry1?: boolean;
@@ -20,32 +20,32 @@ type GetCustomersRequest = {
   sortDir?: 'asc' | 'desc';
 };
 
-type GetCustomersResponse = Promise<{
-  data: Customer[];
+type GetMyPantryResponse = Promise<{
+  data: Pantry[];
   count: number;
 }>;
 
-type GetCustomerRequest = object;
+type GetPantryRequest = object;
 
-type GetCustomerResponse = Promise<Customer>;
+type GetPantryResponse = Promise<Pantry>;
 
-type GetCustomerEmailsRequest = object;
+type GetPantryEmailsRequest = object;
 
-type GetCustomerEmailsResponse = Promise<CustomerEmail[]>;
+type GetPantryEmailsResponse = Promise<PantryEmail[]>;
 
-type GetCustomerInvoicesRequest = object;
+type GetPantryInvoicesRequest = object;
 
-type GetCustomerInvoicesResponse = Promise<CustomerInvoice[]>;
+type GetPantryInvoicesResponse = Promise<PantryInvoice[]>;
 
-type GetCustomerLogsRequest = object;
+type GetPantryLogsRequest = object;
 
-type GetCustomerLogsResponse = Promise<CustomerLog[]>;
+type GetPantryLogsResponse = Promise<PantryLog[]>;
 
-class CustomersApi {
-  getCustomers(request: GetCustomersRequest = {}): GetCustomersResponse {
+class MyPantryApi {
+  getMyPantry(request: GetMyPantryRequest = {}): GetMyPantryResponse {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;
 
-    let data = deepCopy(customers) as Customer[];
+    let data = deepCopy(customers) as Pantry[];
     let count = data.length;
 
     if (typeof filters !== 'undefined') {
@@ -112,21 +112,21 @@ class CustomersApi {
     });
   }
 
-  getCustomer(request?: GetCustomerRequest): GetCustomerResponse {
+  getPantry(request?: GetPantryRequest): GetPantryResponse {
     return Promise.resolve(deepCopy(customer));
   }
 
-  getEmails(request?: GetCustomerEmailsRequest): GetCustomerEmailsResponse {
+  getEmails(request?: GetPantryEmailsRequest): GetPantryEmailsResponse {
     return Promise.resolve(deepCopy(emails));
   }
 
-  getInvoices(request?: GetCustomerInvoicesRequest): GetCustomerInvoicesResponse {
+  getInvoices(request?: GetPantryInvoicesRequest): GetPantryInvoicesResponse {
     return Promise.resolve(deepCopy(invoices));
   }
 
-  getLogs(request?: GetCustomerLogsRequest): GetCustomerLogsResponse {
+  getLogs(request?: GetPantryLogsRequest): GetPantryLogsResponse {
     return Promise.resolve(deepCopy(logs));
   }
 }
 
-export const customersApi = new CustomersApi();
+export const customersApi = new MyPantryApi();

@@ -16,14 +16,14 @@ import Typography from '@mui/material/Typography';
 
 import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
-import type { Customer } from 'src/types/customer';
+import type { Pantry } from 'src/types/customer';
 import { wait } from 'src/utils/wait';
 
-interface CustomerEditFormProps {
-  customer: Customer;
+interface PantryEditFormProps {
+  customer: Pantry;
 }
 
-export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
+export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
   const { customer, ...other } = props;
   const formik = useFormik({
     initialValues: {
@@ -55,7 +55,7 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
         await wait(500);
         helpers.setStatus({ success: true });
         helpers.setSubmitting(false);
-        toast.success('Customer updated');
+        toast.success('Pantry updated');
       } catch (err) {
         console.error(err);
         toast.error('Something went wrong!');
@@ -216,7 +216,7 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
   );
 };
 
-CustomerEditForm.propTypes = {
+PantryEditForm.propTypes = {
   // @ts-ignore
   customer: PropTypes.object.isRequired
 };

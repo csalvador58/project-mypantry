@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import { PropertyList } from 'src/components/property-list';
 import { PropertyListItem } from 'src/components/property-list-item';
 
-interface CustomerBasicDetailsProps {
+interface PantryBasicDetailsProps {
   location: string;
   note: string;
   quantity?: number;
@@ -13,7 +13,7 @@ interface CustomerBasicDetailsProps {
   lastUpdated?: string;
 }
 
-export const CustomerBasicDetails: FC<CustomerBasicDetailsProps> = (props) => {
+export const PantryBasicDetails: FC<PantryBasicDetailsProps> = (props) => {
   const { location, note, quantity, price, lastUpdated } = props;
 
   return (
@@ -29,7 +29,7 @@ export const CustomerBasicDetails: FC<CustomerBasicDetailsProps> = (props) => {
   );
 };
 
-CustomerBasicDetails.propTypes = {
+PantryBasicDetails.propTypes = {
   location: PropTypes.string.isRequired,
   note: PropTypes.string.isRequired,
   quantity: PropTypes.number,
