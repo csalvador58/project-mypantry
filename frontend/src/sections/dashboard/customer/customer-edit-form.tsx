@@ -27,33 +27,27 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
   const { customer, ...other } = props;
   const formik = useFormik({
     initialValues: {
-      address1: customer.address1 || '',
-      address2: customer.address2 || '',
+      price: customer.address1 || '',
       country: customer.country || '',
       note: customer.note || '',
-      hasDiscount: customer.hasDiscount || false,
-      isVerified: customer.isVerified || false,
+      favorite: customer.hasDiscount || false,
       name: customer.name || '',
-      phone: customer.phone || '',
-      state: customer.state || '',
+      quantity: customer.phone || '',
       submit: null
     },
     validationSchema: Yup.object({
-      address1: Yup.string().max(255),
-      address2: Yup.string().max(255),
+      price: Yup.string().max(255),
       country: Yup.string().max(255),
       note: Yup
         .string()
         .max(255)
         .required('note is required'),
-      hasDiscount: Yup.bool(),
-      isVerified: Yup.bool(),
+      favorite: Yup.bool(),
       name: Yup
         .string()
         .max(255)
         .required('Name is required'),
-      phone: Yup.string().max(15),
-      state: Yup.string().max(255)
+      quantity: Yup.string().max(15)
     }),
     onSubmit: async (values, helpers): Promise<void> => {
       try {
@@ -78,7 +72,7 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
       {...other}
     >
       <Card>
-        <CardHeader title="Edit Customer" />
+        <CardHeader title="Edit Pantry Item" />
         <CardContent sx={{ pt: 0 }}>
           <Grid
             container
@@ -92,12 +86,57 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
                 error={!!(formik.touched.name && formik.errors.name)}
                 fullWidth
                 helperText={formik.touched.name && formik.errors.name}
-                label="Full name"
+                label="Name"
                 name="name"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 required
                 value={formik.values.name}
+              />
+            </Grid>
+            <Grid
+              xs={12}
+              md={6}
+            >
+              <TextField
+                error={!!(formik.touched.quantity && formik.errors.quantity)}
+                fullWidth
+                helperText={formik.touched.quantity && formik.errors.quantity}
+                label="Quantity"
+                name="quantity"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.quantity}
+              />
+            </Grid>
+            <Grid
+              xs={12}
+              md={6}
+            >
+              <TextField
+                error={!!(formik.touched.country && formik.errors.country)}
+                fullWidth
+                helperText={formik.touched.country && formik.errors.country}
+                label="Location"
+                name="country"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.country}
+              />
+            </Grid>
+            <Grid
+              xs={12}
+              md={6}
+            >
+              <TextField
+                error={!!(formik.touched.price && formik.errors.price)}
+                fullWidth
+                helperText={formik.touched.price && formik.errors.price}
+                label="Price Tracker"
+                name="price"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.price}
               />
             </Grid>
             <Grid
@@ -114,81 +153,6 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
                 onChange={formik.handleChange}
                 required
                 value={formik.values.note}
-              />
-            </Grid>
-            <Grid
-              xs={12}
-              md={6}
-            >
-              <TextField
-                error={!!(formik.touched.country && formik.errors.country)}
-                fullWidth
-                helperText={formik.touched.country && formik.errors.country}
-                label="Country"
-                name="country"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.country}
-              />
-            </Grid>
-            <Grid
-              xs={12}
-              md={6}
-            >
-              <TextField
-                error={!!(formik.touched.state && formik.errors.state)}
-                fullWidth
-                helperText={formik.touched.state && formik.errors.state}
-                label="State/Region"
-                name="state"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.state}
-              />
-            </Grid>
-            <Grid
-              xs={12}
-              md={6}
-            >
-              <TextField
-                error={!!(formik.touched.address1 && formik.errors.address1)}
-                fullWidth
-                helperText={formik.touched.address1 && formik.errors.address1}
-                label="Address 1"
-                name="address1"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.address1}
-              />
-            </Grid>
-            <Grid
-              xs={12}
-              md={6}
-            >
-              <TextField
-                error={!!(formik.touched.address2 && formik.errors.address2)}
-                fullWidth
-                helperText={formik.touched.address2 && formik.errors.address2}
-                label="Address 2"
-                name="address2"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.address2}
-              />
-            </Grid>
-            <Grid
-              xs={12}
-              md={6}
-            >
-              <TextField
-                error={!!(formik.touched.phone && formik.errors.phone)}
-                fullWidth
-                helperText={formik.touched.phone && formik.errors.phone}
-                label="Phone number"
-                name="phone"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.phone}
               />
             </Grid>
           </Grid>
@@ -208,53 +172,16 @@ export const CustomerEditForm: FC<CustomerEditFormProps> = (props) => {
                   gutterBottom
                   variant="subtitle1"
                 >
-                  Make Contact Info Public
-                </Typography>
-                <Typography
-                  color="text.secondary"
-                  variant="body2"
-                >
-                  Means that anyone viewing your profile will be able to see your contacts
-                  details
+                  Favorite
                 </Typography>
               </Stack>
               <Switch
-                checked={formik.values.isVerified}
+                checked={formik.values.favorite}
                 color="primary"
                 edge="start"
-                name="isVerified"
+                name="favorite"
                 onChange={formik.handleChange}
-                value={formik.values.isVerified}
-              />
-            </Stack>
-            <Stack
-              alignItems="center"
-              direction="row"
-              justifyContent="space-between"
-              spacing={3}
-            >
-              <Stack spacing={1}>
-                <Typography
-                  gutterBottom
-                  variant="subtitle1"
-                >
-                  Available to hire
-                </Typography>
-                <Typography
-                  color="text.secondary"
-                  variant="body2"
-                >
-                  Toggling this will let your teammates know that you are available for
-                  acquiring new projects
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.hasDiscount}
-                color="primary"
-                edge="start"
-                name="hasDiscount"
-                onChange={formik.handleChange}
-                value={formik.values.hasDiscount}
+                value={formik.values.favorite}
               />
             </Stack>
           </Stack>

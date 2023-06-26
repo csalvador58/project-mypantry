@@ -17,7 +17,6 @@ import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
 import { CustomerEditForm } from 'src/sections/dashboard/customer/customer-edit-form';
 import type { Customer } from 'src/types/customer';
-import { getInitials } from 'src/utils/get-initials';
 
 const useCustomer = (): Customer | null => {
   const isMounted = useMounted();
@@ -57,7 +56,7 @@ const Page = () => {
 
   return (
     <>
-      <Seo title="Dashboard: Customer Edit" />
+      <Seo title="Dashboard: Item Edit" />
       <Box
         component="main"
         sx={{
@@ -83,7 +82,7 @@ const Page = () => {
                     <ArrowLeftIcon />
                   </SvgIcon>
                   <Typography variant="subtitle2">
-                    Customers
+                    Pantry
                   </Typography>
                 </Link>
               </div>
@@ -101,15 +100,6 @@ const Page = () => {
                   direction="row"
                   spacing={2}
                 >
-                  <Avatar
-                    src={customer.avatar}
-                    sx={{
-                      height: 64,
-                      width: 64
-                    }}
-                  >
-                    {getInitials(customer.name)}
-                  </Avatar>
                   <Stack spacing={1}>
                     <Typography variant="h4">
                       {customer.note}

@@ -200,7 +200,7 @@ export const customer: Customer = {
   id: '5e8680e60cba5019c5ca6fda',
   avatar: '/assets/avatars/avatar-nasimiyu-danai.png',
   city: 'Salt Lake City',
-  country: 'USA',
+  country: 'Pantry 1',
   currency: '$',
   note: 'item notes',
   inPantry1: false,
@@ -214,12 +214,12 @@ export const customer: Customer = {
   totalSpent: 2.00,
   totalOrders: 7,
   updatedAt: subDays(subHours(now, 1), 9).getTime(),
-  address1: 'Street John Wick, no. 7',
+  address1: '10.00',
   address2: 'House #25',
   balance: 0,
   hasDiscount: false,
   isVerified: true,
-  phone: '+55 748 327 439',
+  phone: '4',
   vatRate: 19,
   zipCode: '240355'
 };

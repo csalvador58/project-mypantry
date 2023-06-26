@@ -10,8 +10,8 @@ export const Seo: FC<SeoProps> = (props) => {
   const { title } = props;
 
   const fullTitle = title
-    ? title + ' | Devias Kit PRO'
-    : 'Devias Kit PRO';
+    ? title + ' | My Pantry'
+    : 'My Pantry';
 
   return (
     <Helmet>
