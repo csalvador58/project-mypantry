@@ -38,3 +38,4 @@ const deleteTodo = (req, res, next) => {
     res.json({ message: 'Todo deleted!' });
 };
 exports.deleteTodo = deleteTodo;
+//# sourceMappingURL=todos.js.map
