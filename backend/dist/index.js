@@ -5,8 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const port = process.env.PORT || 3000;
-const mongoURL = process.env.MONGO_CONNECTION_STRING || 'mongodb://127.0.0.1/mypantry';
+require("dotenv/config");
+const port = process.env['PORT'] || 3000;
+const mongoURL = process.env['MONGODB_URL'] || 'mongodb://127.0.0.1/mypantry';
 mongoose_1.default
     .connect(mongoURL, {})
     .then(() => {

@@ -3,16 +3,16 @@ import { IUser } from '../models/user.model';
 import * as userService from '../services/user.service';
 import catchAsync from '../utils/catchAsync';
 
-export const createUser: RequestHandler = catchAsync(async (req, res) => {
-  let createUser = req.body as IUser;
+export const registerUser: RequestHandler = catchAsync(async (req, res) => {
+  const registerUser = req.body as IUser;
 
-  const result = await userService.createUser({
-    username: createUser.username,
-    password: createUser.password,
-    role: createUser.role,
+  const result = await userService.registerUser({
+    username: registerUser.username,
+    password: registerUser.password,
+    role: registerUser.role,
   });
 
-  res.status(201).json({ message: 'User created successfully', user: result });
+  res.status(201).json({ message: 'User successfully registered', user: result });
 });
 
 export const getUsers: RequestHandler = catchAsync(async (req, res) => {

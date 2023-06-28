@@ -21,7 +21,7 @@
 
 import { Router } from 'express';
 import authRoute from './auth.route';
-// import pantryRoute from './pantry.route';
+import pantryRoute from './pantry.route';
 import requestLogger from '../utils/reqLogger.route'
 
 const router = Router();
@@ -41,10 +41,10 @@ const defaultIRoute: IRoute[] = [
     path: '/auth',
     route: authRoute,
   },
-  // {
-  //   path: '/pantry',
-  //   route: pantryRoute,
-  // },
+  {
+    path: '/pantry',
+    route: pantryRoute,
+  },
 ];
 
 defaultIRoute.forEach((route) => {

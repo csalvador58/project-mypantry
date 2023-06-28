@@ -1,7 +1,3 @@
-// export class User {
-//   constructor(public username: string, public password: string) {};
-// }
-
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser {

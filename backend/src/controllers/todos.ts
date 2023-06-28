@@ -31,7 +31,7 @@ export const updateTodo: RequestHandler<{ id: string }> = (req, res, next) => {
     throw new Error('Could not find todo!');
   }
 
-  TODOS[todoIndex] = new Todo(TODOS[todoIndex].id, updatedText);
+  TODOS[todoIndex] = new Todo(TODOS[todoIndex]!.id, updatedText);
 
   res.json({ message: 'Updated!', updateTodo: TODOS[todoIndex] });
 };
