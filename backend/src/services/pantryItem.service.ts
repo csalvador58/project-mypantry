@@ -6,9 +6,6 @@ import PantryItem, {
 export const addPantryItem = async (
   pantryItemBody: IPantryItem
 ): Promise<IPantryItemDocument> => {
-    console.log('pantryItem.service: ')
-    console.log('pantryItemBody')
-    console.log(pantryItemBody)
   return PantryItem.create(pantryItemBody);
 };
 
