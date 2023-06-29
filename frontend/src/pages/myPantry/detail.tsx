@@ -25,8 +25,6 @@ import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
 import { PantryBasicDetails } from 'src/sections/dashboard/pantry/pantry-basic-details';
 import { PantryDataManagement } from 'src/sections/dashboard/pantry/pantry-data-management';
-import { PantryEmailsSummary } from 'src/sections/dashboard/pantry/pantry-emails-summary';
-import { PantryPayment } from 'src/sections/dashboard/pantry/pantry-payment';
 import type { Pantry } from 'src/types/pantry';
 import { getInitials } from 'src/utils/get-initials';
 
@@ -93,7 +91,7 @@ const Page = () => {
   });
   const location = locationString.join(', ');
 
-  const time = pantry.updatedAt? new Date(pantry.updatedAt).toLocaleString('en-US', {
+  const time = pantry.lastUpdated? new Date(pantry.lastUpdated).toLocaleString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',

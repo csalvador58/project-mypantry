@@ -57,7 +57,7 @@ const tabs: TabOption[] = [
   }
 ];
 
-type SortValue = 'updatedAt|desc' | 'updatedAt|asc' | 'quantity|desc' | 'quantity|asc';
+type SortValue = 'lastUpdated|desc' | 'lastUpdated|asc' | 'quantity|desc' | 'quantity|asc';
 
 interface SortOption {
   label: string;
@@ -67,11 +67,11 @@ interface SortOption {
 const sortOptions: SortOption[] = [
   {
     label: 'Last update (newest)',
-    value: 'updatedAt|desc'
+    value: 'lastUpdated|desc'
   },
   {
     label: 'Last update (oldest)',
-    value: 'updatedAt|asc'
+    value: 'lastUpdated|asc'
   },
   {
     label: 'Quantity (highest)',
@@ -114,8 +114,6 @@ export const PantryListSearch: FC<PantryListSearchProps> = (props) => {
 
   const handleTabsChange = useCallback(
     (event: ChangeEvent<any>, value: TabValue): void => {
-      console.log('value')
-      console.log(value)
     
       setCurrentTab(value);
       setFilters((prevState) => {
@@ -150,8 +148,6 @@ export const PantryListSearch: FC<PantryListSearchProps> = (props) => {
 
   const handleSortChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
-      console.log('event.target.value')
-      console.log(event.target.value)
       const [sortBy, sortDir] = event.target.value.split('|') as [string, SortDir];
 
       onSortChange?.({

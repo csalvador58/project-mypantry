@@ -1,9 +1,9 @@
-import type { Pantry, PantryEmail, PantryInvoice, PantryLog } from 'src/types/pantry';
+import type { Pantry } from 'src/types/pantry';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { applySort } from 'src/utils/apply-sort';
 import { deepCopy } from 'src/utils/deep-copy';
 
-import { pantry, myPantry, emails, invoices, logs } from './data';
+import { pantry, myPantry } from './data';
 
 type GetMyPantryRequest = {
   filters?: {
@@ -28,18 +28,6 @@ type GetMyPantryResponse = Promise<{
 type GetPantryRequest = object;
 
 type GetPantryResponse = Promise<Pantry>;
-
-type GetPantryEmailsRequest = object;
-
-type GetPantryEmailsResponse = Promise<PantryEmail[]>;
-
-type GetPantryInvoicesRequest = object;
-
-type GetPantryInvoicesResponse = Promise<PantryInvoice[]>;
-
-type GetPantryLogsRequest = object;
-
-type GetPantryLogsResponse = Promise<PantryLog[]>;
 
 class MyPantryApi {
   getMyPantry(request: GetMyPantryRequest = {}): GetMyPantryResponse {
@@ -116,17 +104,6 @@ class MyPantryApi {
     return Promise.resolve(deepCopy(pantry));
   }
 
-  getEmails(request?: GetPantryEmailsRequest): GetPantryEmailsResponse {
-    return Promise.resolve(deepCopy(emails));
-  }
-
-  getInvoices(request?: GetPantryInvoicesRequest): GetPantryInvoicesResponse {
-    return Promise.resolve(deepCopy(invoices));
-  }
-
-  getLogs(request?: GetPantryLogsRequest): GetPantryLogsResponse {
-    return Promise.resolve(deepCopy(logs));
-  }
 }
 
 export const myPantryApi = new MyPantryApi();
