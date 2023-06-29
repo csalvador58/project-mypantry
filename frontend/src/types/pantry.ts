@@ -1,6 +1,6 @@
 export interface Pantry {
   id: string;
-  price?: string;
+  price?: number;
   location?: string;
   currency?: string;
   note: string;
@@ -11,9 +11,7 @@ export interface Pantry {
   freezer?: boolean;
   other?: boolean;
   name: string;
-  quantity?: string;
-  totalSpent?: number;
-  totalOrders?: number;
+  quantity?: number;
   updatedAt?: number;
 }
 

@@ -141,7 +141,7 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                 }
               });
               const location = locationString.join(', ');
-              const totalSpent = numeral(pantry.totalSpent).format(
+              const price = numeral(pantry.price).format(
                 `${pantry.currency}0,0.00`
               );
 
@@ -189,9 +189,9 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                     </Stack>
                   </TableCell>
                   <TableCell>{location}</TableCell>
-                  <TableCell>{pantry.totalOrders}</TableCell>
+                  <TableCell>{pantry.quantity}</TableCell>
                   <TableCell>
-                    <Typography variant='subtitle2'>{totalSpent}</Typography>
+                    <Typography variant='subtitle2'>{price}</Typography>
                   </TableCell>
                   <TableCell align='right'>
                     <IconButton

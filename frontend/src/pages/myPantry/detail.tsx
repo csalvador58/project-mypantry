@@ -233,8 +233,8 @@ const Page = () => {
                     <PantryBasicDetails
                       location={location}
                       note={pantry.note}
-                      quantity={pantry.totalOrders}
-                      price={pantry.totalSpent}
+                      quantity={pantry.quantity}
+                      price={pantry.price}
                       lastUpdated={time}
                     />
                   </Grid>
