@@ -1,15 +1,14 @@
 export interface Pantry {
   id: string;
   price?: number;
-  location?: string;
   currency?: string;
   note: string;
-  inPantry1?: boolean;
-  inPantry2?: boolean;
-  inPantry3?: boolean;
+  location1?: boolean;
+  location2?: boolean;
+  location3?: boolean;
+  location4?: boolean;
+  location5?: boolean;
   favorite?: boolean;
-  freezer?: boolean;
-  other?: boolean;
   name: string;
   quantity?: number;
   updatedAt?: number;

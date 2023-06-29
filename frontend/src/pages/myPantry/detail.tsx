@@ -79,11 +79,11 @@ const Page = () => {
   }
 
   const data = {
-    'Pantry 1': pantry.inPantry1 || false,
-    'Pantry 2': pantry.inPantry2 || false,
-    'Pantry 3': pantry.inPantry3 || false,
-    'Freezer': pantry.freezer || false,
-    'Other': pantry.other || false,
+    'Pantry 1': pantry.location1 || false,
+    'Pantry 2': pantry.location2 || false,
+    'Pantry 3': pantry.location3 || false,
+    'Freezer': pantry.location4 || false,
+    'Other': pantry.location5 || false,
   };
   const locationString: string[] = [];
   Object.entries(data).forEach(([key, value]) => {

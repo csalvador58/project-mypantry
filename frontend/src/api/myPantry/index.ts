@@ -8,11 +8,11 @@ import { pantry, myPantry, emails, invoices, logs } from './data';
 type GetMyPantryRequest = {
   filters?: {
     query?: string;
-    inPantry1?: boolean;
-    inPantry2?: boolean;
-    inPantry3?: boolean;
-    freezer?: boolean;
-    other?: boolean;
+    location1?: boolean;
+    location2?: boolean;
+    location3?: boolean;
+    location4?: boolean;
+    location5?: boolean;
   };
   page?: number;
   rowsPerPage?: number;
@@ -65,30 +65,30 @@ class MyPantryApi {
           }
         }
 
-        if (typeof filters.inPantry1 !== 'undefined') {
-          if (pantry.inPantry1 !== filters.inPantry1) {
+        if (typeof filters.location1 !== 'undefined') {
+          if (pantry.location1 !== filters.location1) {
             return false;
           }
         }
-        if (typeof filters.inPantry2 !== 'undefined') {
-          if (pantry.inPantry2 !== filters.inPantry2) {
+        if (typeof filters.location2 !== 'undefined') {
+          if (pantry.location2 !== filters.location2) {
             return false;
           }
         }
-        if (typeof filters.inPantry3 !== 'undefined') {
-          if (pantry.inPantry3 !== filters.inPantry3) {
-            return false;
-          }
-        }
-
-        if (typeof filters.freezer !== 'undefined') {
-          if (pantry.freezer !== filters.freezer) {
+        if (typeof filters.location3 !== 'undefined') {
+          if (pantry.location3 !== filters.location3) {
             return false;
           }
         }
 
-        if (typeof filters.other !== 'undefined') {
-          if (pantry.other !== filters.other) {
+        if (typeof filters.location4 !== 'undefined') {
+          if (pantry.location4 !== filters.location4) {
+            return false;
+          }
+        }
+
+        if (typeof filters.location5 !== 'undefined') {
+          if (pantry.location5 !== filters.location5) {
             return false;
           }
         }

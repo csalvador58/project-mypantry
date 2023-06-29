@@ -16,14 +16,14 @@ import { useUpdateEffect } from 'src/hooks/use-update-effect';
 
 interface Filters {
   query?: string;
-  inPantry1?: boolean;
-  inPantry2?: boolean;
-  inPantry3?: boolean;
-  freezer?: boolean;
-  other?: boolean;
+  location1?: boolean;
+  location2?: boolean;
+  location3?: boolean;
+  location4?: boolean;
+  location5?: boolean;
 }
 
-type TabValue = 'all' | 'inPantry1' | 'inPantry2' | 'inPantry3' | 'freezer' | 'other';
+type TabValue = 'all' | 'location1' | 'location2' | 'location3' | 'location4' | 'location5';
 
 interface TabOption {
   label: string;
@@ -37,23 +37,23 @@ const tabs: TabOption[] = [
   },
   {
     label: 'Pantry 1',
-    value: 'inPantry1'
+    value: 'location1'
   },
   {
     label: 'Pantry 2',
-    value: 'inPantry2'
+    value: 'location2'
   },
   {
     label: 'Pantry 3',
-    value: 'inPantry3'
+    value: 'location3'
   },
   {
     label: 'Freezer',
-    value: 'freezer'
+    value: 'location4'
   },
   {
     label: 'Other',
-    value: 'other'
+    value: 'location5'
   }
 ];
 
@@ -121,11 +121,11 @@ export const PantryListSearch: FC<PantryListSearchProps> = (props) => {
       setFilters((prevState) => {
         const updatedFilters: Filters = {
           ...prevState,
-          inPantry1: undefined,
-          inPantry2: undefined,
-          inPantry3: undefined,
-          freezer: undefined,
-          other: undefined
+          location1: undefined,
+          location2: undefined,
+          location3: undefined,
+          location4: undefined,
+          location5: undefined
         };
 
         if (value !== 'all') {

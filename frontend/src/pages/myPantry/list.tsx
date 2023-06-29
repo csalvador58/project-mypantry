@@ -22,11 +22,11 @@ import type { Pantry } from 'src/types/pantry';
 
 interface Filters {
   query?: string;
-  inPantry1?: boolean;
-  inPantry2?: boolean;
-  inPantry3?: boolean;
-  freezer?: boolean;
-  other?: boolean;
+  location1?: boolean;
+  location2?: boolean;
+  location3?: boolean;
+  location4?: boolean;
+  location5?: boolean;
 }
 
 interface MyPantrySearchState {
@@ -41,11 +41,11 @@ const useMyPantrySearch = () => {
   const [state, setState] = useState<MyPantrySearchState>({
     filters: {
       query: undefined,
-      inPantry1: undefined,
-      inPantry2: undefined,
-      inPantry3: undefined,
-      freezer: undefined,
-      other: undefined
+      location1: undefined,
+      location2: undefined,
+      location3: undefined,
+      location4: undefined,
+      location5: undefined
     },
     page: 0,
     rowsPerPage: 5,
