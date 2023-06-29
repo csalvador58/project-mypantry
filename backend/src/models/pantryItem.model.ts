@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Document, Model } from 'mongoose';
 
 export interface IPantryItem {
   name: string;
@@ -13,9 +13,11 @@ export interface IPantryItem {
   note?: string;
   price?: number | null;
   quantity?: number | null;
+  userId: string;
 }
 
-export interface IPantryItemDocument extends Document {}
+export interface IPantryItemDocument extends IPantryItem, Document {}
+export interface IPantryItemModel extends Model<IPantryItemDocument> {}
 
 export type UpdatePantryItem = Omit<
   IPantryItem,
@@ -32,19 +34,27 @@ export type UpdatePantryItem = Omit<
   | 'quantity'
 >;
 
-const pantryItemSchema = new Schema({
+const pantryItemSchema = new mongoose.Schema({
   name: { type: String, unique: true, required: true },
-  currency: { type: String, default: '$'},
-  favorite: { type: Boolean, default: false},
-  lastUpdated: { type: Date, default: Date.now()},
-  location1: { type: Boolean, default: false},
-  location2: { type: Boolean, default: false},
-  location3: { type: Boolean, default: false},
-  location4: { type: Boolean, default: false},
-  location5: { type: Boolean, default: false},
-  note: { type: String},
-  price: { type: Number, default: null},
+  currency: { type: String, default: '$' },
+  favorite: { type: Boolean, default: false },
+  lastUpdated: { type: Date, default: Date.now() },
+  location1: { type: Boolean, default: false },
+  location2: { type: Boolean, default: false },
+  location3: { type: Boolean, default: false },
+  location4: { type: Boolean, default: false },
+  location5: { type: Boolean, default: false },
+  note: { type: String },
+  price: { type: Number, default: null },
   quantity: { type: Number, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
-export default mongoose.model<IPantryItem>('PantryItem', pantryItemSchema);
+// create text index
+pantryItemSchema.index({ note: 'text' });
+
+const PantryItem = mongoose.model<IPantryItemDocument, IPantryItemModel>(
+  'PantryItem',
+  pantryItemSchema
+);
+export default PantryItem;

@@ -1,18 +1,20 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Document, Model } from 'mongoose';
 
 export interface IUser {
   username: string;
   password: string;
   role: string;
 }
-export interface IUserDocument extends Document {}
+export interface IUserDocument extends IUser, Document {}
+export interface IUserModel extends Model<IUserDocument> {}
 
 export type LoginUser = Omit<IUser, 'role'>;
 
-const userSchema: Schema = new Schema({
+const userSchema = new mongoose.Schema<IUserDocument, IUserModel>({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   role: { type: String, required: true },
 });
 
-export default mongoose.model<IUser>('User', userSchema);
+const User = mongoose.model<IUserDocument, IUserModel>('User', userSchema);
+export default User;

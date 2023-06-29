@@ -9,6 +9,6 @@ export const addPantryItem = async (
   return PantryItem.create(pantryItemBody);
 };
 
-export const getPantryItems = async (): Promise<IPantryItemDocument> => {
-  return PantryItem.find().lean();
+export const getPantryItems = async (userId: string): Promise<IPantryItemDocument> => {
+  return PantryItem.find({userId}).lean();
 };

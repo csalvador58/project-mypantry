@@ -18,7 +18,7 @@ export const addPantryItem: RequestHandler = catchAsync(async (req, res) => {
 
 export const getPantryItems: RequestHandler = catchAsync(async (req, res) => {
   console.log('pantryItem.controller: getPantryItems');
-
-  const result = await pantryService.getPantryItems();
+  const tempUserId = '649b8084878eb16d80764fd9'
+  const result = await pantryService.getPantryItems(tempUserId);
   res.status(200).json({ message: 'Request success', pantry: result });
 });
