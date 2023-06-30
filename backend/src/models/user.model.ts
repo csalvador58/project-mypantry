@@ -1,6 +1,6 @@
 import mongoose, { Document, Model } from 'mongoose';
 
-enum Roles {
+export enum Roles {
   Admin = 'Admin',
   User = 'User',
   Test = 'Test',
