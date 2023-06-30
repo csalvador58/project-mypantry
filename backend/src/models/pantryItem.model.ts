@@ -46,7 +46,7 @@ const pantryItemSchema = new mongoose.Schema({
   location5: { type: Boolean, default: false },
   note: { type: String },
   price: { type: Number, default: null },
-  quantity: { type: Number, required: true },
+  quantity: { type: Number, default: 0 },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 });
 

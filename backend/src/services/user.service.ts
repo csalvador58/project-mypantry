@@ -7,3 +7,7 @@ export const registerUser = async (userBody: IUser): Promise<IUserDocument> => {
 export const getUsers = async (): Promise<IUserDocument[]> => {
   return User.find().lean();
 };
+
+export const getUserByEmail = async (email: string): Promise<IUserDocument> => {
+  return User.find({email: email}).lean()
+}
