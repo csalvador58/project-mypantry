@@ -1,13 +1,13 @@
 import User, { IUser, IUserDocument } from '../models/user.model';
 
 export const registerUser = async (userBody: IUser): Promise<IUserDocument> => {
-  return User.create(userBody);
+  return await User.create(userBody);
 };
 
 export const getUsers = async (): Promise<IUserDocument[]> => {
-  return User.find().lean();
+  return await User.find().lean();
 };
 
-export const getUserByEmail = async (email: string): Promise<IUserDocument> => {
-  return User.find({email: email}).lean()
+export const getUserByUsername = async (username: string): Promise<IUserDocument[]> => {
+  return await User.find({username: username}).lean();
 }

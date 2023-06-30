@@ -6,7 +6,7 @@ import { loginUser } from '../controllers/token.controller'
 const router = Router();
 
 router.post('/register', registerUser);
-router.post('login', loginUser)
+router.post('/login', loginUser)
 router.get('/get', getUsers);
 // router.get('/', getUsers);
 // router.put('/', updateUser);

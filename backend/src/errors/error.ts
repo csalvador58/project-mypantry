@@ -22,7 +22,12 @@ export const errorHandler = (
     return res.status(409).json({error: err.message})
   }
 
-  
+  // handle bcrypt encryption error
+  if(err.message.includes('Invalid salt')) {
+    res.status(503).json({message: 'Service currently unavailable, please try again later.'})
+  }
+
+
   console.log('err.message')
   console.log(err.message)
   console.log('err.code')

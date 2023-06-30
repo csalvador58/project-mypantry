@@ -17,7 +17,6 @@ export interface IPayload extends JwtPayload {
   sub: string;
   iat: number;
   exp: number;
-  type: string;
 }
 
 export interface TokenPayload {
