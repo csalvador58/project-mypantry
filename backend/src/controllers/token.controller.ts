@@ -36,9 +36,6 @@ export const loginUser: RequestHandler = catchAsync(async (req, res) => {
 export const validateToken: RequestHandler = catchAsync((req, res, next) => {
   console.log('token.controller - validateToken');
 
-  console.log('req.headers');
-  console.log(req.headers);
-
   if (!req.headers) {
     return res.status(401).json({ error: 'Unauthorized - Login Required.' });
   }
@@ -51,12 +48,6 @@ export const validateToken: RequestHandler = catchAsync((req, res, next) => {
     return res.status(401).json({ error: 'Unauthorized - Login Required.' });
   }
 
+  // Validate token here
   return res.status(200).json({ message: 'Good' });
-  // if (req.headers.authorization.split(' ')[0] === 'Bearer') {
-  //   const tokenString = req.headers.authorization.split(' ')[1];
-  //   req.user = await jwt.verify(tokenString, secret);
-  //   next();
-  // } else {
-  //   return res.status(401).json({ error: 'Invalid token' });
-  // }
 });

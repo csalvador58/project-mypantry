@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import InvalidInputError from './InvalidInputError';
 import mongoose from 'mongoose';
 
 interface MongoError extends Error {
-    code: number;
+  code: number;
 }
 
 export const errorHandler = (
@@ -11,6 +12,9 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  // Errors - 400s
+
+  // 400 BAD Request Errors
   if (
     err instanceof mongoose.Error &&
     err.message.includes('validation failed')
@@ -18,27 +22,37 @@ export const errorHandler = (
     return res.status(400).json({ error: err.message });
   }
 
-  if(err.name === 'MongoServerError' && err.code === 11000) {
-    return res.status(409).json({error: err.message})
+  if (err instanceof InvalidInputError) {
+    return res.status(400).json({ error: err.message });
   }
 
-  // handle bcrypt encryption error
-  if(err.message.includes('Invalid salt')) {
-    res.status(503).json({message: 'Service currently unavailable, please try again later.'})
+  // 409 Conflict Errors
+  if (err.name === 'MongoServerError' && err.code === 11000) {
+    return res.status(409).json({ error: err.message });
   }
 
+  // Errors - 500s
 
-  console.log('err.message')
-  console.log(err.message)
-  console.log('err.code')
-  console.log(err.code)
+  // 503 Service Unavailable
+
+  if (err.message.includes('Invalid salt')) {
+    // handle bcrypt encryption error
+    return res.status(503).json({
+      message: 'Service currently unavailable, please try again later.',
+    });
+  }
+
+  console.log('err.message');
+  console.log(err.message);
+  console.log('err.code');
+  console.log(err.code);
 
   console.log('err instanceof mongoose.Error');
   console.log(err instanceof mongoose.Error);
 
-  console.log('err.name')
-  console.log(err.name)
-  console.log('err.stack')
-  console.log(err.stack)
+  console.log('err.name');
+  console.log(err.name);
+  console.log('err.stack');
+  console.log(err.stack);
   return res.status(500).json({ error: err.message });
 };

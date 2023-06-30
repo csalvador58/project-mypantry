@@ -5,15 +5,17 @@ import catchAsync from '../utils/catchAsync';
 import bcrypt from 'bcrypt';
 import 'dotenv/config';
 
+const SALT_ROUNDS = parseInt(process.env['BCRYPT_SALT_ROUNDS']!) || 15;
+
 export const registerUser: RequestHandler = catchAsync(async (req, res) => {
-  const registerUser = req.body as IUser;
-  const saltRounds = parseInt(process.env['BCRYPT_SALT_ROUNDS']!) || 15;
-  const hashedPassword = await bcrypt.hash(registerUser.password, saltRounds);
+  const { username, password, role } = req.body as IUser;
+
+  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
   const result = await userService.registerUser({
-    username: registerUser.username,
+    username: username,
     password: hashedPassword,
-    role: registerUser.role,
+    role: role,
   });
 
   res

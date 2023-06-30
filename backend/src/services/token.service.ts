@@ -19,16 +19,15 @@ export const generateToken = async (
 
   const newToken = jwt.sign(payload, secret, { algorithm: 'HS256' });
 
-  const storeToken: IToken = {
+  const token: IToken = {
     token: newToken,
     userId: userId,
     expires: new Date(expDateInSeconds * 1000), // convert time to milliseconds
     blacklisted: false,
   };
 
-  const result = await saveToken(userId, storeToken);
-  console.log('result of token store');
-  console.log(result);
+  // save token in DB
+  const result = await saveToken(userId, token);
 
   // Return null if token was not saved successfully
   if (!result) {
