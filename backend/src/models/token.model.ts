@@ -21,7 +21,7 @@ export interface IPayload extends JwtPayload {
 
 export interface TokenPayload {
   token: string;
-  expires: Date;
+  expires: number;
 }
 
 export interface ITokenLogin {

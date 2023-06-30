@@ -7,31 +7,56 @@ import bcrypt from 'bcrypt';
 import catchAsync from '../utils/catchAsync';
 
 export const loginUser: RequestHandler = catchAsync(async (req, res) => {
-  console.log('token.controller - loginUser')
+  console.log('token.controller - loginUser');
   const { username, password } = req.body as ITokenLogin;
 
   const userDB = (await userService.getUserByUsername(username))[0];
   if (!userDB) {
     return res.status(401).json({ error: 'Invalid User' });
   }
-  console.log('userDB')
-  console.log(userDB)
   const { _id: userId, password: hashedPassword } = userDB;
 
-  console.log('password')
-  console.log(password)
-  console.log('hashedPassword')
-  console.log(hashedPassword)
   // verify password matches DB
   const passwordIsValid = await bcrypt.compare(password, hashedPassword);
-
-  if (passwordIsValid) {
-    // Generate jwt token
-    const loginToken = tokenService.generateToken(userId);
-    return res
-      .status(200)
-      .json({ message: 'Login successful', token: loginToken });
-  } else {
+  if (!passwordIsValid)
     return res.status(401).json({ error: 'Invalid username/password' });
+
+  // Generate jwt token
+  const loginToken = await tokenService.generateToken(userId);
+  if (!loginToken)
+    return res.status(503).json({
+      message: 'Service currently unavailable, please try again later.',
+    });
+
+  return res
+    .status(200)
+    .json({ message: 'Login successful', token: loginToken });
+});
+
+export const validateToken: RequestHandler = catchAsync((req, res, next) => {
+  console.log('token.controller - validateToken');
+
+  console.log('req.headers');
+  console.log(req.headers);
+
+  if (!req.headers) {
+    return res.status(401).json({ error: 'Unauthorized - Login Required.' });
   }
+  const { authorization } = req.headers;
+  const token = authorization?.includes('Bearer')
+    ? authorization.replace('Bearer ', '')
+    : null;
+
+  if (token?.trim() === '') {
+    return res.status(401).json({ error: 'Unauthorized - Login Required.' });
+  }
+
+  return res.status(200).json({ message: 'Good' });
+  // if (req.headers.authorization.split(' ')[0] === 'Bearer') {
+  //   const tokenString = req.headers.authorization.split(' ')[1];
+  //   req.user = await jwt.verify(tokenString, secret);
+  //   next();
+  // } else {
+  //   return res.status(401).json({ error: 'Invalid token' });
+  // }
 });
