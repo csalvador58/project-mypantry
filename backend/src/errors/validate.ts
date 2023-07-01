@@ -6,7 +6,10 @@ import * as TokenService from '../services/token.service';
 import { IPayload } from '../models/token.model';
 
 interface AuthenticatedRequest extends Request {
-  token?: IPayload;
+  auth?: {
+    token: string;
+    payload: IPayload;
+  };
 }
 
 export const isUsernameValid: RequestHandler = catchAsync((req, res, next) => {
@@ -33,18 +36,36 @@ export const isTokenValid: RequestHandler = catchAsync(
       throw new InvalidTokenError('Unauthorized - Login Required.');
     }
     const { authorization } = req.headers;
-    const token = authorization?.includes('Bearer')
+    const tokenString = authorization?.includes('Bearer')
       ? authorization.replace('Bearer ', '')
       : null;
 
-    if (!token || token.trim() === '') {
+    if (!tokenString || tokenString.trim() === '') {
       throw new InvalidTokenError('Unauthorized - Login Required.');
     }
 
-    // validate token, error thrown if jwt expired
-    let validatedToken: IPayload | void;
-    validatedToken = TokenService.validateToken(token);
-    req.token = validatedToken as IPayload;
+    // validate token, error thrown if jwt expired;
+    const validatedToken = TokenService.validateToken(tokenString) as IPayload;
+    req.auth = {
+      token: tokenString,
+      payload: validatedToken,
+    };
+    next();
+  }
+);
+
+export const isTokenBlacklisted: RequestHandler = catchAsync(
+  async (req: AuthenticatedRequest, res, next) => {
+    console.log('validate.services - isTokenBlacklisted');
+    if(req.auth) {
+      const userIdString = req.auth.payload.sub;
+      const tokenDetails = await TokenService.verifyBlacklist(userIdString)
+      console.log('tokenDetails?.blacklisted')
+      console.log(tokenDetails?.blacklisted)
+      if(tokenDetails?.blacklisted) {
+        throw new InvalidTokenError('Unauthorized - Contact Administrator')
+      }
+    }
     next();
   }
 );

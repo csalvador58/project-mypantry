@@ -12,8 +12,8 @@ export const generateToken = async (
   secret: string = process.env['JWT_SECRET']!
 ): Promise<string | null> => {
   const currentDateInSeconds = Date.now() / 1000;
-  // const expDateInSeconds = currentDateInSeconds + ONE_DAY;
-  const expDateInSeconds = currentDateInSeconds + TEST_ONE_MIN;  // TESTING ONLY
+  const expDateInSeconds = currentDateInSeconds + ONE_DAY;
+  // const expDateInSeconds = currentDateInSeconds + TEST_ONE_MIN;  // TESTING ONLY
   const payload: IPayload = {
     sub: userId.toString(),
     iat: currentDateInSeconds,
@@ -51,6 +51,14 @@ export const validateToken = (tokenString: string): IPayload | void => {
       throw new InvalidTokenError(error.message)
     }
   }
+}
+
+export const verifyBlacklist = async (jwtSub: string) => {
+  console.log('token.service - verify blacklist')
+  console.log('jwtSub')
+  console.log(jwtSub)
+  const userId = new mongoose.Types.ObjectId(jwtSub);
+  return await Token.findOne({userId: userId}).lean();
 }
 
 export const saveToken = async (
