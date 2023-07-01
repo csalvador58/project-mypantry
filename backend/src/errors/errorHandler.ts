@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import InvalidInputError from './InvalidInputError';
 import mongoose from 'mongoose';
+import InvalidTokenError from './InvalidTokenError';
+import { JsonWebTokenError } from 'jsonwebtoken';
 
 interface MongoError extends Error {
   code: number;
@@ -22,8 +24,16 @@ export const errorHandler = (
     return res.status(400).json({ error: err.message });
   }
 
+  if (err instanceof JsonWebTokenError) {
+    return res.status(401).json({ error: err.message });
+  }
+
   if (err instanceof InvalidInputError) {
     return res.status(400).json({ error: err.message });
+  }
+
+  if (err instanceof InvalidTokenError) {
+    return res.status(401).json({ error: err.message });
   }
 
   // 409 Conflict Errors

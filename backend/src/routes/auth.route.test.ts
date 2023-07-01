@@ -1,7 +1,7 @@
 import request from 'supertest';
-import app from '../../app';
-import * as testUtils from '../../utils/test-utils';
-import User, { IUser, IUserDocument, Roles } from '../../models/user.model';
+import app from '../app';
+import * as testUtils from '../utils/test-utils';
+import User, { IUser, IUserDocument, Roles } from '../models/user.model';
 
 describe('/auth', () => {
   beforeAll(testUtils.connectDB);
