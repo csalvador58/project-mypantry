@@ -17,7 +17,7 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "index.ts",
-      "test-utils.ts"
+      "setupDB.ts"
     ],
     "watchPathIgnorePatterns": [
       "globalConfig"

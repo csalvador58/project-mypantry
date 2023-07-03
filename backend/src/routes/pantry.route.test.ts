@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../app';
 import PantryItem from '../models/pantryItem.model';
-import * as testUtils from '../utils/test-utils';
+import * as testUtils from '../jest/setupDB';
 
 describe('/pantry', () => {
   beforeAll(testUtils.connectDB);

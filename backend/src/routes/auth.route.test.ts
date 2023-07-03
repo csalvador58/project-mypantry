@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../app';
-import * as testUtils from '../utils/test-utils';
+import * as testUtils from '../jest/setupDB';
 import User, { IUser, IUserDocument, Roles } from '../models/user.model';
 
 describe('/auth', () => {
