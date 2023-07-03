@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { isUsernameValid, isPasswordValid, isTokenValid, isTokenBlacklisted } from '../errors/validate';
 import { loginUser, registerUser, getUsers } from '../controllers/user.controller';
+import { isPasswordValid, isUsernameValid } from '../utils';
+import { isTokenBlacklisted, isTokenValid } from '../controllers/token.controller';
 
 const router = Router();
 
