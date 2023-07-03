@@ -5,15 +5,15 @@ export interface IPantryItem {
   currency?: string;
   favorite?: boolean;
   lastUpdated?: Date;
-  location1?: string;
-  location2?: string;
-  location3?: string;
-  location4?: string;
-  location5?: string;
+  location1?: boolean;
+  location2?: boolean;
+  location3?: boolean;
+  location4?: boolean;
+  location5?: boolean;
   note?: string;
   price?: number | null;
   quantity?: number | null;
-  userId: string;
+  userId: mongoose.Types.ObjectId;
 }
 
 export interface IPantryItemDocument extends IPantryItem, Document {}
@@ -35,7 +35,13 @@ export type UpdatePantryItem = Omit<
 >;
 
 const pantryItemSchema = new mongoose.Schema({
-  name: { type: String, unique: true, required: true },
+  name: {
+    type: String,
+    unique: true,
+    required: true,
+    minLength: 2,
+    maxLength: 26,
+  },
   currency: { type: String, default: '$' },
   favorite: { type: Boolean, default: false },
   lastUpdated: { type: Date, default: Date.now() },
@@ -44,7 +50,7 @@ const pantryItemSchema = new mongoose.Schema({
   location3: { type: Boolean, default: false },
   location4: { type: Boolean, default: false },
   location5: { type: Boolean, default: false },
-  note: { type: String },
+  note: { type: String, minLength: 2, maxLength: 300 },
   price: { type: Number, default: null },
   quantity: { type: Number, default: 0 },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

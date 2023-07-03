@@ -14,6 +14,9 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('err.message');
+  console.log(err.message);
+  
   // Errors - 400s
 
   // 400 BAD Request Errors
@@ -24,6 +27,9 @@ export const errorHandler = (
     return res.status(400).json({ error: 'mongoose.Error - ' + err.message });
   }
 
+  if (err instanceof JsonWebTokenError && err.message.includes('jwt malformed')) {
+    return res.status(401).json({ error: 'JsonWebTokenError - ' + 'Invalid password' });
+  }
   if (err instanceof JsonWebTokenError) {
     return res.status(401).json({ error: 'JsonWebTokenError - ' + err.message });
   }
@@ -52,8 +58,7 @@ export const errorHandler = (
     });
   }
 
-  console.log('err.message');
-  console.log(err.message);
+  
   console.log('err.code');
   console.log(err.code);
 

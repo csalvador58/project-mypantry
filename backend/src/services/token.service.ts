@@ -55,8 +55,7 @@ export const validateToken = (tokenString: string): IPayload | void => {
 
 export const verifyBlacklist = async (jwtSub: string) => {
   console.log('token.service - verify blacklist')
-  console.log('jwtSub')
-  console.log(jwtSub)
+
   const userId = new mongoose.Types.ObjectId(jwtSub);
   return await Token.findOne({userId: userId}).lean();
 }
