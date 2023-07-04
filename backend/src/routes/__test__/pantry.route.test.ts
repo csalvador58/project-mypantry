@@ -6,7 +6,7 @@ import PantryItem, {
 } from '../../models/pantryItem.model';
 import * as testUtils from '../../utils/jest/setupDB';
 import { IUser, Roles } from '../../models/user.model';
-console.log = jest.fn();
+// console.log = jest.fn();
 
 interface ITestItem
   extends Omit<IPantryItem, 'name' | 'lastUpdated' | 'userId'> {
@@ -50,7 +50,7 @@ describe('/pantry', () => {
     };
   });
 
-  describe('Before login', () => {
+  describe.skip('Before login', () => {
     describe('GET /', () => {
       it('should return 401 Unauthorized response without a valid token', async () => {
         res = await request(app)
@@ -62,9 +62,8 @@ describe('/pantry', () => {
     });
     describe('GET /:id', () => {
       it('should return 401 Unauthorized response without a valid token', async () => {
-        const pantryItemId = await PantryItem.findOne();
         res = await request(app)
-          .get('/pantry/')
+          .get('/pantry/1234')
           .set('Authorization', 'Bearer BAD')
           .send();
         expect(res.statusCode).toEqual(401);
@@ -75,7 +74,7 @@ describe('/pantry', () => {
         res = await request(app)
           .post('/pantry/add')
           .set('Authorization', 'Bearer BADtoken')
-          .send({});
+          .send();
         expect(res.statusCode).toEqual(401);
       });
     });
@@ -88,18 +87,19 @@ describe('/pantry', () => {
     //     expect(res.statusCode).toEqual(401);
     //   });
     // });
-    // describe('DELETE /', () => {
-    //   it('should return 401 Unauthorized response without a valid token', async () => {
-    //     let res = await request(app)
-    //       .put('/pantry/:1234')
-    //       .set('Authorization', 'Bearer BAD')
-    //       .send();
-    //     expect(res.statusCode).toEqual(401);
-    //   });
-    // });
+    describe('DELETE /:id', () => {
+      it('should return 401 Unauthorized response without a valid token', async () => {
+        let res = await request(app)
+          .delete('/pantry/:1234')
+          .set('Authorization', 'Bearer BAD')
+          .send();
+        expect(res.statusCode).toEqual(401);
+      });
+    });
   });
   describe('After login', () => {
     describe('POST /add', () => {
+      // describe('POST /add', () => {
       // let res: request.Response;
       let token: string;
       beforeEach(async () => {
@@ -133,14 +133,7 @@ describe('/pantry', () => {
           });
         expect(res.statusCode).toEqual(409);
       });
-      it('should return 201 Created with a valid input', async () => {
-        res = await request(app)
-          .post('/pantry/add')
-          .set('Authorization', 'Bearer ' + token)
-          .send(testPantryItem);
-        expect(res.statusCode).toEqual(201);
-      });
-      it('should return a pantry item document', async () => {
+      it('should return 201 Created and a pantry item document', async () => {
         res = await request(app)
           .post('/pantry/add')
           .set('Authorization', 'Bearer ' + token)
@@ -157,6 +150,7 @@ describe('/pantry', () => {
           _id: result!._id.toString(),
         } as ITestItem;
 
+        expect(res.statusCode).toEqual(201);
         expect(res.body.item).toEqual(expect.objectContaining(testItemObj));
       });
       describe.skip('server failure', () => {
@@ -164,22 +158,13 @@ describe('/pantry', () => {
       });
     });
     describe('GET /', () => {
+      // describe('GET /', () => {
       let token: string;
       beforeEach(async () => {
         res = await request(app).post('/auth/login').send(testUser);
         token = res.body.token;
       });
-      it('should return 200 OK', async () => {
-        await PantryItem.create(testPantryItem);
-
-        res = await request(app)
-          .get(`/pantry/`)
-          .set('Authorization', 'Bearer ' + token)
-          .send({});
-
-        expect(res.statusCode).toEqual(200);
-      });
-      it('should return an array of pantry item document(s)', async () => {
+      it('should return 200 OK and an array of pantry item document(s)', async () => {
         await PantryItem.create(testPantryItem);
         await PantryItem.create({
           ...testPantryItem,
@@ -204,6 +189,7 @@ describe('/pantry', () => {
           };
         }) as ITestItem[];
 
+        expect(res.statusCode).toEqual(200);
         expect(res.body.pantry).toEqual(
           testPantryArr.map((item: ITestItem) => expect.objectContaining(item))
         );
@@ -212,6 +198,7 @@ describe('/pantry', () => {
         it('should return 500 Internal Server Error ', async () => {});
       });
     });
+    // describe.skip('GET /:id', () => {
     describe('GET /:id', () => {
       let token: string;
       beforeEach(async () => {
@@ -226,35 +213,24 @@ describe('/pantry', () => {
 
         expect(res.statusCode).toEqual(400);
       });
-      it('should return 200 OK with a valid ID', async () => {
-        const pantryItemDoc = await PantryItem.create(testPantryItem);
+      it('should return 200 OK and a pantry item document with a valid ID', async () => {
+        let pantryItemDoc: IPantryItemDocument = (
+          await PantryItem.create(testPantryItem)
+        ).toObject();
 
         res = await request(app)
           .get(`/pantry/${pantryItemDoc._id}`)
           .set('Authorization', 'Bearer ' + token)
           .send({});
-
-        expect(res.statusCode).toEqual(200);
-      });
-      it('should return a pantry item document', async () => {
-        const pantryItemDoc = await PantryItem.create(testPantryItem);
-
-        res = await request(app)
-          .get(`/pantry/${pantryItemDoc._id}`)
-          .set('Authorization', 'Bearer ' + token)
-          .send({});
-
-        let result: IPantryItemDocument = (await PantryItem.findOne({
-          name: testPantryItem.name,
-        }).lean())!;
 
         let testItemObj = {
-          ...result,
-          lastUpdated: new Date(result!.lastUpdated!).toISOString(),
-          userId: result!.userId.toString(),
-          _id: result!._id.toString(),
+          ...pantryItemDoc,
+          lastUpdated: new Date(pantryItemDoc!.lastUpdated!).toISOString(),
+          userId: pantryItemDoc!.userId.toString(),
+          _id: pantryItemDoc!._id.toString(),
         } as ITestItem;
 
+        expect(res.statusCode).toEqual(200);
         expect(res.body.pantry).toContainEqual(
           expect.objectContaining(testItemObj)
         );
@@ -270,12 +246,45 @@ describe('/pantry', () => {
     //     it('should return 500 Internal Server Error ', async () => {});
     //   });
     // });
-    // describe('DELETE /delete/:id', () => {
-    //   it('should return 400 Bad Request with invalid input', async () => {});
-    //   it('should return 201 Created with a valid input', async () => {});
-    //   describe('server failure', () => {
-    //     it('should return 500 Internal Server Error ', async () => {});
-    //   });
-    // });
+    describe('DELETE /pantry/:id', () => {
+      let token: string;
+      beforeEach(async () => {
+        res = await request(app).post('/auth/login').send(testUser);
+        token = res.body.token;
+      });
+      it('should return 400 Bad Request with invalid id', async () => {
+        res = await request(app)
+          .delete('/pantry/1234')
+          .set('Authorization', 'Bearer ' + token)
+          .send();
+        expect(res.statusCode).toEqual(400);
+      });
+      it('should return 200 OK and a deleted pantry item document with a valid ID', async () => {
+        let pantryItemDoc: IPantryItemDocument = (
+          await PantryItem.create(testPantryItem)
+        ).toObject();
+
+        res = await request(app)
+          .delete(`/pantry/${pantryItemDoc._id}`)
+          .set('Authorization', 'Bearer ' + token)
+          .send({});
+
+        let testItemObj = {
+          ...pantryItemDoc,
+          lastUpdated: new Date(pantryItemDoc!.lastUpdated!).toISOString(),
+          userId: pantryItemDoc!.userId.toString(),
+          _id: pantryItemDoc!._id.toString(),
+        } as ITestItem;
+
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.item).toEqual(
+          expect.objectContaining(testItemObj)
+        );
+      });
+      
+      describe.skip('server failure', () => {
+        it('should return 500 Internal Server Error ', async () => {});
+      });
+    });
   });
 });

@@ -36,19 +36,39 @@ export const errorHandler = (
     return res.status(400).json({ error: 'mongoose.Error - ' + 'Invalid ID' });
   }
 
-  if (err instanceof JsonWebTokenError && err.message.includes('jwt malformed')) {
-    return res.status(401).json({ error: 'JsonWebTokenError - ' + 'Invalid password' });
-  }
-  if (err instanceof JsonWebTokenError) {
-    return res.status(401).json({ error: 'JsonWebTokenError - ' + err.message });
+  if (err instanceof InvalidInputError) {
+    return res
+      .status(400)
+      .json({ error: 'InvalidInputError - ' + err.message });
   }
 
-  if (err instanceof InvalidInputError) {
-    return res.status(400).json({ error: 'InvalidInputError - ' + err.message });
+  if (
+    err.name === 'BSONError' &&
+    err.message.includes('12 bytes or a string of 24 hex characters')
+  ) {
+    return res
+      .status(400)
+      .json({ error: 'InvalidInputError - ' + err.message });
+  }
+  // 401 Unauthorized Errors
+  if (
+    err instanceof JsonWebTokenError &&
+    err.message.includes('jwt malformed')
+  ) {
+    return res
+      .status(401)
+      .json({ error: 'JsonWebTokenError - ' + 'Invalid password' });
+  }
+  if (err instanceof JsonWebTokenError) {
+    return res
+      .status(401)
+      .json({ error: 'JsonWebTokenError - ' + err.message });
   }
 
   if (err instanceof InvalidTokenError) {
-    return res.status(401).json({ error: 'InvalidTokenError - ' + err.message });
+    return res
+      .status(401)
+      .json({ error: 'InvalidTokenError - ' + err.message });
   }
 
   // 409 Conflict Errors
@@ -67,9 +87,11 @@ export const errorHandler = (
     });
   }
 
-
   console.log('err instanceof mongoose.Error');
   console.log(err instanceof mongoose.Error);
+
+  console.log('err instanceof JsonWebTokenError');
+  console.log(err instanceof JsonWebTokenError);
 
   console.log('err.name');
   console.log(err.name);
