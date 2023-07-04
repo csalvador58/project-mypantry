@@ -5,9 +5,9 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand",
+    "test": "jest --verbose --runInBand",
     "ci": "jest --json --runInBand | node .github/workflows/parseOutput.js",
-    "tdd": "jest --watch --runInBand",
+    "tdd": "jest --watch --verbose --runInBand",
     "start": "node ./dist/index.js",
     "devStart": "nodemon ./dist/index.js"
   },
@@ -16,11 +16,13 @@
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "index.ts",
       "setupDB.ts"
     ],
     "watchPathIgnorePatterns": [
       "globalConfig"
+    ],
+    "modulePathIgnorePatterns": [
+      "backend/dist"
     ]
   },
   "dependencies": {

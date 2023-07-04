@@ -1,7 +1,8 @@
 import request from 'supertest';
-import app from '../app';
-import * as testUtils from '../utils/jest/setupDB';
-import User, { IUser, IUserDocument, Roles } from '../models/user.model';
+import app from '../../app';
+import * as testUtils from '../../utils/jest/setupDB';
+import User, { IUser, IUserDocument, Roles } from '../../models/user.model';
+console.log = jest.fn();
 
 describe('/auth', () => {
   beforeAll(testUtils.connectDB);

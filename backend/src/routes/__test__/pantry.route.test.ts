@@ -1,12 +1,12 @@
 import request from 'supertest';
-import app from '../app';
+import app from '../../app';
 import PantryItem, {
   IPantryItem,
   IPantryItemDocument,
-} from '../models/pantryItem.model';
-import * as testUtils from '../utils/jest/setupDB';
-import { IUser, Roles } from '../models/user.model';
-import mongoose from 'mongoose';
+} from '../../models/pantryItem.model';
+import * as testUtils from '../../utils/jest/setupDB';
+import { IUser, Roles } from '../../models/user.model';
+console.log = jest.fn();
 
 interface ITestItem
   extends Omit<IPantryItem, 'name' | 'lastUpdated' | 'userId'> {
@@ -146,9 +146,9 @@ describe('/pantry', () => {
           .set('Authorization', 'Bearer ' + token)
           .send(testPantryItem);
 
-        let result: IPantryItemDocument | null = await PantryItem.findOne({
+        let result: IPantryItemDocument = (await PantryItem.findOne({
           name: testPantryItem.name,
-        }).lean();
+        }).lean())!;
 
         let testItemObj = {
           ...result,
@@ -191,7 +191,7 @@ describe('/pantry', () => {
           .set('Authorization', 'Bearer ' + token)
           .send({});
 
-        let result: IPantryItemDocument[] | null = (await PantryItem.find({
+        let result: IPantryItemDocument[] = (await PantryItem.find({
           userId: testPantryItem!.userId!,
         }).lean())!;
 
@@ -244,9 +244,9 @@ describe('/pantry', () => {
           .set('Authorization', 'Bearer ' + token)
           .send({});
 
-        let result: IPantryItemDocument | null = await PantryItem.findOne({
-          name: testPantryItem!.name!,
-        }).lean();
+        let result: IPantryItemDocument = (await PantryItem.findOne({
+          name: testPantryItem.name,
+        }).lean())!;
 
         let testItemObj = {
           ...result,
