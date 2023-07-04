@@ -6,5 +6,6 @@ const router = Router();
 
 router.post('/add', isTokenValid, isTokenBlacklisted, addPantryItem);
 router.get('/', isTokenValid, isTokenBlacklisted, getPantryItems)
+router.get('/:id', isTokenValid, isTokenBlacklisted, getPantryItems)
 
 export default router;

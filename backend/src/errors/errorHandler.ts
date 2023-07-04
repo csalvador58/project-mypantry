@@ -16,7 +16,9 @@ export const errorHandler = (
 ) => {
   console.log('err.message');
   console.log(err.message);
-  
+  console.log('err.code');
+  console.log(err.code);
+
   // Errors - 400s
 
   // 400 BAD Request Errors
@@ -25,6 +27,13 @@ export const errorHandler = (
     err.message.includes('validation failed')
   ) {
     return res.status(400).json({ error: 'mongoose.Error - ' + err.message });
+  }
+
+  if (
+    err instanceof mongoose.Error &&
+    err.message.includes('Cast to ObjectId')
+  ) {
+    return res.status(400).json({ error: 'mongoose.Error - ' + 'Invalid ID' });
   }
 
   if (err instanceof JsonWebTokenError && err.message.includes('jwt malformed')) {
@@ -58,9 +67,6 @@ export const errorHandler = (
     });
   }
 
-  
-  console.log('err.code');
-  console.log(err.code);
 
   console.log('err instanceof mongoose.Error');
   console.log(err instanceof mongoose.Error);

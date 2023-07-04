@@ -49,7 +49,7 @@ describe('/auth', () => {
     });
   });
   describe('POST /login', () => {
-    let res: any;
+    let res: request.Response;
 
     beforeEach(async () => {
       await request(app).post('/auth/register').send(testUser);
