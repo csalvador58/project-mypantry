@@ -3,7 +3,6 @@ export interface Pantry {
   name: string;
   currency?: string;
   favorite?: boolean;
-  lastUpdated?: number;
   location1?: boolean;
   location2?: boolean;
   location3?: boolean;
@@ -12,4 +11,6 @@ export interface Pantry {
   note: string;
   price?: number;
   quantity?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

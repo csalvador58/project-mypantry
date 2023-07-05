@@ -10,11 +10,11 @@ interface PantryBasicDetailsProps {
   note: string;
   quantity?: number;
   price?: number;
-  lastUpdated?: string;
+  updatedAt?: string;
 }
 
 export const PantryBasicDetails: FC<PantryBasicDetailsProps> = (props) => {
-  const { location, note, quantity, price, lastUpdated } = props;
+  const { location, note, quantity, price, updatedAt } = props;
 
   return (
     <Card>
@@ -23,7 +23,7 @@ export const PantryBasicDetails: FC<PantryBasicDetailsProps> = (props) => {
         <PropertyListItem divider label='Quantity' value={quantity?.toString()} />
         <PropertyListItem divider label='Location' value={location} />
         <PropertyListItem divider label='Price Tracker' value={price?.toString()} />
-        <PropertyListItem divider label='Last Updated' value={lastUpdated} />
+        <PropertyListItem divider label='Last Updated' value={updatedAt} />
       </PropertyList>
     </Card>
   );
@@ -34,5 +34,5 @@ PantryBasicDetails.propTypes = {
   note: PropTypes.string.isRequired,
   quantity: PropTypes.number,
   price: PropTypes.number,
-  lastUpdated: PropTypes.string,
+  updatedAt: PropTypes.string,
 };

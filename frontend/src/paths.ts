@@ -5,7 +5,7 @@ export const paths = {
     details: '/myPantry/:pantryId',
     edit: '/myPantry/:pantryId/edit'
   },
-  docs: 'https://material-kit-pro-react-docs.devias.io',
+  docs: 'https://mypantry.io',
   notAuthorized: '/401',
   notFound: '/404',
   serverError: '/500'

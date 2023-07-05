@@ -91,7 +91,7 @@ const Page = () => {
   });
   const location = locationString.join(', ');
 
-  const time = pantry.lastUpdated? new Date(pantry.lastUpdated).toLocaleString('en-US', {
+  const time = pantry.updatedAt? pantry.updatedAt.toLocaleString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -233,7 +233,7 @@ const Page = () => {
                       note={pantry.note}
                       quantity={pantry.quantity}
                       price={pantry.price}
-                      lastUpdated={time}
+                      updatedAt={time}
                     />
                   </Grid>
                   <Grid

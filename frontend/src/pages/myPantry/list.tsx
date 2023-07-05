@@ -49,7 +49,7 @@ const useMyPantrySearch = () => {
     },
     page: 0,
     rowsPerPage: 5,
-    sortBy: 'lastUpdated',
+    sortBy: 'updatedAt',
     sortDir: 'desc'
   });
 

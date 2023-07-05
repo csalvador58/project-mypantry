@@ -1,8 +1,10 @@
-import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
-
 import type { Pantry } from 'src/types/pantry';
 
-const now = new Date();
+const startDate = new Date('2023-01-01');
+const endDate = new Date('2023-06-20');
+
+const randomTimestamp = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+
 
 export const myPantry: Pantry[] = [
   {
@@ -15,7 +17,7 @@ export const myPantry: Pantry[] = [
     location4: false,
     location5: true,
     name: 'pasta',
-    lastUpdated: subDays(subHours(now, 7), 1).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 3.00,
     favorite: false,
     quantity: 4,
@@ -30,7 +32,7 @@ export const myPantry: Pantry[] = [
     location4: true,
     location5: false,
     name: 'Chicken',
-    lastUpdated: subDays(subHours(now, 1), 2).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 0.00,
     favorite: false,
     quantity: 3,
@@ -45,7 +47,7 @@ export const myPantry: Pantry[] = [
     location4: false,
     location5: false,
     name: 'steak',
-    lastUpdated: subDays(subHours(now, 4), 2).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 5.00,
     favorite: false,
     quantity: 6,
@@ -60,7 +62,7 @@ export const myPantry: Pantry[] = [
     location4: false,
     location5: true,
     name: 'Strawberry',
-    lastUpdated: subDays(subHours(now, 11), 2).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 5.00,
     favorite: false,
     quantity: 1,
@@ -75,7 +77,7 @@ export const myPantry: Pantry[] = [
     location4: true,
     location5: false,
     name: 'cheese',
-    lastUpdated: subDays(subHours(now, 7), 3).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 0.00,
     favorite: false,
     quantity: 0,
@@ -90,7 +92,7 @@ export const myPantry: Pantry[] = [
     location4: true,
     location5: false,
     name: 'broccoli',
-    lastUpdated: subDays(subHours(now, 5), 4).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 0.00,
     favorite: false,
     quantity: 3,
@@ -105,7 +107,7 @@ export const myPantry: Pantry[] = [
     location4: false,
     location5: false,
     name: 'chocolate',
-    lastUpdated: subDays(subHours(now, 15), 4).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 10.00,
     favorite: false,
     quantity: 1,
@@ -120,7 +122,7 @@ export const myPantry: Pantry[] = [
     location4: false,
     location5: true,
     name: 'potato chips',
-    lastUpdated: subDays(subHours(now, 2), 5).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 10.00,
     favorite: false,
     quantity: 2,
@@ -135,7 +137,7 @@ export const myPantry: Pantry[] = [
     location4: true,
     location5: false,
     name: 'ice cream',
-    lastUpdated: subDays(subHours(now, 8), 6).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 0.00,
     favorite: false,
     quantity: 0,
@@ -150,7 +152,7 @@ export const myPantry: Pantry[] = [
     location4: false,
     location5: true,
     name: 'chicken nuggets',
-    lastUpdated: subDays(subHours(now, 1), 9).getTime(),
+    updatedAt: new Date(randomTimestamp),
     price: 2.00,
     favorite: false,
     quantity: 4,
@@ -167,7 +169,7 @@ export const pantry: Pantry = {
   location4: false,
   location5: true,
   name: 'chicken nuggets',
-  lastUpdated: subDays(subHours(now, 1), 9).getTime(),
+  updatedAt: new Date(randomTimestamp),
   price: 2.00,
   favorite: false,
   quantity: 3,
