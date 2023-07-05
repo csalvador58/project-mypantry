@@ -4,6 +4,7 @@ import { applySort } from 'src/utils/apply-sort';
 import { deepCopy } from 'src/utils/deep-copy';
 
 import { pantry, myPantry } from './data';
+import { fetchPantry, fetchPantryItem } from './fetchPantry';
 
 type GetMyPantryRequest = {
   filters?: {
@@ -30,10 +31,11 @@ type GetPantryRequest = object;
 type GetPantryResponse = Promise<Pantry>;
 
 class MyPantryApi {
-  getMyPantry(request: GetMyPantryRequest = {}): GetMyPantryResponse {
+  async getMyPantry(request: GetMyPantryRequest = {}): Promise<GetMyPantryResponse> {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;
 
-    let data = deepCopy(myPantry) as Pantry[];
+    // let data = deepCopy(myPantry) as Pantry[];
+    let data = await fetchPantry();
     let count = data.length;
 
     if (typeof filters !== 'undefined') {
@@ -96,14 +98,14 @@ class MyPantryApi {
 
     return Promise.resolve({
       data,
-      count
+      count,
     });
   }
 
-  getPantry(request?: GetPantryRequest): GetPantryResponse {
-    return Promise.resolve(deepCopy(pantry));
+  async getPantry(request?: GetPantryRequest): Promise<GetPantryResponse> {
+    let data = await fetchPantryItem('64a4e75d4765b390680d642e');
+    return Promise.resolve(deepCopy(data));
   }
-
 }
 
 export const myPantryApi = new MyPantryApi();

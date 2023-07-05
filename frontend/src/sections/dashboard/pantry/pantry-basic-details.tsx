@@ -7,7 +7,7 @@ import { PropertyListItem } from 'src/components/property-list-item';
 
 interface PantryBasicDetailsProps {
   location: string;
-  note: string;
+  note?: string;
   quantity?: number;
   price?: number;
   updatedAt?: string;
@@ -31,7 +31,7 @@ export const PantryBasicDetails: FC<PantryBasicDetailsProps> = (props) => {
 
 PantryBasicDetails.propTypes = {
   location: PropTypes.string.isRequired,
-  note: PropTypes.string.isRequired,
+  note: PropTypes.string,
   quantity: PropTypes.number,
   price: PropTypes.number,
   updatedAt: PropTypes.string,
