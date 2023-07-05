@@ -241,9 +241,11 @@ describe('/pantry', () => {
     });
     describe('PUT /pantry/:id', () => {
       let token: string;
+      let pantryItemDoc: IPantryItemDocument;
       beforeEach(async () => {
         res = await request(app).post('/auth/login').send(testUser);
         token = res.body.token;
+        pantryItemDoc = (await PantryItem.create(testPantryItem)).toObject();
       });
       it('should return 400 Bad Request with invalid id', async () => {
         res = await request(app)
@@ -251,11 +253,7 @@ describe('/pantry', () => {
           .set('Authorization', 'Bearer ' + token)
           .send({ name: 'updateName' });
       });
-      it('should return 400 Bad Request with invalid input', async () => {
-        let pantryItemDoc: IPantryItemDocument = (
-          await PantryItem.create(testPantryItem)
-        ).toObject();
-
+      it('should return 400 Bad Request with invalid name input', async () => {
         res = await request(app)
           .put(`/pantry/${pantryItemDoc._id}`)
           .set('Authorization', 'Bearer ' + token)
@@ -263,64 +261,100 @@ describe('/pantry', () => {
 
         expect(res.statusCode).toEqual(400);
       });
-      // it('should return 409 Conflict if name already exist', async () => {
-      //   await request(app)
-      //     .post('/pantry/add')
-      //     .set('Authorization', 'Bearer ' + token)
-      //     .send({
-      //       name: 'test duplicate name',
-      //       userId: testUserId,
-      //     });
-      //   res = await request(app)
-      //     .post('/pantry/add')
-      //     .set('Authorization', 'Bearer ' + token)
-      //     .send({
-      //       name: 'test duplicate name',
-      //       userId: testUserId,
-      //     });
-      //   expect(res.statusCode).toEqual(409);
-    });
-    describe.skip('server failure', () => {
-      it('should return 500 Internal Server Error ', async () => {});
-    });
-
-    describe('DELETE /pantry/:id', () => {
-      let token: string;
-      beforeEach(async () => {
-        res = await request(app).post('/auth/login').send(testUser);
-        token = res.body.token;
-      });
-      it('should return 400 Bad Request with invalid id', async () => {
+      it('should return 400 Bad Request with negative price input', async () => {
         res = await request(app)
-          .delete('/pantry/1234')
+          .put(`/pantry/${pantryItemDoc._id}`)
           .set('Authorization', 'Bearer ' + token)
-          .send();
+          .send({ price: -10 });
+
         expect(res.statusCode).toEqual(400);
       });
-      it('should return 200 OK and a deleted pantry item document with a valid ID', async () => {
-        let pantryItemDoc: IPantryItemDocument = (
-          await PantryItem.create(testPantryItem)
+      it('should return 400 Bad Request with negative quantity input', async () => {
+        res = await request(app)
+          .put(`/pantry/${pantryItemDoc._id}`)
+          .set('Authorization', 'Bearer ' + token)
+          .send({ quantity: -1 });
+
+        expect(res.statusCode).toEqual(400);
+      });
+      it('should return 400 Bad Request with a non boolean value for a true/false input', async () => {
+        res = await request(app)
+          .put(`/pantry/${pantryItemDoc._id}`)
+          .set('Authorization', 'Bearer ' + token)
+          .send({ favorite: 'true' });
+
+        expect(res.statusCode).toEqual(400);
+      });
+      it('should return 400 Bad Request when attempting to update a restricted property', async () => {
+        res = await request(app)
+          .put(`/pantry/${pantryItemDoc._id}`)
+          .set('Authorization', 'Bearer ' + token)
+          .send({ userId: testPantryItem.userId });
+
+        expect(res.statusCode).toEqual(400);
+      });
+      it('should return 400 Bad Request with invalid note input', async () => {
+        res = await request(app)
+          .put(`/pantry/${pantryItemDoc._id}`)
+          .set('Authorization', 'Bearer ' + token)
+          .send({ note: 'h' });
+
+        expect(res.statusCode).toEqual(400);
+      });
+      it('should return 409 Conflict if name already exist', async () => {
+        let pantryItemDoc2: IPantryItemDocument = (
+          await PantryItem.create({
+            ...testPantryItem,
+            name: 'testDuplicateName',
+          })
         ).toObject();
 
         res = await request(app)
-          .delete(`/pantry/${pantryItemDoc._id}`)
+          .put(`/pantry/${pantryItemDoc._id}`)
           .set('Authorization', 'Bearer ' + token)
-          .send({});
-
-        let testItemObj = {
-          ...pantryItemDoc,
-          createdAt: new Date(pantryItemDoc!.createdAt!).toISOString(),
-          updatedAt: new Date(pantryItemDoc!.updatedAt!).toISOString(),
-          userId: pantryItemDoc!.userId.toString(),
-          _id: pantryItemDoc!._id.toString(),
-        } as ITestItem;
-
-        expect(res.statusCode).toEqual(200);
-        expect(res.body.item).toEqual(expect.objectContaining(testItemObj));
+          .send({
+            name: 'testDuplicateName',
+          });
+        expect(res.statusCode).toEqual(409);
       });
-
       describe.skip('server failure', () => {
         it('should return 500 Internal Server Error ', async () => {});
+      });
+
+      describe('DELETE /pantry/:id', () => {
+        let token: string;
+        beforeEach(async () => {
+          res = await request(app).post('/auth/login').send(testUser);
+          token = res.body.token;
+        });
+        it('should return 400 Bad Request with invalid id', async () => {
+          res = await request(app)
+            .delete('/pantry/1234')
+            .set('Authorization', 'Bearer ' + token)
+            .send();
+          expect(res.statusCode).toEqual(400);
+        });
+        it('should return 200 OK and a deleted pantry item document with a valid ID', async () => {
+          res = await request(app)
+            .delete(`/pantry/${pantryItemDoc._id}`)
+            .set('Authorization', 'Bearer ' + token)
+            .send({});
+
+          let testItemObj = {
+            ...pantryItemDoc,
+            createdAt: new Date(pantryItemDoc!.createdAt!).toISOString(),
+            updatedAt: new Date(pantryItemDoc!.updatedAt!).toISOString(),
+            userId: pantryItemDoc!.userId.toString(),
+            _id: pantryItemDoc!._id.toString(),
+          } as ITestItem;
+
+          expect(res.statusCode).toEqual(200);
+          expect(res.body.item).toEqual(expect.objectContaining(testItemObj));
+        });
+
+        describe.skip('server failure', () => {
+          it('should return 500 Internal Server Error ', async () => {});
+        });
       });
     });
   });

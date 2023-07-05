@@ -4,7 +4,7 @@ import * as testUtils from '../../utils/jest/setupDB';
 import User, { IUser, IUserDocument, Roles } from '../../models/user.model';
 console.log = jest.fn();
 
-describe.skip('/auth', () => {
+describe('/auth', () => {
   beforeAll(testUtils.connectDB);
   afterAll(testUtils.stopDB);
 
