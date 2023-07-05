@@ -52,8 +52,29 @@ export const getPantryItems: RequestHandler = catchAsync(
     } else {
       result = await pantryService.getPantryItems(userId, itemId);
     }
-    console.log('result');
-    console.log(result);
     res.status(200).json({ message: 'Request success', pantry: result });
   }
 );
+
+export const updatePantryItem: RequestHandler = catchAsync(async (req: AuthenticatedRequest, res) => {
+  console.log('pantryItem.controller: updatePantryItem');
+  const itemId = req.params?.['id'];
+  const updateItem: IPantryItem = {
+    ...req.body,
+    userId: req.auth!.payload.sub,
+  };
+
+  if (!itemId) {
+    return res.status(400).json({ error: 'Invalid ID' });
+  }
+  const updatedItem = await pantryService.updatePantryItem(itemId, updateItem);
+
+  if (!updatedItem) {
+    // 204 No Content
+    return res.status(204).send();
+  }
+  return res
+    .status(200)
+    .json({ message: 'Item updated successfully', item: updatedItem });
+ 
+})

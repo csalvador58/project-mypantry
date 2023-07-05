@@ -29,3 +29,13 @@ export const getPantryItems = async (
   }
   return PantryItem.find({ userId: userId }).lean();
 };
+export const updatePantryItem = async (
+  itemId: string,
+  updatedItem: IPantryItem
+): Promise<IPantryItemDocument | null> => {
+  return await PantryItem.findByIdAndUpdate(
+    new mongoose.Types.ObjectId(itemId),
+    updatedItem,
+    { new: true }
+  );
+};
