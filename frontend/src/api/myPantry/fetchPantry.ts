@@ -82,7 +82,7 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
 
     const data = await response.json();
 
-    if (data.pantry && data.pantry.length) {
+    if (data.pantry) {
       data.pantry.forEach((item: IItem) => {
         pantryData = {
           id: item._id,
@@ -101,9 +101,6 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
         };
       });
     }
-
-    console.log('pantryData')
-    console.log(pantryData)
 
     return pantryData;
   } catch (error) {

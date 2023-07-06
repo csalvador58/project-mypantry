@@ -6,7 +6,7 @@ import { deepCopy } from 'src/utils/deep-copy';
 import { pantry, myPantry } from './data';
 import { fetchPantry, fetchPantryItem } from './fetchPantry';
 
-type GetMyPantryRequest = {
+export type GetMyPantryRequest = {
   filters?: {
     query?: string;
     location1?: boolean;
@@ -102,8 +102,9 @@ class MyPantryApi {
     });
   }
 
-  async getPantry(request?: GetPantryRequest): Promise<GetPantryResponse> {
-    let data = await fetchPantryItem('64a4e75d4765b390680d642e');
+  // async getPantryItem(request?: GetPantryRequest): Promise<GetPantryResponse> {
+  async getPantryItem(request?: string): Promise<GetPantryResponse> {
+    let data = await fetchPantryItem(request!);
     return Promise.resolve(deepCopy(data));
   }
 }

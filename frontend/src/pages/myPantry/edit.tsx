@@ -17,14 +17,16 @@ import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
 import { PantryEditForm } from 'src/sections/dashboard/pantry/pantry-edit-form';
 import type { Pantry } from 'src/types/pantry';
+import { useParams } from 'react-router-dom';
 
 const usePantry = (): Pantry | null => {
   const isMounted = useMounted();
   const [pantry, setPantry] = useState<Pantry | null>(null);
+  const { pantryId } = useParams();
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const response = await myPantryApi.getPantry();
+      const response = await myPantryApi.getPantryItem(pantryId);
 
       if (isMounted()) {
         setPantry(response);
@@ -32,7 +34,7 @@ const usePantry = (): Pantry | null => {
     } catch (err) {
       console.error(err);
     }
-  }, [isMounted]);
+  }, [isMounted, pantryId]);
 
   useEffect(
     () => {
@@ -56,66 +58,49 @@ const Page = () => {
 
   return (
     <>
-      <Seo title="Dashboard: Item Edit" />
+      <Seo title='Dashboard: Item Edit' />
       <Box
-        component="main"
+        component='main'
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth='lg'>
           <Stack spacing={4}>
             <Stack spacing={4}>
               <div>
                 <Link
-                  color="text.primary"
+                  color='text.primary'
                   component={RouterLink}
                   href={paths.myPantry.index}
                   sx={{
                     alignItems: 'center',
-                    display: 'inline-flex'
+                    display: 'inline-flex',
                   }}
-                  underline="hover"
+                  underline='hover'
                 >
                   <SvgIcon sx={{ mr: 1 }}>
                     <ArrowLeftIcon />
                   </SvgIcon>
-                  <Typography variant="subtitle2">
-                    Pantry
-                  </Typography>
+                  <Typography variant='subtitle2'>Pantry</Typography>
                 </Link>
               </div>
               <Stack
-                alignItems="flex-start"
+                alignItems='flex-start'
                 direction={{
                   xs: 'column',
-                  md: 'row'
+                  md: 'row',
                 }}
-                justifyContent="space-between"
+                justifyContent='space-between'
                 spacing={4}
               >
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
+                <Stack alignItems='center' direction='row' spacing={2}>
                   <Stack spacing={1}>
-                    <Typography variant="h4">
-                      {pantry.note}
-                    </Typography>
-                    <Stack
-                      alignItems="center"
-                      direction="row"
-                      spacing={1}
-                    >
-                      <Typography variant="subtitle2">
-                        user_id:
-                      </Typography>
-                      <Chip
-                        label={pantry.id}
-                        size="small"
-                      />
+                    <Typography variant='h4'>{pantry.note}</Typography>
+                    <Stack alignItems='center' direction='row' spacing={1}>
+                      <Typography variant='subtitle2'>user_id:</Typography>
+                      <Chip label={pantry.id} size='small' />
                     </Stack>
                   </Stack>
                 </Stack>

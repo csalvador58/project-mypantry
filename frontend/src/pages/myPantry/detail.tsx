@@ -27,18 +27,18 @@ import { PantryBasicDetails } from 'src/sections/dashboard/pantry/pantry-basic-d
 import { PantryDataManagement } from 'src/sections/dashboard/pantry/pantry-data-management';
 import type { Pantry } from 'src/types/pantry';
 import { getInitials } from 'src/utils/get-initials';
+import { useParams } from 'react-router-dom';
 
-const tabs = [
-  { label: 'Details', value: 'details' },
-];
+const tabs = [{ label: 'Details', value: 'details' }];
 
 const usePantry = (): Pantry | null => {
   const isMounted = useMounted();
   const [pantry, setPantry] = useState<Pantry | null>(null);
+  const { pantryId } = useParams();
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const response = await myPantryApi.getPantry();
+      const response = await myPantryApi.getPantryItem(pantryId);
 
       if (isMounted()) {
         setPantry(response);
@@ -46,7 +46,7 @@ const usePantry = (): Pantry | null => {
     } catch (err) {
       console.error(err);
     }
-  }, [isMounted]);
+  }, [isMounted, pantryId]);
 
   useEffect(
     () => {
@@ -80,8 +80,8 @@ const Page = () => {
     'Pantry 1': pantry.location1 || false,
     'Pantry 2': pantry.location2 || false,
     'Pantry 3': pantry.location3 || false,
-    'Freezer': pantry.location4 || false,
-    'Other': pantry.location5 || false,
+    Freezer: pantry.location4 || false,
+    Other: pantry.location5 || false,
   };
   const locationString: string[] = [];
   Object.entries(data).forEach(([key, value]) => {
@@ -91,97 +91,77 @@ const Page = () => {
   });
   const location = locationString.join(', ');
 
-  const time = pantry.updatedAt? pantry.updatedAt.toLocaleString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-    timeZoneName: 'short',
-  }) : '';
-
-  
+  const time = pantry.updatedAt
+    ? pantry.updatedAt.toLocaleString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+        timeZoneName: 'short',
+      })
+    : '';
 
   return (
     <>
-      <Seo title="Dashboard: Pantry Details" />
+      <Seo title='Dashboard: Pantry Details' />
       <Box
-        component="main"
+        component='main'
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth='xl'>
           <Stack spacing={4}>
             <Stack spacing={4}>
               <div>
                 <Link
-                  color="text.primary"
+                  color='text.primary'
                   component={RouterLink}
                   href={paths.myPantry.index}
                   sx={{
                     alignItems: 'center',
-                    display: 'inline-flex'
+                    display: 'inline-flex',
                   }}
-                  underline="hover"
+                  underline='hover'
                 >
                   <SvgIcon sx={{ mr: 1 }}>
                     <ArrowLeftIcon />
                   </SvgIcon>
-                  <Typography variant="subtitle2">
-                    Pantry
-                  </Typography>
+                  <Typography variant='subtitle2'>Pantry</Typography>
                 </Link>
               </div>
               <Stack
-                alignItems="flex-start"
+                alignItems='flex-start'
                 direction={{
                   xs: 'column',
-                  md: 'row'
+                  md: 'row',
                 }}
-                justifyContent="space-between"
+                justifyContent='space-between'
                 spacing={4}
               >
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
+                <Stack alignItems='center' direction='row' spacing={2}>
                   <Stack spacing={1}>
-                    <Typography variant="h4">
-                      {pantry.name}
-                    </Typography>
-                    <Stack
-                      alignItems="center"
-                      direction="row"
-                      spacing={1}
-                    >
-                      <Typography variant="subtitle2">
-                        item_id:
-                      </Typography>
-                      <Chip
-                        label={pantry.id}
-                        size="small"
-                      />
+                    <Typography variant='h4'>{pantry.name}</Typography>
+                    <Stack alignItems='center' direction='row' spacing={1}>
+                      <Typography variant='subtitle2'>item_id:</Typography>
+                      <Chip label={pantry.id} size='small' />
                     </Stack>
                   </Stack>
                 </Stack>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
+                <Stack alignItems='center' direction='row' spacing={2}>
                   <Button
-                    color="inherit"
+                    color='inherit'
                     component={RouterLink}
-                    endIcon={(
+                    endIcon={
                       <SvgIcon>
                         <Edit02Icon />
                       </SvgIcon>
-                    )}
-                    href={paths.myPantry.edit}
+                    }
+                    // href={paths.myPantry.edit}
+                    href={`/myPantry/${pantry.id}/edit`}
                   >
                     Edit
                   </Button>
@@ -199,20 +179,16 @@ const Page = () => {
               </Stack>
               <div>
                 <Tabs
-                  indicatorColor="primary"
+                  indicatorColor='primary'
                   onChange={handleTabsChange}
-                  scrollButtons="auto"
+                  scrollButtons='auto'
                   sx={{ mt: 3 }}
-                  textColor="primary"
+                  textColor='primary'
                   value={currentTab}
-                  variant="scrollable"
+                  variant='scrollable'
                 >
                   {tabs.map((tab) => (
-                    <Tab
-                      key={tab.value}
-                      label={tab.label}
-                      value={tab.value}
-                    />
+                    <Tab key={tab.value} label={tab.label} value={tab.value} />
                   ))}
                 </Tabs>
                 <Divider />
@@ -220,14 +196,8 @@ const Page = () => {
             </Stack>
             {currentTab === 'details' && (
               <div>
-                <Grid
-                  container
-                  spacing={4}
-                >
-                  <Grid
-                    xs={12}
-                    lg={4}
-                  >
+                <Grid container spacing={4}>
+                  <Grid xs={12} lg={4}>
                     <PantryBasicDetails
                       location={location}
                       note={pantry.note}
@@ -236,10 +206,7 @@ const Page = () => {
                       updatedAt={time}
                     />
                   </Grid>
-                  <Grid
-                    xs={12}
-                    lg={8}
-                  >
+                  <Grid xs={12} lg={8}>
                     <Stack spacing={4}>
                       <PantryDataManagement />
                     </Stack>

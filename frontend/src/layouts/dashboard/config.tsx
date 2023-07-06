@@ -27,47 +27,44 @@ export interface Section {
 export const useSections = () => {
   const { t } = useTranslation();
 
-  return useMemo(
-    () => {
-      return [
-        {
-          items: [
-            {
-              title: t(tokens.nav.overview),
-              path: paths.index,
-              icon: (
-                <SvgIcon fontSize="small">
-                  <HomeSmileIcon />
-                </SvgIcon>
-              )
-            },
-            {
-              title: 'Pantry',
-              path: paths.myPantry.index,
-              icon: (
-                <SvgIcon fontSize="small">
-                  <Users03Icon />
-                </SvgIcon>
-              ),
-              items: [
-                {
-                  title: 'List',
-                  path: paths.myPantry.index
-                },
-                {
-                  title: 'Details',
-                  path: paths.myPantry.details
-                },
-                {
-                  title: 'Edit',
-                  path: paths.myPantry.edit
-                }
-              ]
-            },
-          ]
-        }
-      ];
-    },
-    [t]
-  );
+  return useMemo(() => {
+    return [
+      {
+        items: [
+          {
+            title: t(tokens.nav.overview),
+            path: paths.index,
+            icon: (
+              <SvgIcon fontSize='small'>
+                <HomeSmileIcon />
+              </SvgIcon>
+            ),
+          },
+          {
+            title: 'Pantry',
+            path: paths.myPantry.index,
+            icon: (
+              <SvgIcon fontSize='small'>
+                <Users03Icon />
+              </SvgIcon>
+            ),
+            items: [
+              {
+                title: 'List',
+                path: paths.myPantry.index,
+              },
+              // {
+              //   title: 'Details',
+              //   path: paths.myPantry.details
+              // },
+              // {
+              //   title: 'Edit',
+              //   path: paths.myPantry.edit
+              // }
+            ],
+          },
+        ],
+      },
+    ];
+  }, [t]);
 };

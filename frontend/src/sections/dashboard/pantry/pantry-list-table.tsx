@@ -196,7 +196,8 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                   <TableCell align='right'>
                     <IconButton
                       component={RouterLink}
-                      href={paths.myPantry.edit}
+                      // href={paths.myPantry.edit}
+                      href={`/myPantry/${pantry.id}/edit`}
                     >
                       <SvgIcon>
                         <Edit02Icon />
@@ -204,7 +205,8 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                     </IconButton>
                     <IconButton
                       component={RouterLink}
-                      href={paths.myPantry.details}
+                      href={`/myPantry/${pantry.id}`}
+                      // href={paths.myPantry.details}
                     >
                       <SvgIcon>
                         <ArrowRightIcon />
