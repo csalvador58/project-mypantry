@@ -29,7 +29,7 @@ export const deletePantryItem: RequestHandler = catchAsync(
       return res.status(400).json({ error: 'Invalid ID' });
     }
     const deletedItem = await pantryService.deletePantryItem(itemId);
-   
+
     if (!deletedItem) {
       // 204 No Content
       return res.status(204).send();
@@ -56,25 +56,40 @@ export const getPantryItems: RequestHandler = catchAsync(
   }
 );
 
-export const updatePantryItem: RequestHandler = catchAsync(async (req: AuthenticatedRequest, res) => {
-  console.log('pantryItem.controller: updatePantryItem');
-  const itemId = req.params?.['id'];
-  const updateItem: IPantryItem = {
-    ...req.body,
-    userId: req.auth!.payload.sub,
-  };
+export const getPantryItemsCount: RequestHandler = catchAsync(
+  async (req: AuthenticatedRequest, res) => {
+    console.log('pantryItem.controller: getPantryItemsCount');
+    const userId = req.auth!.payload.sub;
 
-  if (!itemId) {
-    return res.status(400).json({ error: 'Invalid ID' });
-  }
-  const updatedItem = await pantryService.updatePantryItem(itemId, updateItem);
+    let result: number = await pantryService.getPantryItemsCount(userId);
 
-  if (!updatedItem) {
-    // 204 No Content
-    return res.status(204).send();
+    res.status(200).json({ message: 'Request success', pantryCount: result });
   }
-  return res
-    .status(200)
-    .json({ message: 'Item updated successfully', item: updatedItem });
- 
-})
+);
+
+export const updatePantryItem: RequestHandler = catchAsync(
+  async (req: AuthenticatedRequest, res) => {
+    console.log('pantryItem.controller: updatePantryItem');
+    const itemId = req.params?.['id'];
+    const updateItem: IPantryItem = {
+      ...req.body,
+      userId: req.auth!.payload.sub,
+    };
+
+    if (!itemId) {
+      return res.status(400).json({ error: 'Invalid ID' });
+    }
+    const updatedItem = await pantryService.updatePantryItem(
+      itemId,
+      updateItem
+    );
+
+    if (!updatedItem) {
+      // 204 No Content
+      return res.status(204).send();
+    }
+    return res
+      .status(200)
+      .json({ message: 'Item updated successfully', item: updatedItem });
+  }
+);

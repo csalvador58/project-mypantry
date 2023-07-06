@@ -1,10 +1,10 @@
-import type { Pantry } from 'src/types/pantry';
+import type { Pantry, PantryCount } from 'src/types/pantry';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { applySort } from 'src/utils/apply-sort';
 import { deepCopy } from 'src/utils/deep-copy';
 
 import { pantry, myPantry } from './data';
-import { fetchPantry, fetchPantryItem } from './fetchPantry';
+import { fetchPantry, fetchPantryCount, fetchPantryItem } from './fetchPantry';
 
 export type GetMyPantryRequest = {
   filters?: {
@@ -26,12 +26,13 @@ type GetMyPantryResponse = Promise<{
   count: number;
 }>;
 
-type GetPantryRequest = object;
+export type GetPantryItemRequest = { id: string };
 
 type GetPantryResponse = Promise<Pantry>;
+type GetPantryCountResponse = Promise<PantryCount>;
 
 class MyPantryApi {
-  async getMyPantry(request: GetMyPantryRequest = {}): Promise<GetMyPantryResponse> {
+  async getMyPantry(request: GetMyPantryRequest): Promise<GetMyPantryResponse> {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;
 
     // let data = deepCopy(myPantry) as Pantry[];
@@ -45,7 +46,11 @@ class MyPantryApi {
           const properties: ('note' | 'name')[] = ['note', 'name'];
 
           properties.forEach((property) => {
-            if ((pantry[property]).toLowerCase().includes(filters.query!.toLowerCase())) {
+            if (
+              pantry[property]
+                .toLowerCase()
+                .includes(filters.query!.toLowerCase())
+            ) {
               queryMatched = true;
             }
           });
@@ -103,9 +108,16 @@ class MyPantryApi {
   }
 
   // async getPantryItem(request?: GetPantryRequest): Promise<GetPantryResponse> {
-  async getPantryItem(request?: string): Promise<GetPantryResponse> {
-    let data = await fetchPantryItem(request!);
+  async getPantryItem(
+    request: GetPantryItemRequest
+  ): Promise<GetPantryResponse> {
+    let data = await fetchPantryItem(request.id);
     return Promise.resolve(deepCopy(data));
+  }
+
+  async getPantryCount(): Promise<GetPantryCountResponse> {
+    let count = await fetchPantryCount();
+    return Promise.resolve(deepCopy(count));
   }
 }
 

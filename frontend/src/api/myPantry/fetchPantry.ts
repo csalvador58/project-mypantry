@@ -1,11 +1,11 @@
-import { Pantry } from 'src/types/pantry';
+import { Pantry, PantryCount } from 'src/types/pantry';
 
 interface IItem extends Omit<Pantry, 'id'> {
   _id: string;
 }
 
 const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDlmNmI0MzFlNjg5ZWE4YzMyZjhkNGIiLCJpYXQiOjE2ODg1ODg3MDQuMTk3LCJleHAiOjE2ODg2NzUxMDQuMTk3fQ.0k3GpY_1_P7QazI4qSGm-YMuP13H-DQHRXnzbtc3Low';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDlmNmI0MzFlNjg5ZWE4YzMyZjhkNGIiLCJpYXQiOjE2ODg2NjQxOTQuMTk3LCJleHAiOjE2ODg3NTA1OTQuMTk3fQ.uGRdlHLw_s7isvmgPGOyZZfkpmRF56HjUR1EDwNz0hM';
 
 const DOMAIN = 'http://localhost:3001';
 const HEADERS = {
@@ -103,6 +103,33 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
     }
 
     return pantryData;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred during the API call.');
+  }
+};
+
+export const fetchPantryCount = async (): Promise<PantryCount> => {
+  let pantryNull: PantryCount = { count: 0 };
+  try {
+    const url = `${DOMAIN}/pantry/count`;
+    const method = 'GET';
+    const response = await fetch(url, {
+      method: method,
+      headers: HEADERS,
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.error);
+      throw new Error(
+        `${response.status}: ${response.statusText}, ${data.error}`
+      );
+    }
+
+    const data = await response.json();
+
+    return data ? { count: data.pantryCount } : pantryNull;
   } catch (error) {
     console.error(error);
     throw new Error('An error occurred during the API call.');

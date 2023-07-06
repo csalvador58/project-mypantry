@@ -23,7 +23,6 @@ import { RouterLink } from 'src/components/router-link';
 import { Scrollbar } from 'src/components/scrollbar';
 import { paths } from 'src/paths';
 import type { Pantry } from 'src/types/pantry';
-import { getInitials } from 'src/utils/get-initials';
 
 interface PantryListTableProps {
   count?: number;

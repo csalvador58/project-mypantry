@@ -14,3 +14,7 @@ export interface Pantry {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface PantryCount {
+  count: number
+}

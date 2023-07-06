@@ -29,6 +29,15 @@ export const getPantryItems = async (
   }
   return PantryItem.find({ userId: userId }).lean();
 };
+
+export const getPantryItemsCount = async (
+  userId: string,
+): Promise<number> => {
+  // console.log('pantryItem.service - getPantryItemsCount')
+
+  return PantryItem.countDocuments({ userId: userId }).lean();
+};
+
 export const updatePantryItem = async (
   itemId: string,
   updatedItem: IPantryItem
