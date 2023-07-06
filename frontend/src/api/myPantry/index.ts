@@ -1,10 +1,16 @@
-import type { Pantry, PantryCount } from 'src/types/pantry';
+import type { Pantry, PantryCount, PantryUpdate, PantryUpdateStatus } from 'src/types/pantry';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { applySort } from 'src/utils/apply-sort';
 import { deepCopy } from 'src/utils/deep-copy';
 
-import { pantry, myPantry } from './data';
-import { fetchPantry, fetchPantryCount, fetchPantryItem } from './fetchPantry';
+// import { pantry, myPantry } from './data';
+import {
+  fetchPantry,
+  fetchPantryCount,
+  fetchPantryItem,
+  fetchPantryItemUpdate,
+  // fetchUpdatePantryItem,
+} from './fetchPantry';
 
 export type GetMyPantryRequest = {
   filters?: {
@@ -27,6 +33,13 @@ type GetMyPantryResponse = Promise<{
 }>;
 
 export type GetPantryItemRequest = { id: string };
+
+export type UpdatePantryItemRequest = {
+  id: string;
+  data: PantryUpdate;
+};
+
+type UpdatePantryResponse = Promise<Pantry>
 
 type GetPantryResponse = Promise<Pantry>;
 type GetPantryCountResponse = Promise<PantryCount>;
@@ -113,6 +126,13 @@ class MyPantryApi {
   ): Promise<GetPantryResponse> {
     let data = await fetchPantryItem(request.id);
     return Promise.resolve(deepCopy(data));
+  }
+
+  async updatePantryItem(
+    request: Pantry
+  ): Promise<boolean> {
+    let data = await fetchPantryItemUpdate(request);
+    return Promise.resolve(data);
   }
 
   async getPantryCount(): Promise<GetPantryCountResponse> {

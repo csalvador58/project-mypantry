@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC } from 'react';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
@@ -17,7 +17,8 @@ import Typography from '@mui/material/Typography';
 import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
 import type { Pantry } from 'src/types/pantry';
-import { wait } from 'src/utils/wait';
+
+import { myPantryApi } from 'src/api/myPantry';
 
 interface PantryEditFormProps {
   pantry: Pantry;
@@ -27,7 +28,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
   const { pantry, ...other } = props;
   const formik = useFormik({
     initialValues: {
-      price: pantry.price || '',
+      price: pantry.price || null,
       note: pantry.note || '',
       location1: pantry.location1 || false,
       location2: pantry.location2 || false,
@@ -36,11 +37,11 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
       location5: pantry.location5 || false,
       favorite: pantry.favorite || false,
       name: pantry.name || '',
-      quantity: pantry.quantity || '',
+      quantity: pantry.quantity || null,
       submit: null,
     },
     validationSchema: Yup.object({
-      price: Yup.string().max(255),
+      price: Yup.number().positive('Price must be greater than 0'),
       note: Yup.string().max(255).required('note is required'),
       location1: Yup.bool(),
       location2: Yup.bool(),
@@ -49,12 +50,33 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
       location5: Yup.bool(),
       favorite: Yup.bool(),
       name: Yup.string().max(255).required('Name is required'),
-      quantity: Yup.string().max(15),
+      quantity: Yup.number().positive('Quantity must be greater than 0'),
     }),
     onSubmit: async (values, helpers): Promise<void> => {
+      console.log('values: ');
+      console.log(values);
       try {
         // NOTE: Make API request
-        await wait(500);
+        const response = await myPantryApi.updatePantryItem({
+          id: pantry.id,
+          favorite: values.favorite,
+          location1: values.location1,
+          location2: values.location2,
+          location3: values.location3,
+          location4: values.location4,
+          location5: values.location5,
+          name: values.name,
+          note: values.note,
+          price: values.price ? +values.price : null,
+          quantity: values.quantity? +values.quantity : null,
+        } as Pantry);
+        
+        if(response) {
+          alert('Pantry Item Updated!')
+        } else {
+          alert('Error encountered during update, item may be corrupted.')
+        }
+        // await wait(500);
         helpers.setStatus({ success: true });
         helpers.setSubmitting(false);
         toast.success('Pantry updated');
@@ -71,7 +93,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
   return (
     <form onSubmit={formik.handleSubmit} {...other}>
       <Card>
-        <CardHeader title='Edit Pantry Item' />
+        <CardHeader title={`Edit Pantry Item #: ${pantry.id}`} />
         <CardContent sx={{ pt: 0 }}>
           <Grid container spacing={3}>
             <Grid xs={12} md={6}>
@@ -96,7 +118,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
                 name='quantity'
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                value={formik.values.quantity}
+                value={formik.values.quantity ? formik.values.quantity : ''}
               />
             </Grid>
             <Grid xs={12} md={6}>
@@ -108,7 +130,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
                 name='price'
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                value={formik.values.price}
+                value={formik.values.price ? formik.values.price : ''}
               />
             </Grid>
             <Grid xs={12} md={6}>

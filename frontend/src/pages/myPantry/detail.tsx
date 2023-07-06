@@ -17,7 +17,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 
-import { GetPantryItemRequest, myPantryApi } from 'src/api/myPantry';
+import { myPantryApi } from 'src/api/myPantry';
 import { RouterLink } from 'src/components/router-link';
 import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
@@ -38,8 +38,7 @@ const usePantry = (): Pantry | null => {
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const request: GetPantryItemRequest = {id: pantryId ? pantryId : ''}
-      const response = await myPantryApi.getPantryItem(request);
+      const response = await myPantryApi.getPantryItem({id: pantryId ? pantryId : ''});
 
       if (isMounted()) {
         setPantry(response);

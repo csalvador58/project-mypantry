@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-import { GetPantryItemRequest, myPantryApi } from 'src/api/myPantry';
+import { myPantryApi } from 'src/api/myPantry';
 import { RouterLink } from 'src/components/router-link';
 import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
@@ -26,7 +26,7 @@ const usePantry = (): Pantry | null => {
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const request: GetPantryItemRequest = {id: pantryId ? pantryId : ''}
+      const request = {id: pantryId ? pantryId : ''}
       const response = await myPantryApi.getPantryItem(request);
 
       if (isMounted()) {
@@ -98,7 +98,7 @@ const Page = () => {
               >
                 <Stack alignItems='center' direction='row' spacing={2}>
                   <Stack spacing={1}>
-                    <Typography variant='h4'>{pantry.note}</Typography>
+                    <Typography variant='h4'>{pantry.name}</Typography>
                     <Stack alignItems='center' direction='row' spacing={1}>
                       <Typography variant='subtitle2'>user_id:</Typography>
                       <Chip label={pantry.id} size='small' />

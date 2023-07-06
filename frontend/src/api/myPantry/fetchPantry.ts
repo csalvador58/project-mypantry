@@ -1,4 +1,9 @@
-import { Pantry, PantryCount } from 'src/types/pantry';
+import {
+  Pantry,
+  PantryCount,
+  PantryUpdate,
+  PantryUpdateStatus,
+} from 'src/types/pantry';
 
 interface IItem extends Omit<Pantry, 'id'> {
   _id: string;
@@ -106,6 +111,52 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
   } catch (error) {
     console.error(error);
     throw new Error('An error occurred during the API call.');
+  }
+};
+
+export const fetchPantryItemUpdate = async (
+  request: Pantry
+): Promise<boolean> => {
+  let pantryData: Pantry = { id: 'null', name: 'null', note: 'null' };
+  const body = {
+    name: request.name,
+    favorite: request.favorite,
+    location1: request.location1,
+    location2: request.location2,
+    location3: request.location3,
+    location4: request.location4,
+    location5: request.location5,
+    note: request.note,
+    price: request.price,
+    quantity: request.quantity,
+  };
+
+  try {
+    const url = `${DOMAIN}/pantry/${request.id}`;
+    const method = 'PUT';
+    const response = await fetch(url, {
+      method: method,
+      headers: HEADERS,
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.error);
+      throw new Error(
+        `${response.status}: ${response.statusText}, ${data.error}`
+      );
+    }
+
+    const data = await response.json();
+
+    if (data.item) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred during the API call.', error);
   }
 };
 

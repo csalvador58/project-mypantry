@@ -9,12 +9,19 @@ export interface Pantry {
   location4?: boolean;
   location5?: boolean;
   note: string;
-  price?: number;
-  quantity?: number;
+  price?: number | null;
+  quantity?: number | null;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface PantryCount {
-  count: number
+  count: number;
+}
+
+export interface PantryUpdate
+  extends Omit<Pantry, 'id' | 'currency' | 'createdAt' | 'updatedAt'> {}
+
+export interface PantryUpdateStatus {
+  status: boolean;
 }

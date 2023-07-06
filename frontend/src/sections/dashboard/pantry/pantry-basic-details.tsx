@@ -8,8 +8,8 @@ import { PropertyListItem } from 'src/components/property-list-item';
 interface PantryBasicDetailsProps {
   location: string;
   note?: string;
-  quantity?: number;
-  price?: number;
+  quantity?: number | null;
+  price?: number | null;
   updatedAt?: string;
 }
 
@@ -27,12 +27,4 @@ export const PantryBasicDetails: FC<PantryBasicDetailsProps> = (props) => {
       </PropertyList>
     </Card>
   );
-};
-
-PantryBasicDetails.propTypes = {
-  location: PropTypes.string.isRequired,
-  note: PropTypes.string,
-  quantity: PropTypes.number,
-  price: PropTypes.number,
-  updatedAt: PropTypes.string,
 };
