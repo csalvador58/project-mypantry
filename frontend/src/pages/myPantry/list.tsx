@@ -19,6 +19,7 @@ import { useSelection } from 'src/hooks/use-selection';
 import { PantryListSearch } from 'src/sections/dashboard/pantry/pantry-list-search';
 import { PantryListTable } from 'src/sections/dashboard/pantry/pantry-list-table';
 import type { Pantry } from 'src/types/pantry';
+import { paths } from 'src/paths';
 
 interface Filters {
   query?: string;
@@ -197,8 +198,9 @@ const Page = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
+                  href={paths.myPantry.add}
                 >
-                  Add
+                  Add To Pantry
                 </Button>
               </Stack>
             </Stack>

@@ -20,24 +20,24 @@ import type { Pantry } from 'src/types/pantry';
 
 import { myPantryApi } from 'src/api/myPantry';
 
-interface PantryEditFormProps {
+interface PantryAddFormProps {
   pantry: Pantry;
 }
 
-export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
+export const PantryAddForm: FC<PantryAddFormProps> = (props) => {
   const { pantry, ...other } = props;
   const formik = useFormik({
     initialValues: {
-      price: pantry.price || null,
-      note: pantry.note || '',
-      location1: pantry.location1 || false,
-      location2: pantry.location2 || false,
-      location3: pantry.location3 || false,
-      location4: pantry.location4 || false,
-      location5: pantry.location5 || false,
-      favorite: pantry.favorite || false,
-      name: pantry.name || '',
-      quantity: pantry.quantity || null,
+      price: null,
+      note: '',
+      location1: false,
+      location2: false,
+      location3: false,
+      location4: false,
+      location5: false,
+      favorite: false,
+      name: '',
+      quantity: null,
       submit: null,
     },
     validationSchema: Yup.object({
@@ -53,8 +53,6 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
       quantity: Yup.number().positive('Quantity must be greater than 0'),
     }),
     onSubmit: async (values, helpers): Promise<void> => {
-      console.log('values: ');
-      console.log(values);
       try {
         // NOTE: Make API request
         const response = await myPantryApi.updatePantryItem({
@@ -72,7 +70,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
         } as Pantry);
         
         if(response) {
-          alert('Pantry Item Updated!')
+          alert('Pantry Item Added!')
         } else {
           alert('Error encountered during update, item may be corrupted.')
         }
@@ -93,7 +91,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
   return (
     <form onSubmit={formik.handleSubmit} {...other}>
       <Card>
-        <CardHeader title={`Edit Pantry Item #: ${pantry.id}`} />
+        <CardHeader title={`Fill out form then click Add To Pantry:`} />
         <CardContent sx={{ pt: 0 }}>
           <Grid container spacing={3}>
             <Grid xs={12} md={6}>
@@ -248,13 +246,13 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
             type='submit'
             variant='contained'
           >
-            Update
+            Add To Pantry
           </Button>
           <Button
             color='inherit'
             component={RouterLink}
             disabled={formik.isSubmitting}
-            href={paths.myPantry.details}
+            href={paths.myPantry.index}
           >
             Cancel
           </Button>
@@ -264,7 +262,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
   );
 };
 
-PantryEditForm.propTypes = {
+PantryAddForm.propTypes = {
   // @ts-ignore
   pantry: PropTypes.object.isRequired,
 };

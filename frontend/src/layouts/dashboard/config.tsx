@@ -53,10 +53,10 @@ export const useSections = () => {
                 title: 'List',
                 path: paths.myPantry.index,
               },
-              // {
-              //   title: 'Details',
-              //   path: paths.myPantry.details
-              // },
+              {
+                title: 'Add',
+                path: paths.myPantry.add
+              },
               // {
               //   title: 'Edit',
               //   path: paths.myPantry.edit

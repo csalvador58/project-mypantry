@@ -8,6 +8,7 @@ import {
   fetchPantry,
   fetchPantryCount,
   fetchPantryItem,
+  fetchPantryItemAdd,
   fetchPantryItemUpdate,
   // fetchUpdatePantryItem,
 } from './fetchPantry';
@@ -39,12 +40,20 @@ export type UpdatePantryItemRequest = {
   data: PantryUpdate;
 };
 
-type UpdatePantryResponse = boolean;
+type AddUpdatePantryResponse = boolean;
 
 type GetPantryResponse = Promise<Pantry>;
 type GetPantryCountResponse = Promise<PantryCount>;
 
 class MyPantryApi {
+
+  async addPantryItem(
+    request: Pantry
+  ): Promise<AddUpdatePantryResponse> {
+    let data = await fetchPantryItemAdd(request);
+    return Promise.resolve(data);
+  }
+
   async getMyPantry(request: GetMyPantryRequest): Promise<GetMyPantryResponse> {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;
 
@@ -128,17 +137,17 @@ class MyPantryApi {
     let data = await fetchPantryItem(request.id);
     return Promise.resolve(deepCopy(data));
   }
-
-  async updatePantryItem(
-    request: Pantry
-  ): Promise<UpdatePantryResponse> {
-    let data = await fetchPantryItemUpdate(request);
-    return Promise.resolve(data);
-  }
-
+  
   async getPantryCount(): Promise<GetPantryCountResponse> {
     let count = await fetchPantryCount();
     return Promise.resolve(deepCopy(count));
+  }
+
+  async updatePantryItem(
+    request: Pantry
+  ): Promise<AddUpdatePantryResponse> {
+    let data = await fetchPantryItemUpdate(request);
+    return Promise.resolve(data);
   }
 }
 

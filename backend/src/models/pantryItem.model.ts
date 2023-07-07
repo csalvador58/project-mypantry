@@ -1,4 +1,5 @@
 import mongoose, { Document, Model } from 'mongoose';
+import { PANTRY_CONSTANTS as PANTRY } from '../utils/constants';
 
 export interface IPantryItem {
   name: string;
@@ -46,8 +47,8 @@ const pantryItemSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: true,
-      minLength: 2,
-      maxLength: 26,
+      minLength: PANTRY.MIN_NAME,
+      maxLength: PANTRY.MAX_NAME,
     },
     currency: { type: String, default: '$' },
     favorite: { type: Boolean, default: false },
@@ -56,7 +57,7 @@ const pantryItemSchema = new mongoose.Schema(
     location3: { type: Boolean, default: false },
     location4: { type: Boolean, default: false },
     location5: { type: Boolean, default: false },
-    note: { type: String, minLength: 2, maxLength: 300, default: '  ' },
+    note: { type: String, minLength: PANTRY.MIN_NOTE, maxLength: PANTRY.MAX_NOTE, default: '  ' },
     price: { type: Number, default: null },
     quantity: { type: Number, default: 0 },
     userId: {

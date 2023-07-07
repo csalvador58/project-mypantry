@@ -15,7 +15,7 @@ import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
-import { PantryEditForm } from 'src/sections/dashboard/pantry/pantry-edit-form';
+import { PantryAddForm } from 'src/sections/dashboard/pantry/pantry-add-form';
 import type { Pantry } from 'src/types/pantry';
 import { useParams } from 'react-router-dom';
 
@@ -59,7 +59,7 @@ const Page = () => {
 
   return (
     <>
-      <Seo title='Dashboard: Edit Item' />
+      <Seo title='Dashboard: Add Item' />
       <Box
         component='main'
         sx={{
@@ -98,16 +98,17 @@ const Page = () => {
               >
                 <Stack alignItems='center' direction='row' spacing={2}>
                   <Stack spacing={1}>
-                    <Typography variant='h4'>{pantry.name}</Typography>
+                    <Typography variant='h4'>*New Item*</Typography>
                     <Stack alignItems='center' direction='row' spacing={1}>
                       <Typography variant='subtitle2'>user_id:</Typography>
+                      {/* ACTION - Update below to userID when login is implemented */}
                       <Chip label={pantry.id} size='small' />
                     </Stack>
                   </Stack>
                 </Stack>
               </Stack>
             </Stack>
-            <PantryEditForm pantry={pantry} />
+            <PantryAddForm pantry={pantry} />
           </Stack>
         </Container>
       </Box>

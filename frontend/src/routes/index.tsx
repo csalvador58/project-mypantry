@@ -14,6 +14,7 @@ const Error500Page = lazy(() => import('src/pages/500'));
 const PantryListPage = lazy(() => import('src/pages/myPantry/list'));
 const PantryDetailPage = lazy(() => import('src/pages/myPantry/detail'));
 const PantryEditPage = lazy(() => import('src/pages/myPantry/edit'));
+const PantryAddPage = lazy(() => import('src/pages/myPantry/add'));
 
 export const routes: RouteObject[] = [
   {
@@ -35,6 +36,10 @@ export const routes: RouteObject[] = [
           {
             index: true,
             element: <PantryListPage />,
+          },
+          {
+            path: 'add',
+            element: <PantryAddPage />,
           },
           {
             path: ':pantryId',

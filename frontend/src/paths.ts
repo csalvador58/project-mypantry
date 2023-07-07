@@ -2,6 +2,7 @@ export const paths = {
   index: '/',
   myPantry: {
     index: '/myPantry',
+    add: '/myPantry/add',
     details: '/myPantry/:pantryId',
     edit: '/myPantry/:pantryId/edit'
   },

@@ -3,6 +3,7 @@ import InvalidInputError from '../errors/InvalidInputError';
 import catchAsync from '../utils/catchAsync';
 import { IUpdatePantryItem } from '../models/pantryItem.model';
 import { regexTextHelper } from './regexTextHelper';
+import { PANTRY_CONSTANTS as PANTRY } from './constants';
 
 export const validateInputs: RequestHandler = catchAsync((req, res, next) => {
   const pantryItem: IUpdatePantryItem = req.body;
@@ -12,7 +13,7 @@ export const validateInputs: RequestHandler = catchAsync((req, res, next) => {
 
     switch (propertyName) {
       case 'name': {
-        regex = /^(.{2,24})$/;
+        regex = new RegExp(`^(.{${PANTRY.MIN_NAME},${PANTRY.MAX_NAME}})$`);
         const isNameValid = regexTextHelper(regex, propertyValue);
         if (!isNameValid) {
           throw new InvalidInputError(`Invalid input for ${propertyName}`);
@@ -20,7 +21,7 @@ export const validateInputs: RequestHandler = catchAsync((req, res, next) => {
         break;
       }
       case 'note': {
-        regex = /^(.{2,300})$/;
+        regex = new RegExp(`^(.{${PANTRY.MIN_NOTE},${PANTRY.MAX_NOTE}})$`);
         const isNoteValid = regexTextHelper(regex, propertyValue);
         if (!isNoteValid) {
           throw new InvalidInputError(`Invalid input for ${propertyName}`);

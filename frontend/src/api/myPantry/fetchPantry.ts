@@ -10,7 +10,7 @@ interface IItem extends Omit<Pantry, 'id'> {
 }
 
 const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDlmNmI0MzFlNjg5ZWE4YzMyZjhkNGIiLCJpYXQiOjE2ODg2NjQxOTQuMTk3LCJleHAiOjE2ODg3NTA1OTQuMTk3fQ.uGRdlHLw_s7isvmgPGOyZZfkpmRF56HjUR1EDwNz0hM';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDlmNmI0MzFlNjg5ZWE4YzMyZjhkNGIiLCJpYXQiOjE2ODg3NTM3NTkuOTgyLCJleHAiOjE2ODg4NDAxNTkuOTgyfQ.G8wW6yVO6mvwBuo1DQqzQVLQ9pWcZT3P-zqh6PQGBSY';
 
 const DOMAIN = 'http://localhost:3001';
 const HEADERS = {
@@ -114,10 +114,52 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
   }
 };
 
+export const fetchPantryItemAdd = async (request: Pantry): Promise<boolean> => {
+  const body = {
+    name: request.name,
+    favorite: request.favorite,
+    location1: request.location1,
+    location2: request.location2,
+    location3: request.location3,
+    location4: request.location4,
+    location5: request.location5,
+    note: request.note,
+    price: request.price,
+    quantity: request.quantity,
+  };
+
+  try {
+    const url = `${DOMAIN}/pantry/add`;
+    const method = 'POST';
+    const response = await fetch(url, {
+      method: method,
+      headers: HEADERS,
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.error);
+      throw new Error(
+        `${response.status}: ${response.statusText}, ${data.error}`
+      );
+    }
+
+    const data = await response.json();
+
+    if (data.item) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred during the API call.', error);
+  }
+};
+
 export const fetchPantryItemUpdate = async (
   request: Pantry
 ): Promise<boolean> => {
-  let pantryData: Pantry = { id: 'null', name: 'null', note: 'null' };
   const body = {
     name: request.name,
     favorite: request.favorite,
