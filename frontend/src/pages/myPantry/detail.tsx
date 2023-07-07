@@ -27,7 +27,7 @@ import { PantryBasicDetails } from 'src/sections/dashboard/pantry/pantry-basic-d
 import { PantryDataManagement } from 'src/sections/dashboard/pantry/pantry-data-management';
 import type { Pantry } from 'src/types/pantry';
 import { getInitials } from 'src/utils/get-initials';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const tabs = [{ label: 'Details', value: 'details' }];
 
@@ -38,7 +38,9 @@ const usePantry = (): Pantry | null => {
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const response = await myPantryApi.getPantryItem({id: pantryId ? pantryId : ''});
+      const response = await myPantryApi.getPantryItem({
+        id: pantryId ? pantryId : '',
+      });
 
       if (isMounted()) {
         setPantry(response);
@@ -62,6 +64,7 @@ const usePantry = (): Pantry | null => {
 const Page = () => {
   const [currentTab, setCurrentTab] = useState<string>('details');
   const pantry = usePantry();
+  const navigate = useNavigate();
 
   usePageView();
 
@@ -102,6 +105,23 @@ const Page = () => {
         timeZoneName: 'short',
       })
     : '';
+
+  const deleteHandler = async (itemId: string) => {
+    console.log('itemId');
+    console.log(itemId);
+    try {
+      const response = await myPantryApi.deletePantryItem({ id: itemId });
+
+      if (response) {
+        alert('Pantry Item Deleted');
+        navigate(paths.myPantry.index)
+      } else {
+        alert('Error encountered during update, item may be corrupted.');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
@@ -208,7 +228,10 @@ const Page = () => {
                   </Grid>
                   <Grid xs={12} lg={8}>
                     <Stack spacing={4}>
-                      <PantryDataManagement />
+                      <PantryDataManagement
+                        itemId={pantry.id}
+                        deleteHandler={deleteHandler}
+                      />
                     </Stack>
                   </Grid>
                 </Grid>

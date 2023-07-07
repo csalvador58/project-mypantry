@@ -152,6 +152,35 @@ export const fetchPantryItemAdd = async (request: PantryAdd): Promise<boolean> =
   }
 };
 
+export const fetchPantryItemDelete = async (itemId: string): Promise<boolean> => {
+  try {
+    const url = `${DOMAIN}/pantry/${itemId}`;
+    const method = 'DELETE';
+    const response = await fetch(url, {
+      method: method,
+      headers: HEADERS,
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.error);
+      throw new Error(
+        `${response.status}: ${response.statusText}, ${data.error}`
+      );
+    }
+
+    const data = await response.json();
+
+    if (data.item) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred during the API call.');
+  }
+};
+
 export const fetchPantryItemUpdate = async (
   request: Pantry
 ): Promise<boolean> => {

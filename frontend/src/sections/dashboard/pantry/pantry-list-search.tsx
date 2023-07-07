@@ -187,7 +187,7 @@ export const PantryListSearch: FC<PantryListSearchProps> = (props) => {
       >
         <Box
           component="form"
-          onSubmit={handleQueryChange}
+          onChange={handleQueryChange}
           sx={{ flexGrow: 1 }}
         >
           <OutlinedInput
