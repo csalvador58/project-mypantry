@@ -56,7 +56,7 @@ const pantryItemSchema = new mongoose.Schema(
     location3: { type: Boolean, default: false },
     location4: { type: Boolean, default: false },
     location5: { type: Boolean, default: false },
-    note: { type: String, minLength: 2, maxLength: 300 },
+    note: { type: String, minLength: 2, maxLength: 300, default: '  ' },
     price: { type: Number, default: null },
     quantity: { type: Number, default: 0 },
     userId: {
