@@ -1,8 +1,6 @@
 import type { ChangeEvent, MouseEvent } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import Download01Icon from '@untitled-ui/icons-react/build/esm/Download01';
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
-import Upload01Icon from '@untitled-ui/icons-react/build/esm/Upload01';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -20,6 +18,7 @@ import { PantryListSearch } from 'src/sections/dashboard/pantry/pantry-list-sear
 import { PantryListTable } from 'src/sections/dashboard/pantry/pantry-list-table';
 import type { Pantry } from 'src/types/pantry';
 import { paths } from 'src/paths';
+import { RouterLink } from 'src/components/router-link';
 
 interface Filters {
   query?: string;
@@ -198,6 +197,7 @@ const Page = () => {
                     </SvgIcon>
                   )}
                   variant="contained"
+                  component={RouterLink}
                   href={paths.myPantry.add}
                 >
                   Add To Pantry

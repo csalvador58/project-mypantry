@@ -16,16 +16,17 @@ import Typography from '@mui/material/Typography';
 
 import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
-import type { Pantry } from 'src/types/pantry';
+import type { PantryAdd } from 'src/types/pantry';
 
 import { myPantryApi } from 'src/api/myPantry';
 
-interface PantryAddFormProps {
-  pantry: Pantry;
-}
+// interface PantryAddFormProps {
+//   pantry: Pantry;
+// }
 
-export const PantryAddForm: FC<PantryAddFormProps> = (props) => {
-  const { pantry, ...other } = props;
+// export const PantryAddForm: FC<PantryAddFormProps> = () => {
+export const PantryAddForm: FC = () => {
+  // const { pantry, ...other } = props;
   const formik = useFormik({
     initialValues: {
       price: null,
@@ -55,8 +56,8 @@ export const PantryAddForm: FC<PantryAddFormProps> = (props) => {
     onSubmit: async (values, helpers): Promise<void> => {
       try {
         // NOTE: Make API request
-        const response = await myPantryApi.updatePantryItem({
-          id: pantry.id,
+        const response = await myPantryApi.addPantryItem({
+          // id: pantry.id,
           favorite: values.favorite,
           location1: values.location1,
           location2: values.location2,
@@ -67,7 +68,7 @@ export const PantryAddForm: FC<PantryAddFormProps> = (props) => {
           note: values.note,
           price: values.price ? +values.price : null,
           quantity: values.quantity? +values.quantity : null,
-        } as Pantry);
+        } as PantryAdd);
         
         if(response) {
           alert('Pantry Item Added!')
@@ -89,7 +90,8 @@ export const PantryAddForm: FC<PantryAddFormProps> = (props) => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} {...other}>
+    // <form onSubmit={formik.handleSubmit} {...other}>
+    <form onSubmit={formik.handleSubmit}>
       <Card>
         <CardHeader title={`Fill out form then click Add To Pantry:`} />
         <CardContent sx={{ pt: 0 }}>
@@ -262,7 +264,7 @@ export const PantryAddForm: FC<PantryAddFormProps> = (props) => {
   );
 };
 
-PantryAddForm.propTypes = {
-  // @ts-ignore
-  pantry: PropTypes.object.isRequired,
-};
+// PantryAddForm.propTypes = {
+//   // @ts-ignore
+//   pantry: PropTypes.object.isRequired,
+// };

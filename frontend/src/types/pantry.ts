@@ -19,7 +19,7 @@ export interface PantryCount {
   count: number;
 }
 
-export interface PantryUpdate
+export interface PantryAdd
   extends Omit<Pantry, 'id' | 'currency' | 'createdAt' | 'updatedAt'> {}
 
 export interface PantryUpdateStatus {

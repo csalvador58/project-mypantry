@@ -20,6 +20,8 @@ import { myPantryApi } from 'src/api/myPantry';
 import { useMounted } from 'src/hooks/use-mounted';
 import { useCallback, useEffect, useState } from 'react';
 import { PantryCount } from 'src/types/pantry';
+import { RouterLink } from 'src/components/router-link';
+import { paths } from 'src/paths';
 
 const now = new Date();
 
@@ -87,6 +89,8 @@ const Page = () => {
                         </SvgIcon>
                       }
                       variant='contained'
+                      component={RouterLink}
+                      href={paths.myPantry.add}
                     >
                       Add Pantry Item
                     </Button>

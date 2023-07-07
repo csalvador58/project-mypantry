@@ -1,9 +1,4 @@
-import {
-  Pantry,
-  PantryCount,
-  PantryUpdate,
-  PantryUpdateStatus,
-} from 'src/types/pantry';
+import { Pantry, PantryAdd, PantryCount } from 'src/types/pantry';
 
 interface IItem extends Omit<Pantry, 'id'> {
   _id: string;
@@ -114,7 +109,7 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
   }
 };
 
-export const fetchPantryItemAdd = async (request: Pantry): Promise<boolean> => {
+export const fetchPantryItemAdd = async (request: PantryAdd): Promise<boolean> => {
   const body = {
     name: request.name,
     favorite: request.favorite,

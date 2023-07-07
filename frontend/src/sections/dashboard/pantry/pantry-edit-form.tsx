@@ -254,7 +254,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
             color='inherit'
             component={RouterLink}
             disabled={formik.isSubmitting}
-            href={paths.myPantry.details}
+            href={`/myPantry/${pantry.id}`}
           >
             Cancel
           </Button>

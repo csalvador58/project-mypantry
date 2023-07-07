@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useState } from 'react';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -9,53 +8,14 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-import { myPantryApi } from 'src/api/myPantry';
 import { RouterLink } from 'src/components/router-link';
 import { Seo } from 'src/components/seo';
-import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
 import { PantryAddForm } from 'src/sections/dashboard/pantry/pantry-add-form';
-import type { Pantry } from 'src/types/pantry';
-import { useParams } from 'react-router-dom';
-
-const usePantry = (): Pantry | null => {
-  const isMounted = useMounted();
-  const [pantry, setPantry] = useState<Pantry | null>(null);
-  const { pantryId } = useParams();
-
-  const handlePantryGet = useCallback(async () => {
-    try {
-      const request = {id: pantryId ? pantryId : ''}
-      const response = await myPantryApi.getPantryItem(request);
-
-      if (isMounted()) {
-        setPantry(response);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [isMounted, pantryId]);
-
-  useEffect(
-    () => {
-      handlePantryGet();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
-  return pantry;
-};
 
 const Page = () => {
-  const pantry = usePantry();
-
   usePageView();
-
-  if (!pantry) {
-    return null;
-  }
 
   return (
     <>
@@ -102,13 +62,14 @@ const Page = () => {
                     <Stack alignItems='center' direction='row' spacing={1}>
                       <Typography variant='subtitle2'>user_id:</Typography>
                       {/* ACTION - Update below to userID when login is implemented */}
-                      <Chip label={pantry.id} size='small' />
+                      <Chip label={'ACTION - This will be updated userID when login is implemented'} size='small' />
                     </Stack>
                   </Stack>
                 </Stack>
               </Stack>
             </Stack>
-            <PantryAddForm pantry={pantry} />
+            {/* <PantryAddForm pantry={pantry} /> */}
+            <PantryAddForm />
           </Stack>
         </Container>
       </Box>
