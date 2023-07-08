@@ -46,7 +46,6 @@ type SignInResponse = Promise<{
 
 type SignUpRequest = {
   username: string;
-  name: string;
   password: string;
 }
 
@@ -104,7 +103,7 @@ class AuthApi {
   }
 
   async signUp(request: SignUpRequest): SignUpResponse {
-    const { username, name, password } = request;
+    const { username, password } = request;
 
     await wait(1000);
 
@@ -128,7 +127,6 @@ class AuthApi {
           id: createResourceId(),
           avatar: undefined,
           username,
-          name,
           password,
           plan: 'Standard'
         };

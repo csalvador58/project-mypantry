@@ -32,27 +32,6 @@ export const routes: RouteObject[] = [
         index: true,
         element: <HomePage />,
       },
-      // {
-      //   path: 'myPantry',
-      //   children: [
-      //     {
-      //       index: true,
-      //       element: <PantryListPage />,
-      //     },
-      //     {
-      //       path: 'add',
-      //       element: <PantryAddPage />,
-      //     },
-      //     {
-      //       path: ':pantryId',
-      //       element: <PantryDetailPage />,
-      //     },
-      //     {
-      //       path: ':pantryId/edit',
-      //       element: <PantryEditPage />,
-      //     },
-      //   ],
-      // },
     ],
   },
   ...authRoutes,

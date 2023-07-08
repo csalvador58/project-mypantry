@@ -164,8 +164,8 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
   );
 
   const signUp = useCallback(
-    async (username: string, name: string, password: string): Promise<void> => {
-      const { accessToken } = await authApi.signUp({ username, name, password });
+    async (username: string, password: string): Promise<void> => {
+      const { accessToken } = await authApi.signUp({ username, password });
       const user = await authApi.me({ accessToken });
 
       sessionStorage.setItem(STORAGE_KEY, accessToken);
