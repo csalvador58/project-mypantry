@@ -27,7 +27,8 @@ import { PantryBasicDetails } from 'src/sections/dashboard/pantry/pantry-basic-d
 import { PantryDataManagement } from 'src/sections/dashboard/pantry/pantry-data-management';
 import type { Pantry } from 'src/types/pantry';
 import { getInitials } from 'src/utils/get-initials';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useRouter } from 'src/hooks/use-router';
 
 const tabs = [{ label: 'Details', value: 'details' }];
 
@@ -64,7 +65,7 @@ const usePantry = (): Pantry | null => {
 const Page = () => {
   const [currentTab, setCurrentTab] = useState<string>('details');
   const pantry = usePantry();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   usePageView();
 
@@ -114,7 +115,7 @@ const Page = () => {
 
       if (response) {
         alert('Pantry Item Deleted');
-        navigate(paths.myPantry.index)
+        router.replace(paths.myPantry.index)
       } else {
         alert('Error encountered during update, item may be corrupted.');
       }

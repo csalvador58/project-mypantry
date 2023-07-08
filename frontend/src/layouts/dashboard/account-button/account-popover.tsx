@@ -19,6 +19,8 @@ import { RouterLink } from 'src/components/router-link';
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 import { useRouter } from 'src/hooks/use-router';
 import { paths } from 'src/paths';
+import { useAuth } from 'src/hooks/use-auth';
+import { Issuer } from 'src/utils/auth';
 
 interface AccountPopoverProps {
   anchorEl: null | Element;
@@ -29,13 +31,25 @@ interface AccountPopoverProps {
 export const AccountPopover: FC<AccountPopoverProps> = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const router = useRouter();
+  const auth = useAuth();
   const user = useMockedUser();
 
   const handleLogout = useCallback(
     async (): Promise<void> => {
       try {
         onClose?.();
-        router.push(paths.index);
+        switch (auth.issuer) {
+          case Issuer.JWT: {
+            await auth.signOut();
+            break;
+          }
+
+          default: {
+            console.warn('Using an unknown Auth Issuer, did not log out');
+          }
+        }
+        // console.log('logout')
+        // router.push(paths.index);
       } catch (err) {
         console.error(err);
         toast.error('Something went wrong!');
@@ -65,7 +79,7 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
           color="text.secondary"
           variant="body2"
         >
-          {user.email}
+          {user.username}
         </Typography>
       </Box>
       <Divider />

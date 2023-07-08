@@ -15,6 +15,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { RouterLink } from 'src/components/router-link';
+import { useRouter } from 'src/hooks/use-router';
 import { paths } from 'src/paths';
 import type { PantryAdd } from 'src/types/pantry';
 
@@ -27,6 +28,7 @@ import { myPantryApi } from 'src/api/myPantry';
 // export const PantryAddForm: FC<PantryAddFormProps> = () => {
 export const PantryAddForm: FC = () => {
   // const { pantry, ...other } = props;
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       price: null,
@@ -72,6 +74,8 @@ export const PantryAddForm: FC = () => {
         
         if(response) {
           alert('Pantry Item Added!')
+          router.replace(paths.myPantry.index);
+          
         } else {
           alert('Error encountered during update, item may be corrupted.')
         }
