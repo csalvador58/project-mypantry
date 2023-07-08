@@ -3,8 +3,10 @@ import type { RouteObject } from 'react-router';
 import { Outlet } from 'react-router-dom';
 
 import { Layout as DashboardLayout } from 'src/layouts/dashboard';
+import { authRoutes } from './auth';
+import { myPantryRoutes } from './myPantry';
 // import HomePage from 'src/pages';
-const HomePage = lazy(() => import('src/pages'));
+const HomePage = lazy(() => import('src/pages/index'));
 
 const Error401Page = lazy(() => import('src/pages/401'));
 const Error404Page = lazy(() => import('src/pages/404'));
@@ -30,29 +32,31 @@ export const routes: RouteObject[] = [
         index: true,
         element: <HomePage />,
       },
-      {
-        path: 'myPantry',
-        children: [
-          {
-            index: true,
-            element: <PantryListPage />,
-          },
-          {
-            path: 'add',
-            element: <PantryAddPage />,
-          },
-          {
-            path: ':pantryId',
-            element: <PantryDetailPage />,
-          },
-          {
-            path: ':pantryId/edit',
-            element: <PantryEditPage />,
-          },
-        ],
-      },
+      // {
+      //   path: 'myPantry',
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <PantryListPage />,
+      //     },
+      //     {
+      //       path: 'add',
+      //       element: <PantryAddPage />,
+      //     },
+      //     {
+      //       path: ':pantryId',
+      //       element: <PantryDetailPage />,
+      //     },
+      //     {
+      //       path: ':pantryId/edit',
+      //       element: <PantryEditPage />,
+      //     },
+      //   ],
+      // },
     ],
   },
+  ...authRoutes,
+  ...myPantryRoutes,
   {
     path: '401',
     element: <Error401Page />,

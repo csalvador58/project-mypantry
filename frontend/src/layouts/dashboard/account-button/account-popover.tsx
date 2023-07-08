@@ -65,7 +65,7 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
           color="text.secondary"
           variant="body2"
         >
-          {user.email}
+          {user.username}
         </Typography>
       </Box>
       <Divider />
