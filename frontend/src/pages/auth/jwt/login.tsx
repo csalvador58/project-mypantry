@@ -60,7 +60,7 @@ const Page = () => {
         await signIn(values.username, values.password);
 
         if (isMounted()) {
-          router.push(returnTo || paths.myPantry.index);
+          router.push(returnTo || paths.index);
           // router.push(paths.myPantry.index);
         }
       } catch (err) {

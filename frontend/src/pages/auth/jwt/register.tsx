@@ -69,7 +69,7 @@ const Page = () => {
     validationSchema,
     onSubmit: async (values, helpers): Promise<void> => {
       try {
-        await signUp(values.username, values.name, values.password);
+        await signUp(values.username, values.password);
 
         if (isMounted()) {
           router.push(returnTo || paths.myPantry.index);

@@ -19,6 +19,7 @@ import { paths } from 'src/paths';
 import type { Pantry } from 'src/types/pantry';
 
 import { myPantryApi } from 'src/api/myPantry';
+import { useRouter } from 'src/hooks/use-router';
 
 interface PantryEditFormProps {
   pantry: Pantry;
@@ -26,6 +27,7 @@ interface PantryEditFormProps {
 
 export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
   const { pantry, ...other } = props;
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       price: pantry.price || null,
@@ -53,8 +55,6 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
       quantity: Yup.number().positive('Quantity must be greater than 0'),
     }),
     onSubmit: async (values, helpers): Promise<void> => {
-      console.log('values: ');
-      console.log(values);
       try {
         // NOTE: Make API request
         const response = await myPantryApi.updatePantryItem({
@@ -73,6 +73,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
         
         if(response) {
           alert('Pantry Item Updated!')
+          router.replace(paths.myPantry.index)
         } else {
           alert('Error encountered during update, item may be corrupted.')
         }

@@ -16,11 +16,11 @@ export const myPantryRoutes: RouteObject[] = [
   {
     path: 'myPantry',
     element: (
-      <DashboardLayout>
+      // <DashboardLayout>
         <Suspense>
           <Outlet />
         </Suspense>
-      </DashboardLayout>
+      // </DashboardLayout>
     ),
     children: [
       {

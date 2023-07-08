@@ -24,8 +24,6 @@ import { createTheme } from 'src/theme';
 // Remove if locales are not used
 import 'src/locales/i18n';
 import { SplashScreen } from './components/splash-screen';
-import { Layout as AuthLayout } from 'src/layouts/auth/modern-layout';
-import JwtLoginPage from 'src/pages/auth/jwt/login';
 
 export const App: FC = () => {
   useNprogress();
@@ -73,9 +71,6 @@ export const App: FC = () => {
                           <CssBaseline />
                           {showSlashScreen ? (
                             <SplashScreen />
-                            // <AuthLayout>
-                            //   <JwtLoginPage />
-                            // </AuthLayout>
                           ) : (
                             <>
                               {element}
