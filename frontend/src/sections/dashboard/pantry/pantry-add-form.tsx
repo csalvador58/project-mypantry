@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useState, type FC } from 'react';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
@@ -20,6 +20,7 @@ import { paths } from 'src/paths';
 import type { PantryAdd } from 'src/types/pantry';
 
 import { myPantryApi } from 'src/api/myPantry';
+import ErrorHandler from 'src/error/error-handler';
 
 // interface PantryAddFormProps {
 //   pantry: Pantry;
@@ -27,6 +28,7 @@ import { myPantryApi } from 'src/api/myPantry';
 
 // export const PantryAddForm: FC<PantryAddFormProps> = () => {
 export const PantryAddForm: FC = () => {
+  const [error, setError] = useState<Error | null>(null);
   // const { pantry, ...other } = props;
   const router = useRouter();
   const formik = useFormik({
@@ -69,202 +71,203 @@ export const PantryAddForm: FC = () => {
           name: values.name,
           note: values.note,
           price: values.price ? +values.price : null,
-          quantity: values.quantity? +values.quantity : null,
+          quantity: values.quantity ? +values.quantity : null,
         } as PantryAdd);
-        
-        if(response) {
-          alert('Pantry Item Added!')
+
+        if (response) {
+          alert('Pantry Item Added!');
           router.replace(paths.myPantry.index);
-          
         } else {
-          alert('Error encountered during update, item may be corrupted.')
+          alert('Error encountered during update, item may be corrupted.');
         }
         // await wait(500);
         helpers.setStatus({ success: true });
         helpers.setSubmitting(false);
         toast.success('Pantry updated');
       } catch (err) {
-        console.error(err);
         toast.error('Something went wrong!');
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
+        setError(err);
       }
     },
   });
 
   return (
-    // <form onSubmit={formik.handleSubmit} {...other}>
-    <form onSubmit={formik.handleSubmit}>
-      <Card>
-        <CardHeader title={`Fill out form then click Add To Pantry:`} />
-        <CardContent sx={{ pt: 0 }}>
-          <Grid container spacing={3}>
-            <Grid xs={12} md={6}>
-              <TextField
-                error={!!(formik.touched.name && formik.errors.name)}
-                fullWidth
-                helperText={formik.touched.name && formik.errors.name}
-                label='Name'
-                name='name'
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                required
-                value={formik.values.name}
-              />
+    <ErrorHandler error={error}>
+      {/* <form onSubmit={formik.handleSubmit} {...other}> */}
+      <form onSubmit={formik.handleSubmit}>
+        <Card>
+          <CardHeader title={`Fill out form then click Add To Pantry:`} />
+          <CardContent sx={{ pt: 0 }}>
+            <Grid container spacing={3}>
+              <Grid xs={12} md={6}>
+                <TextField
+                  error={!!(formik.touched.name && formik.errors.name)}
+                  fullWidth
+                  helperText={formik.touched.name && formik.errors.name}
+                  label='Name'
+                  name='name'
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  required
+                  value={formik.values.name}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <TextField
+                  error={!!(formik.touched.quantity && formik.errors.quantity)}
+                  fullWidth
+                  helperText={formik.touched.quantity && formik.errors.quantity}
+                  label='Quantity'
+                  name='quantity'
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.quantity ? formik.values.quantity : ''}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <TextField
+                  error={!!(formik.touched.price && formik.errors.price)}
+                  fullWidth
+                  helperText={formik.touched.price && formik.errors.price}
+                  label='Price Tracker'
+                  name='price'
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.price ? formik.values.price : ''}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <TextField
+                  error={!!(formik.touched.note && formik.errors.note)}
+                  fullWidth
+                  helperText={formik.touched.note && formik.errors.note}
+                  label='Note'
+                  name='note'
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  required
+                  value={formik.values.note}
+                />
+              </Grid>
             </Grid>
-            <Grid xs={12} md={6}>
-              <TextField
-                error={!!(formik.touched.quantity && formik.errors.quantity)}
-                fullWidth
-                helperText={formik.touched.quantity && formik.errors.quantity}
-                label='Quantity'
-                name='quantity'
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.quantity ? formik.values.quantity : ''}
-              />
-            </Grid>
-            <Grid xs={12} md={6}>
-              <TextField
-                error={!!(formik.touched.price && formik.errors.price)}
-                fullWidth
-                helperText={formik.touched.price && formik.errors.price}
-                label='Price Tracker'
-                name='price'
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.price ? formik.values.price : ''}
-              />
-            </Grid>
-            <Grid xs={12} md={6}>
-              <TextField
-                error={!!(formik.touched.note && formik.errors.note)}
-                fullWidth
-                helperText={formik.touched.note && formik.errors.note}
-                label='Note'
-                name='note'
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                required
-                value={formik.values.note}
-              />
-            </Grid>
-          </Grid>
-          <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
-            <Stack alignItems='center' direction='row' spacing={3}>
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Pantry 1
-                </Typography>
+            <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
+              <Stack alignItems='center' direction='row' spacing={3}>
+                <Stack spacing={1}>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Pantry 1
+                  </Typography>
+                </Stack>
+                <Switch
+                  checked={formik.values.location1}
+                  color='primary'
+                  edge='start'
+                  name='location1'
+                  onChange={formik.handleChange}
+                  value={formik.values.location1}
+                />
+                <Stack spacing={1}>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Pantry 2
+                  </Typography>
+                </Stack>
+                <Switch
+                  checked={formik.values.location2}
+                  color='primary'
+                  edge='start'
+                  name='location2'
+                  onChange={formik.handleChange}
+                  value={formik.values.location2}
+                />
+                <Stack spacing={1}>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Pantry 3
+                  </Typography>
+                </Stack>
+                <Switch
+                  checked={formik.values.location3}
+                  color='primary'
+                  edge='start'
+                  name='location3'
+                  onChange={formik.handleChange}
+                  value={formik.values.location3}
+                />
+                <Stack spacing={1}>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Freezer
+                  </Typography>
+                </Stack>
+                <Switch
+                  checked={formik.values.location4}
+                  color='primary'
+                  edge='start'
+                  name='location4'
+                  onChange={formik.handleChange}
+                  value={formik.values.location4}
+                />
+                <Stack spacing={1}>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Other
+                  </Typography>
+                </Stack>
+                <Switch
+                  checked={formik.values.location5}
+                  color='primary'
+                  edge='start'
+                  name='location5'
+                  onChange={formik.handleChange}
+                  value={formik.values.location5}
+                />
               </Stack>
-              <Switch
-                checked={formik.values.location1}
-                color='primary'
-                edge='start'
-                name='location1'
-                onChange={formik.handleChange}
-                value={formik.values.location1}
-              />
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Pantry 2
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location2}
-                color='primary'
-                edge='start'
-                name='location2'
-                onChange={formik.handleChange}
-                value={formik.values.location2}
-              />
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Pantry 3
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location3}
-                color='primary'
-                edge='start'
-                name='location3'
-                onChange={formik.handleChange}
-                value={formik.values.location3}
-              />
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Freezer
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location4}
-                color='primary'
-                edge='start'
-                name='location4'
-                onChange={formik.handleChange}
-                value={formik.values.location4}
-              />
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Other
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location5}
-                color='primary'
-                edge='start'
-                name='location5'
-                onChange={formik.handleChange}
-                value={formik.values.location5}
-              />
             </Stack>
-          </Stack>
-          <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
-            <Stack alignItems='center' direction='row' spacing={3}>
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Favorite
-                </Typography>
+            <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
+              <Stack alignItems='center' direction='row' spacing={3}>
+                <Stack spacing={1}>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Favorite
+                  </Typography>
+                </Stack>
+                <Switch
+                  checked={formik.values.favorite}
+                  color='primary'
+                  edge='start'
+                  name='favorite'
+                  onChange={formik.handleChange}
+                  value={formik.values.favorite}
+                />
               </Stack>
-              <Switch
-                checked={formik.values.favorite}
-                color='primary'
-                edge='start'
-                name='favorite'
-                onChange={formik.handleChange}
-                value={formik.values.favorite}
-              />
             </Stack>
+          </CardContent>
+          <Stack
+            direction={{
+              xs: 'column',
+              sm: 'row',
+            }}
+            flexWrap='wrap'
+            spacing={3}
+            sx={{ p: 3 }}
+          >
+            <Button
+              disabled={formik.isSubmitting}
+              type='submit'
+              variant='contained'
+            >
+              Add To Pantry
+            </Button>
+            <Button
+              color='inherit'
+              component={RouterLink}
+              disabled={formik.isSubmitting}
+              href={paths.myPantry.index}
+            >
+              Cancel
+            </Button>
           </Stack>
-        </CardContent>
-        <Stack
-          direction={{
-            xs: 'column',
-            sm: 'row',
-          }}
-          flexWrap='wrap'
-          spacing={3}
-          sx={{ p: 3 }}
-        >
-          <Button
-            disabled={formik.isSubmitting}
-            type='submit'
-            variant='contained'
-          >
-            Add To Pantry
-          </Button>
-          <Button
-            color='inherit'
-            component={RouterLink}
-            disabled={formik.isSubmitting}
-            href={paths.myPantry.index}
-          >
-            Cancel
-          </Button>
-        </Stack>
-      </Card>
-    </form>
+        </Card>
+      </form>
+    </ErrorHandler>
   );
 };
 

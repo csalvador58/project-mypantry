@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -18,22 +24,28 @@ import { paths } from 'src/paths';
 import { PantryEditForm } from 'src/sections/dashboard/pantry/pantry-edit-form';
 import type { Pantry } from 'src/types/pantry';
 import { useParams } from 'react-router-dom';
+import ErrorHandler from 'src/error/error-handler';
 
-const usePantry = (): Pantry | null => {
+const usePantry = (
+  setError: Dispatch<SetStateAction<Error | null>>
+): Pantry | null => {
   const isMounted = useMounted();
   const [pantry, setPantry] = useState<Pantry | null>(null);
   const { pantryId } = useParams();
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const request = {id: pantryId ? pantryId : ''}
+      const request = { id: pantryId ? pantryId : '' };
       const response = await myPantryApi.getPantryItem(request);
 
       if (isMounted()) {
         setPantry(response);
       }
     } catch (err) {
-      console.error(err);
+      if (isMounted()) {
+        setPantry(null);
+      }
+      setError(err);
     }
   }, [isMounted, pantryId]);
 
@@ -49,7 +61,8 @@ const usePantry = (): Pantry | null => {
 };
 
 const Page = () => {
-  const pantry = usePantry();
+  const [error, setError] = useState<Error | null>(null);
+  const pantry = usePantry(setError);
 
   usePageView();
 
@@ -58,7 +71,7 @@ const Page = () => {
   }
 
   return (
-    <>
+    <ErrorHandler error={error}>
       <Seo title='Dashboard: Edit Item' />
       <Box
         component='main'
@@ -111,7 +124,7 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
-    </>
+    </ErrorHandler>
   );
 };
 

@@ -1,4 +1,4 @@
-import type { ChangeEvent, MouseEvent } from 'react';
+import type { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
 import Box from '@mui/material/Box';
@@ -19,6 +19,8 @@ import { PantryListTable } from 'src/sections/dashboard/pantry/pantry-list-table
 import type { Pantry } from 'src/types/pantry';
 import { paths } from 'src/paths';
 import { RouterLink } from 'src/components/router-link';
+import { ErrorLogger } from 'src/error/error-logger';
+import ErrorHandler from 'src/error/error-handler';
 
 interface Filters {
   query?: string;
@@ -45,30 +47,27 @@ const useMyPantrySearch = () => {
       location2: undefined,
       location3: undefined,
       location4: undefined,
-      location5: undefined
+      location5: undefined,
     },
     page: 0,
     rowsPerPage: 5,
     sortBy: 'updatedAt',
-    sortDir: 'desc'
+    sortDir: 'desc',
   });
 
-  const handleFiltersChange = useCallback(
-    (filters: Filters): void => {
-      setState((prevState) => ({
-        ...prevState,
-        filters
-      }));
-    },
-    []
-  );
+  const handleFiltersChange = useCallback((filters: Filters): void => {
+    setState((prevState) => ({
+      ...prevState,
+      filters,
+    }));
+  }, []);
 
   const handleSortChange = useCallback(
-    (sort: { sortBy: string; sortDir: 'asc' | 'desc'; }): void => {
+    (sort: { sortBy: string; sortDir: 'asc' | 'desc' }): void => {
       setState((prevState) => ({
         ...prevState,
         sortBy: sort.sortBy,
-        sortDir: sort.sortDir
+        sortDir: sort.sortDir,
       }));
     },
     []
@@ -78,7 +77,7 @@ const useMyPantrySearch = () => {
     (event: MouseEvent<HTMLButtonElement> | null, page: number): void => {
       setState((prevState) => ({
         ...prevState,
-        page
+        page,
       }));
     },
     []
@@ -88,7 +87,7 @@ const useMyPantrySearch = () => {
     (event: ChangeEvent<HTMLInputElement>): void => {
       setState((prevState) => ({
         ...prevState,
-        rowsPerPage: parseInt(event.target.value, 10)
+        rowsPerPage: parseInt(event.target.value, 10),
       }));
     },
     []
@@ -99,7 +98,7 @@ const useMyPantrySearch = () => {
     handleSortChange,
     handlePageChange,
     handleRowsPerPageChange,
-    state
+    state,
   };
 };
 
@@ -108,30 +107,37 @@ interface MyPantryStoreState {
   myPantryCount: number;
 }
 
-const useMyPantryStore = (searchState: MyPantrySearchState) => {
+const useMyPantryStore = (
+  searchState: MyPantrySearchState,
+  setError: Dispatch<SetStateAction<Error | null>>
+) => {
   const isMounted = useMounted();
   const [state, setState] = useState<MyPantryStoreState>({
     myPantry: [],
-    myPantryCount: 0
+    myPantryCount: 0,
   });
 
-  const handleMyPantryGet = useCallback(
-    async () => {
-      try {
-        const response = await myPantryApi.getMyPantry(searchState);
+  const handleMyPantryGet = useCallback(async () => {
+    try {
+      const response = await myPantryApi.getMyPantry(searchState);
 
-        if (isMounted()) {
-          setState({
-            myPantry: response.data,
-            myPantryCount: response.count
-          });
-        }
-      } catch (err) {
-        console.error(err);
+      if (isMounted()) {
+        setState({
+          myPantry: response.data,
+          myPantryCount: response.count,
+        });
       }
-    },
-    [searchState, isMounted]
-  );
+    } catch (err) {
+      if (isMounted()) {
+        setState({
+          myPantry: [],
+          myPantryCount: 0,
+        });
+      }
+      // ErrorLogger(err);
+      setError(err);
+    }
+  }, [searchState, isMounted]);
 
   useEffect(
     () => {
@@ -142,61 +148,49 @@ const useMyPantryStore = (searchState: MyPantrySearchState) => {
   );
 
   return {
-    ...state
+    ...state,
   };
 };
 
 const useMyPantryIds = (myPantry: Pantry[] = []) => {
-  return useMemo(
-    () => {
-      return myPantry.map((pantry) => pantry.id);
-    },
-    [myPantry]
-  );
+  return useMemo(() => {
+    return myPantry.map((pantry) => pantry.id);
+  }, [myPantry]);
 };
 
 const Page = () => {
+  const [error, setError] = useState<Error | null>(null);
   const myPantrySearch = useMyPantrySearch();
-  const myPantryStore = useMyPantryStore(myPantrySearch.state);
+  const myPantryStore = useMyPantryStore(myPantrySearch.state, setError);
   const myPantryIds = useMyPantryIds(myPantryStore.myPantry);
   const myPantrySelection = useSelection<string>(myPantryIds);
 
   usePageView();
 
   return (
-    <>
-      <Seo title="Dashboard: Pantry List" />
+    <ErrorHandler error={error}>
+      <Seo title='Dashboard: Pantry List' />
       <Box
-        component="main"
+        component='main'
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth='xl'>
           <Stack spacing={4}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              spacing={4}
-            >
+            <Stack direction='row' justifyContent='space-between' spacing={4}>
               <Stack spacing={1}>
-                <Typography variant="h4">
-                  Pantry
-                </Typography>
+                <Typography variant='h4'>Pantry</Typography>
               </Stack>
-              <Stack
-                alignItems="center"
-                direction="row"
-                spacing={3}
-              >
+              <Stack alignItems='center' direction='row' spacing={3}>
                 <Button
-                  startIcon={(
+                  startIcon={
                     <SvgIcon>
                       <PlusIcon />
                     </SvgIcon>
-                  )}
-                  variant="contained"
+                  }
+                  variant='contained'
                   component={RouterLink}
                   href={paths.myPantry.add}
                 >
@@ -228,7 +222,7 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
-    </>
+    </ErrorHandler>
   );
 };
 

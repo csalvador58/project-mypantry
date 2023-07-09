@@ -56,7 +56,7 @@ export const fetchPantry = async (): Promise<Pantry[]> => {
 
     return pantryData;
   } catch (error) {
-    throw new ApiError('Error occurred during fetchPantry API call.');
+    throw new ApiError(error.message);
   }
 };
 
@@ -107,7 +107,7 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
 
     return pantryData;
   } catch (error) {
-    throw new ApiError('Error occurred during fetchPantryItem API call.');
+    throw new ApiError(error.message);
   }
 };
 
@@ -154,7 +154,7 @@ export const fetchPantryItemAdd = async (
     }
     return false;
   } catch (error) {
-    throw new ApiError('Error occurred during fetchPantryItemAdd API call.');
+    throw new ApiError(error.message);
   }
 };
 
@@ -187,7 +187,7 @@ export const fetchPantryItemDelete = async (
     }
     return false;
   } catch (error) {
-    throw new ApiError('Error occurred during fetchPantryItemDelete API call.');
+    throw new ApiError(error.message);
   }
 };
 
@@ -234,7 +234,7 @@ export const fetchPantryItemUpdate = async (
     }
     return false;
   } catch (error) {
-    throw new ApiError('Error occurred during fetchPantryItemUpdate API call.');
+    throw new ApiError(error.message);
   }
 };
 
@@ -264,6 +264,6 @@ export const fetchPantryCount = async (): Promise<PantryCount> => {
     return data ? { count: data.pantryCount } : pantryNull;
   } catch (error) {
     // console.error(error);
-    throw new ApiError('Error occurred during fetchPantryCount API call.');
+    throw new ApiError(error.message);
   }
 };

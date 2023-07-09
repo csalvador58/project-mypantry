@@ -18,15 +18,23 @@ import { OverviewRecipeSuggestions } from 'src/sections/dashboard/overview/overv
 
 import { myPantryApi } from 'src/api/myPantry';
 import { useMounted } from 'src/hooks/use-mounted';
-import { useCallback, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { PantryCount } from 'src/types/pantry';
 import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
-import { ErrorLogger } from 'src/error/error-logger';
+import ErrorHandler from 'src/error/error-handler';
 
 const now = new Date();
 
-const usePantry = (): PantryCount => {
+const usePantry = (
+  setError: Dispatch<SetStateAction<Error | null>>
+): PantryCount => {
   const isMounted = useMounted();
   const [pantryCount, setPantryCount] = useState<PantryCount>({ count: 0 });
 
@@ -38,10 +46,10 @@ const usePantry = (): PantryCount => {
         setPantryCount(response);
       }
     } catch (err) {
-      ErrorLogger(err);
       if (isMounted()) {
-        setPantryCount({count: 0});
+        setPantryCount({ count: 0 });
       }
+      setError(err);
     }
   }, [isMounted]);
 
@@ -57,11 +65,12 @@ const usePantry = (): PantryCount => {
 };
 
 const Page = () => {
-  const pantry = usePantry();
+  const [error, setError] = useState<Error | null>(null);
+  const pantry = usePantry(setError);
   const settings = useSettings();
 
   return (
-    <>
+    <ErrorHandler error={error}>
       <Seo title='My Pantry: Overview' />
       <Box
         component='main'
@@ -163,7 +172,7 @@ const Page = () => {
           </Grid>
         </Container>
       </Box>
-    </>
+    </ErrorHandler>
   );
 };
 

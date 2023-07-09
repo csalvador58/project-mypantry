@@ -16,8 +16,6 @@ const Error500Page = lazy(() => import('src/pages/500'));
 const ProtectedRoutes: React.FC = () => {
   const { isAuthenticated } = useAuth();
 
-  console.log('isAuthenticated')
-  console.log(isAuthenticated)
   if (!isAuthenticated) {
     return <Navigate to="/auth/jwt/login" />
   }

@@ -13,6 +13,7 @@ import {
   fetchPantryItemUpdate,
   // fetchUpdatePantryItem,
 } from './fetchPantry';
+import { ApiError } from 'src/error/error-classes';
 
 export type GetMyPantryRequest = {
   filters?: {
@@ -145,8 +146,13 @@ class MyPantryApi {
   }
 
   async getPantryCount(): Promise<GetPantryCountResponse> {
-    let count = await fetchPantryCount();
-    return deepCopy(count);
+    try {
+      let count = await fetchPantryCount();
+      return deepCopy(count);
+      
+    } catch (error) {
+      throw new ApiError(error)
+    }
   }
 
   async updatePantryItem(request: Pantry): Promise<AddUpdatePantryResponse> {

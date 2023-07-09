@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
@@ -29,10 +29,13 @@ import type { Pantry } from 'src/types/pantry';
 import { getInitials } from 'src/utils/get-initials';
 import { useParams } from 'react-router-dom';
 import { useRouter } from 'src/hooks/use-router';
+import ErrorHandler from 'src/error/error-handler';
 
 const tabs = [{ label: 'Details', value: 'details' }];
 
-const usePantry = (): Pantry | null => {
+const usePantry = (
+  setError: Dispatch<SetStateAction<Error | null>>
+): Pantry | null => {
   const isMounted = useMounted();
   const [pantry, setPantry] = useState<Pantry | null>(null);
   const { pantryId } = useParams();
@@ -47,7 +50,10 @@ const usePantry = (): Pantry | null => {
         setPantry(response);
       }
     } catch (err) {
-      console.error(err);
+      if (isMounted()) {
+        setPantry(null);
+      }
+      setError(err);
     }
   }, [isMounted, pantryId]);
 
@@ -64,7 +70,8 @@ const usePantry = (): Pantry | null => {
 
 const Page = () => {
   const [currentTab, setCurrentTab] = useState<string>('details');
-  const pantry = usePantry();
+  const [error, setError] = useState<Error | null>(null);
+  const pantry = usePantry(setError);
   const router = useRouter();
 
   usePageView();
@@ -108,14 +115,12 @@ const Page = () => {
     : '';
 
   const deleteHandler = async (itemId: string) => {
-    console.log('itemId');
-    console.log(itemId);
     try {
       const response = await myPantryApi.deletePantryItem({ id: itemId });
 
       if (response) {
         alert('Pantry Item Deleted');
-        router.replace(paths.myPantry.index)
+        router.replace(paths.myPantry.index);
       } else {
         alert('Error encountered during update, item may be corrupted.');
       }
@@ -125,7 +130,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <ErrorHandler error={error}>
       <Seo title='Dashboard: Pantry Details' />
       <Box
         component='main'
@@ -241,7 +246,7 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
-    </>
+    </ErrorHandler>
   );
 };
 
