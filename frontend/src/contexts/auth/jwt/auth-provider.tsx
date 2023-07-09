@@ -8,14 +8,17 @@ import { Issuer } from 'src/utils/auth';
 
 import type { State } from './auth-context';
 import { AuthContext, initialState } from './auth-context';
+import { MY_PANTRY } from 'src/utils/constants';
 
-const STORAGE_KEY = 'accessToken';
+const STORAGE_KEY = MY_PANTRY.STORAGE_KEY;
+const STORAGE_USER = MY_PANTRY.STORAGE_USER;
+const STORAGE_USER_ID = MY_PANTRY.STORAGE_USER_ID;
 
 enum ActionType {
   INITIALIZE = 'INITIALIZE',
   SIGN_IN = 'SIGN_IN',
   SIGN_UP = 'SIGN_UP',
-  SIGN_OUT = 'SIGN_OUT'
+  SIGN_OUT = 'SIGN_OUT',
 }
 
 type InitializeAction = {
@@ -44,11 +47,7 @@ type SignOutAction = {
   type: ActionType.SIGN_OUT;
 };
 
-type Action =
-  | InitializeAction
-  | SignInAction
-  | SignUpAction
-  | SignOutAction;
+type Action = InitializeAction | SignInAction | SignUpAction | SignOutAction;
 
 type Handler = (state: State, action: any) => State;
 
@@ -60,7 +59,7 @@ const handlers: Record<ActionType, Handler> = {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user
+      user,
     };
   },
   SIGN_IN: (state: State, action: SignInAction): State => {
@@ -69,7 +68,7 @@ const handlers: Record<ActionType, Handler> = {
     return {
       ...state,
       isAuthenticated: true,
-      user
+      user,
     };
   },
   SIGN_UP: (state: State, action: SignUpAction): State => {
@@ -78,19 +77,18 @@ const handlers: Record<ActionType, Handler> = {
     return {
       ...state,
       isAuthenticated: true,
-      user
+      user,
     };
   },
   SIGN_OUT: (state: State): State => ({
     ...state,
     isAuthenticated: false,
-    user: null
-  })
+    user: null,
+  }),
 };
 
-const reducer = (state: State, action: Action): State => (
-  handlers[action.type] ? handlers[action.type](state, action) : state
-);
+const reducer = (state: State, action: Action): State =>
+  handlers[action.type] ? handlers[action.type](state, action) : state;
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -100,43 +98,48 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const initialize = useCallback(
-    async (): Promise<void> => {
-      try {
-        const accessToken = window.sessionStorage.getItem(STORAGE_KEY);
+  const initialize = useCallback(async (): Promise<void> => {
+    try {
+      const accessToken = window.sessionStorage.getItem(STORAGE_KEY);
+      const userId = window.sessionStorage.getItem(STORAGE_USER_ID);
+      const username = window.sessionStorage.getItem(STORAGE_USER);
 
-        if (accessToken) {
-          const user = await authApi.me({ accessToken });
+      console.log('AuthProvider - initialize');
 
-          dispatch({
-            type: ActionType.INITIALIZE,
-            payload: {
-              isAuthenticated: true,
-              user
-            }
-          });
-        } else {
-          dispatch({
-            type: ActionType.INITIALIZE,
-            payload: {
-              isAuthenticated: false,
-              user: null
-            }
-          });
-        }
-      } catch (err) {
-        console.error(err);
+      if (accessToken && userId && username) {
+        dispatch({
+          type: ActionType.INITIALIZE,
+          payload: {
+            isAuthenticated: true,
+            user:
+              userId && username
+                ? {
+                    id: userId,
+                    username,
+                  }
+                : null,
+          },
+        });
+      } else {
         dispatch({
           type: ActionType.INITIALIZE,
           payload: {
             isAuthenticated: false,
-            user: null
-          }
+            user: null,
+          },
         });
       }
-    },
-    [dispatch]
-  );
+    } catch (err) {
+      console.error(err);
+      dispatch({
+        type: ActionType.INITIALIZE,
+        payload: {
+          isAuthenticated: false,
+          user: null,
+        },
+      });
+    }
+  }, [dispatch]);
 
   useEffect(
     () => {
@@ -148,16 +151,28 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
 
   const signIn = useCallback(
     async (username: string, password: string): Promise<void> => {
-      const { accessToken } = await authApi.signIn({ username, password });
-      const user = await authApi.me({ accessToken });
+      console.log('AuthProvider - signIn');
+      const {
+        accessToken,
+        userId,
+        username: user,
+      } = await authApi.signIn({ username, password });
+
+      // console.log('AuthProvider - signIn - accessToken')
+      // console.log(accessToken, userId, user)
 
       sessionStorage.setItem(STORAGE_KEY, accessToken);
+      sessionStorage.setItem(STORAGE_USER, user);
+      sessionStorage.setItem(STORAGE_USER_ID, userId);
 
       dispatch({
         type: ActionType.SIGN_IN,
         payload: {
-          user
-        }
+          user: {
+            id: userId,
+            username: user,
+          },
+        },
       });
     },
     [dispatch]
@@ -165,28 +180,41 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
 
   const signUp = useCallback(
     async (username: string, password: string): Promise<void> => {
-      const { accessToken } = await authApi.signUp({ username, password });
-      const user = await authApi.me({ accessToken });
+      console.log('AuthProvider - signUp');
+      const { userId, username: user } = await authApi.signUp({
+        username,
+        password,
+      });
+
+      console.log('AuthProvider - signUp - accessToken');
+      console.log(userId, user);
+
+      const { accessToken } = await authApi.signIn({ username, password });
 
       sessionStorage.setItem(STORAGE_KEY, accessToken);
+      sessionStorage.setItem(STORAGE_USER, user);
+      sessionStorage.setItem(STORAGE_USER_ID, userId);
 
       dispatch({
         type: ActionType.SIGN_UP,
         payload: {
-          user
-        }
+          user: {
+            id: userId,
+            username: user,
+          },
+        },
       });
     },
     [dispatch]
   );
 
-  const signOut = useCallback(
-    async (): Promise<void> => {
-      sessionStorage.removeItem(STORAGE_KEY);
-      dispatch({ type: ActionType.SIGN_OUT });
-    },
-    [dispatch]
-  );
+  const signOut = useCallback(async (): Promise<void> => {
+    console.log('AuthProvider - signOut');
+    sessionStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(STORAGE_USER);
+    sessionStorage.removeItem(STORAGE_USER_ID);
+    dispatch({ type: ActionType.SIGN_OUT });
+  }, [dispatch]);
 
   return (
     <AuthContext.Provider
@@ -195,7 +223,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         issuer: Issuer.JWT,
         signIn,
         signUp,
-        signOut
+        signOut,
       }}
     >
       {children}
@@ -204,5 +232,5 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };

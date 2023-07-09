@@ -12,8 +12,8 @@ export const generateToken = async (
   secret: string = process.env['JWT_SECRET']!
 ): Promise<string | null> => {
   const currentDateInSeconds = Date.now() / 1000;
-  const expDateInSeconds = currentDateInSeconds + ONE_DAY;
-  // const expDateInSeconds = currentDateInSeconds + TEST_ONE_MIN;  // TESTING ONLY
+  // const expDateInSeconds = currentDateInSeconds + ONE_DAY;
+  const expDateInSeconds = currentDateInSeconds + TEST_ONE_MIN;  // TESTING ONLY
   const payload: IPayload = {
     sub: userId.toString(),
     iat: currentDateInSeconds,

@@ -21,6 +21,9 @@ import { useRouter } from 'src/hooks/use-router';
 import { useSearchParams } from 'src/hooks/use-search-params';
 import { paths } from 'src/paths';
 import { AuthIssuer } from 'src/sections/auth/auth-issuer';
+import { MY_PANTRY } from 'src/utils/constants';
+
+const STORAGE_USER = MY_PANTRY.STORAGE_USER;
 
 interface Values {
   username: string;
@@ -28,9 +31,9 @@ interface Values {
   submit: null;
 }
 
-const initialValues: Values = {
-  username: 'demoMyPantry@mypantry.io',
-  password: 'Password123!',
+const defaultValues: Values = {
+  username: '',
+  password: '',
   submit: null
 };
 
@@ -51,11 +54,16 @@ const Page = () => {
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
   const { issuer, signIn } = useAuth<AuthContextType>();
+
+  const initialValues = {
+    ...defaultValues,
+    username: window.sessionStorage.getItem(STORAGE_USER) || '',
+  }
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values, helpers): Promise<void> => {
-      console.log('Login clicked')
       try {
         await signIn(values.username, values.password);
 
@@ -158,11 +166,11 @@ const Page = () => {
           spacing={3}
           sx={{ mt: 3 }}
         >
-          <Alert severity="error">
+          {/* <Alert severity="error">
             <div>
               You can use <b>demoMyPantry@mypantry.io</b> and password <b>Password123!</b>
             </div>
-          </Alert>
+          </Alert> */}
           <AuthIssuer issuer={issuer} />
         </Stack>
       </div>

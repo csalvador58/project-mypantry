@@ -6,6 +6,7 @@
 
 //   [key: string]: any;
 // }
+
 export interface User {
   id: string;
   username?: string;

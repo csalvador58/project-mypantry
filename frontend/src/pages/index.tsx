@@ -22,6 +22,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { PantryCount } from 'src/types/pantry';
 import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
+import { ErrorLogger } from 'src/error/error-logger';
 
 const now = new Date();
 
@@ -37,7 +38,10 @@ const usePantry = (): PantryCount => {
         setPantryCount(response);
       }
     } catch (err) {
-      console.error(err);
+      ErrorLogger(err);
+      if (isMounted()) {
+        setPantryCount({count: 0});
+      }
     }
   }, [isMounted]);
 

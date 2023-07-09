@@ -1,32 +1,32 @@
+import { ApiError } from 'src/error/error-classes';
+import { ErrorLogger } from 'src/error/error-logger';
 import { Pantry, PantryAdd, PantryCount } from 'src/types/pantry';
+import { MY_PANTRY } from 'src/utils/constants';
 
 interface IItem extends Omit<Pantry, 'id'> {
   _id: string;
 }
 
-const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDlmNmI0MzFlNjg5ZWE4YzMyZjhkNGIiLCJpYXQiOjE2ODg3NTM3NTkuOTgyLCJleHAiOjE2ODg4NDAxNTkuOTgyfQ.G8wW6yVO6mvwBuo1DQqzQVLQ9pWcZT3P-zqh6PQGBSY';
-
-const DOMAIN = 'http://localhost:3001';
-const HEADERS = {
-  Authorization: `Bearer ${TOKEN}`,
-  'Content-Type': 'application/json',
-};
+const STORAGE_KEY = MY_PANTRY.STORAGE_KEY;
+const DOMAIN = MY_PANTRY.DOMAIN;
 
 export const fetchPantry = async (): Promise<Pantry[]> => {
   let pantryData: Pantry[] = [];
 
   try {
+    const token = window.sessionStorage.getItem(STORAGE_KEY);
     const url = `${DOMAIN}/pantry`;
     const method = 'GET';
     const response = await fetch(url, {
       method: method,
-      headers: HEADERS,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
 
     if (!response.ok) {
       const data = await response.json();
-      console.error(data.error);
       throw new Error(
         `${response.status}: ${response.statusText}, ${data.error}`
       );
@@ -56,8 +56,7 @@ export const fetchPantry = async (): Promise<Pantry[]> => {
 
     return pantryData;
   } catch (error) {
-    console.error(error);
-    throw new Error('An error occurred during the API call.');
+    throw new ApiError('Error occurred during fetchPantry API call.');
   }
 };
 
@@ -65,11 +64,15 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
   let pantryData: Pantry = { id: 'null', name: 'null', note: 'null' };
 
   try {
+    const token = window.sessionStorage.getItem(STORAGE_KEY);
     const url = `${DOMAIN}/pantry/${itemId}`;
     const method = 'GET';
     const response = await fetch(url, {
       method: method,
-      headers: HEADERS,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
 
     if (!response.ok) {
@@ -104,12 +107,13 @@ export const fetchPantryItem = async (itemId: string): Promise<Pantry> => {
 
     return pantryData;
   } catch (error) {
-    console.error(error);
-    throw new Error('An error occurred during the API call.');
+    throw new ApiError('Error occurred during fetchPantryItem API call.');
   }
 };
 
-export const fetchPantryItemAdd = async (request: PantryAdd): Promise<boolean> => {
+export const fetchPantryItemAdd = async (
+  request: PantryAdd
+): Promise<boolean> => {
   const body = {
     name: request.name,
     favorite: request.favorite,
@@ -124,17 +128,20 @@ export const fetchPantryItemAdd = async (request: PantryAdd): Promise<boolean> =
   };
 
   try {
+    const token = window.sessionStorage.getItem(STORAGE_KEY);
     const url = `${DOMAIN}/pantry/add`;
     const method = 'POST';
     const response = await fetch(url, {
       method: method,
-      headers: HEADERS,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
     });
 
     if (!response.ok) {
       const data = await response.json();
-      console.error(data.error);
       throw new Error(
         `${response.status}: ${response.statusText}, ${data.error}`
       );
@@ -147,23 +154,27 @@ export const fetchPantryItemAdd = async (request: PantryAdd): Promise<boolean> =
     }
     return false;
   } catch (error) {
-    console.error(error);
-    throw new Error('An error occurred during the API call.', error);
+    throw new ApiError('Error occurred during fetchPantryItemAdd API call.');
   }
 };
 
-export const fetchPantryItemDelete = async (itemId: string): Promise<boolean> => {
+export const fetchPantryItemDelete = async (
+  itemId: string
+): Promise<boolean> => {
   try {
+    const token = window.sessionStorage.getItem(STORAGE_KEY);
     const url = `${DOMAIN}/pantry/${itemId}`;
     const method = 'DELETE';
     const response = await fetch(url, {
       method: method,
-      headers: HEADERS,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
 
     if (!response.ok) {
       const data = await response.json();
-      console.error(data.error);
       throw new Error(
         `${response.status}: ${response.statusText}, ${data.error}`
       );
@@ -176,8 +187,7 @@ export const fetchPantryItemDelete = async (itemId: string): Promise<boolean> =>
     }
     return false;
   } catch (error) {
-    console.error(error);
-    throw new Error('An error occurred during the API call.');
+    throw new ApiError('Error occurred during fetchPantryItemDelete API call.');
   }
 };
 
@@ -198,17 +208,20 @@ export const fetchPantryItemUpdate = async (
   };
 
   try {
+    const token = window.sessionStorage.getItem(STORAGE_KEY);
     const url = `${DOMAIN}/pantry/${request.id}`;
     const method = 'PUT';
     const response = await fetch(url, {
       method: method,
-      headers: HEADERS,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
     });
 
     if (!response.ok) {
       const data = await response.json();
-      console.error(data.error);
       throw new Error(
         `${response.status}: ${response.statusText}, ${data.error}`
       );
@@ -221,24 +234,26 @@ export const fetchPantryItemUpdate = async (
     }
     return false;
   } catch (error) {
-    console.error(error);
-    throw new Error('An error occurred during the API call.', error);
+    throw new ApiError('Error occurred during fetchPantryItemUpdate API call.');
   }
 };
 
 export const fetchPantryCount = async (): Promise<PantryCount> => {
   let pantryNull: PantryCount = { count: 0 };
   try {
+    const token = window.sessionStorage.getItem(STORAGE_KEY);
     const url = `${DOMAIN}/pantry/count`;
     const method = 'GET';
     const response = await fetch(url, {
       method: method,
-      headers: HEADERS,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
 
     if (!response.ok) {
       const data = await response.json();
-      console.error(data.error);
       throw new Error(
         `${response.status}: ${response.statusText}, ${data.error}`
       );
@@ -248,7 +263,7 @@ export const fetchPantryCount = async (): Promise<PantryCount> => {
 
     return data ? { count: data.pantryCount } : pantryNull;
   } catch (error) {
-    console.error(error);
-    throw new Error('An error occurred during the API call.');
+    // console.error(error);
+    throw new ApiError('Error occurred during fetchPantryCount API call.');
   }
 };

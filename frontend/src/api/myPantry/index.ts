@@ -48,19 +48,16 @@ type GetPantryResponse = Promise<Pantry>;
 type GetPantryCountResponse = Promise<PantryCount>;
 
 class MyPantryApi {
-
-  async addPantryItem(
-    request: PantryAdd
-  ): Promise<AddUpdatePantryResponse> {
+  async addPantryItem(request: PantryAdd): Promise<AddUpdatePantryResponse> {
     let data = await fetchPantryItemAdd(request);
-    return Promise.resolve(data);
+    return data;
   }
 
   async deletePantryItem(
     request: DeletePantryItemRequest
   ): Promise<GetPantryResponse> {
     let data = await fetchPantryItemDelete(request.id);
-    return Promise.resolve(deepCopy(data));
+    return deepCopy(data);
   }
 
   async getMyPantry(request: GetMyPantryRequest): Promise<GetMyPantryResponse> {
@@ -133,10 +130,10 @@ class MyPantryApi {
       data = applyPagination(data, page, rowsPerPage);
     }
 
-    return Promise.resolve({
+    return {
       data,
       count,
-    });
+    };
   }
 
   // async getPantryItem(request?: GetPantryRequest): Promise<GetPantryResponse> {
@@ -144,19 +141,17 @@ class MyPantryApi {
     request: GetPantryItemRequest
   ): Promise<GetPantryResponse> {
     let data = await fetchPantryItem(request.id);
-    return Promise.resolve(deepCopy(data));
-  }
-  
-  async getPantryCount(): Promise<GetPantryCountResponse> {
-    let count = await fetchPantryCount();
-    return Promise.resolve(deepCopy(count));
+    return deepCopy(data);
   }
 
-  async updatePantryItem(
-    request: Pantry
-  ): Promise<AddUpdatePantryResponse> {
+  async getPantryCount(): Promise<GetPantryCountResponse> {
+    let count = await fetchPantryCount();
+    return deepCopy(count);
+  }
+
+  async updatePantryItem(request: Pantry): Promise<AddUpdatePantryResponse> {
     let data = await fetchPantryItemUpdate(request);
-    return Promise.resolve(data);
+    return data;
   }
 }
 

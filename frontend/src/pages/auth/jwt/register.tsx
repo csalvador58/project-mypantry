@@ -25,7 +25,6 @@ import { AuthIssuer } from 'src/sections/auth/auth-issuer';
 
 interface Values {
   username: string;
-  name: string;
   password: string;
   policy: boolean;
   submit: null;
@@ -33,7 +32,6 @@ interface Values {
 
 const initialValues: Values = {
   username: '',
-  name: '',
   password: '',
   policy: false,
   submit: null
@@ -44,10 +42,6 @@ const validationSchema = Yup.object({
     .string()
     .max(255)
     .required('Username is required'),
-  name: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
   password: Yup
     .string()
     .min(7)
@@ -68,11 +62,15 @@ const Page = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values, helpers): Promise<void> => {
+
+      console.log('Register clicked')
+      console.log(values.username, values.password)
+
       try {
         await signUp(values.username, values.password);
 
         if (isMounted()) {
-          router.push(returnTo || paths.myPantry.index);
+          router.push(returnTo || paths.index);
         }
       } catch (err) {
         console.error(err);
@@ -120,16 +118,6 @@ const Page = () => {
               onSubmit={formik.handleSubmit}
             >
               <Stack spacing={3}>
-                <TextField
-                  error={!!(formik.touched.name && formik.errors.name)}
-                  fullWidth
-                  helperText={formik.touched.name && formik.errors.name}
-                  label="Name"
-                  name="name"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.name}
-                />
                 <TextField
                   error={!!(formik.touched.username && formik.errors.username)}
                   fullWidth

@@ -84,6 +84,10 @@ describe('/auth', () => {
       expect(res.statusCode).toEqual(200);
       expect(typeof res.body.token).toBe('string');
       expect(res.body.token).not.toBe('');
+      expect(typeof res.body.userId).toBe('string');
+      expect(res.body.userId).not.toBe('');
+      expect(typeof res.body.username).toBe('string');
+      expect(res.body.username).not.toBe('');
     });
   });
 });

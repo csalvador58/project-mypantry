@@ -41,7 +41,7 @@ export const loginUser: RequestHandler = catchAsync(async (req, res) => {
   if (!userDB) {
     return res.status(401).json({ error: 'Invalid User' });
   }
-  const { _id: userId, password: hashedPassword } = userDB;
+  const { username: usernameDB, _id: userId, password: hashedPassword } = userDB;
 
   // verify password matches DB
   const passwordIsValid = await bcrypt.compare(password, hashedPassword);
@@ -58,5 +58,5 @@ export const loginUser: RequestHandler = catchAsync(async (req, res) => {
 
   return res
     .status(200)
-    .json({ message: 'Login successful', token: loginToken });
+    .json({ message: 'Login successful', userId: userId, username: usernameDB, token: loginToken });
 });
