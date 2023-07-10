@@ -32,6 +32,7 @@ import { useRouter } from 'src/hooks/use-router';
 import ErrorHandler from 'src/error/error-handler';
 import { useAuth } from 'src/hooks/use-auth';
 import { ErrorLogger } from 'src/error/error-logger';
+import toast from 'react-hot-toast';
 
 const tabs = [{ label: 'Details', value: 'details' }];
 
@@ -68,6 +69,7 @@ const usePantry = (): Pantry | null => {
       }
 
       if (err.message.includes('jwt expired')) {
+        toast.error('Login token expired, please re-login.');
         ErrorLogger(err);
         console.log('signout!');
         authContext.signOut();
@@ -148,6 +150,7 @@ const Page = () => {
       }
     } catch (err) {
       if (err.message.includes('jwt expired')) {
+        toast.error('Login token expired, please re-login.');
         ErrorLogger(err);
         console.log('signout!');
         authContext.signOut();

@@ -3,6 +3,7 @@ import { ErrorLogger } from './error-logger';
 import { AuthContext } from 'src/contexts/auth/jwt';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { paths } from 'src/paths';
+import toast from 'react-hot-toast';
 const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
 
 interface ErrorBoundaryProps {
@@ -35,6 +36,7 @@ class ErrorBoundary extends React.Component<
     ErrorLogger(error, errorInfo);
     const authContext = this.context as React.ContextType<typeof AuthContext>;
     if (error.message.includes('jwt expired')) {
+      toast.error('Login token expired, please re-login.');
       this.setState({ redirectPage: <JwtLoginPage /> });
       console.log('signout!');
       authContext.signOut();

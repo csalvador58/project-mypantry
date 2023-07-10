@@ -30,6 +30,7 @@ import { paths } from 'src/paths';
 import { useAuth } from 'src/hooks/use-auth';
 import { ErrorLogger } from 'src/error/error-logger';
 import { useRouter } from 'src/hooks/use-router';
+import toast from 'react-hot-toast';
 const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
 
 const now = new Date();
@@ -65,6 +66,7 @@ const usePantry = (): PantryCount => {
       }
 
       if (err.message.includes('jwt expired')) {
+        toast.error('Login token expired, please re-login.');
         ErrorLogger(err)
         console.log('signout!');
         authContext.signOut();

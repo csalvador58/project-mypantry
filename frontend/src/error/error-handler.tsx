@@ -1,4 +1,5 @@
 import { FC, ReactNode, lazy, useContext, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from 'src/contexts/auth/jwt/auth-context';
 import { ErrorLogger } from 'src/error/error-logger';
 const Error401Page = lazy(() => import('src/pages/401'));
@@ -19,7 +20,7 @@ const ErrorHandler: FC<ErrorHandlerProps> = ({ error, children }) => {
       // Log Error
       ErrorLogger(error);
       if (error.message.includes('jwt expired')) {
-        alert('Login token expired. Please re-login.');
+        toast.error('Login token expired, please re-login.');
         // authContext.signOut();
       }
     }

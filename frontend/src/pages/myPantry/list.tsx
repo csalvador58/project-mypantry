@@ -23,6 +23,7 @@ import { ErrorLogger } from 'src/error/error-logger';
 import ErrorHandler from 'src/error/error-handler';
 import { useAuth } from 'src/hooks/use-auth';
 import { useRouter } from 'src/hooks/use-router';
+import toast from 'react-hot-toast';
 
 interface Filters {
   query?: string;
@@ -148,6 +149,7 @@ const useMyPantryStore = (searchState: MyPantrySearchState) => {
       }
 
       if (err.message.includes('jwt expired')) {
+        toast.error('Login token expired, please re-login.');
         ErrorLogger(err)
         console.log('signout!');
         authContext.signOut();
