@@ -1,5 +1,9 @@
-import React, { ErrorInfo, ReactNode } from 'react';
+import React, { ErrorInfo, ReactNode, lazy } from 'react';
 import { ErrorLogger } from './error-logger';
+import { AuthContext } from 'src/contexts/auth/jwt';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { paths } from 'src/paths';
+const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -8,31 +12,42 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
   error: Error | null;
+  hasError: boolean;
+  redirectPage?: React.JSX.Element | null;
 }
 
 class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
-  state: ErrorBoundaryState = { error: null };
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null, redirectPage: null};
+  }
+
+  static contextType = AuthContext;
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { error };
+    return { error, hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     ErrorLogger(error, errorInfo);
+    const authContext = this.context as React.ContextType<typeof AuthContext>;
+    if (error.message.includes('jwt expired')) {
+      this.setState({ redirectPage: <JwtLoginPage /> });
+      console.log('signout!');
+      authContext.signOut();
+    }
   }
 
   render() {
-    const { error } = this.state;
-    const { children, fallback } = this.props;
-
-    if (error) {
-      return fallback ? fallback : <div>An Error Occurred</div>;
+    if (this.state.hasError && this.state.redirectPage) {
+      return this.state.redirectPage;
+    } else if(this.state.hasError) {
+      return this.props.fallback;
     }
-
-    return children;
+    return this.props.children;
   }
 }
 

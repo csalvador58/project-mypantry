@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useState, type FC } from 'react';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
@@ -20,13 +20,28 @@ import type { Pantry } from 'src/types/pantry';
 
 import { myPantryApi } from 'src/api/myPantry';
 import { useRouter } from 'src/hooks/use-router';
+import { ErrorLogger } from 'src/error/error-logger';
+import { useAuth } from 'src/hooks/use-auth';
 
 interface PantryEditFormProps {
   pantry: Pantry;
 }
 
+
+const useThrowAsyncError = () => {
+  const [state, setState] = useState();
+
+  return (error: any) => {
+    setState(() => {
+      throw error;
+    });
+  };
+};
+
 export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
   const { pantry, ...other } = props;
+  const throwAsyncError = useThrowAsyncError();
+  const authContext = useAuth();
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -82,11 +97,20 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
         helpers.setSubmitting(false);
         toast.success('Pantry updated');
       } catch (err) {
-        console.error(err);
+        // console.error(err);
         toast.error('Something went wrong!');
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
+
+        if (err.message.includes('jwt expired')) {
+          ErrorLogger(err)
+          console.log('signout!');
+          authContext.signOut();
+          router.replace(paths.auth.jwt.login)
+        }
+  
+        throwAsyncError(err);
       }
     },
   });

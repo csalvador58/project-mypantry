@@ -57,8 +57,7 @@ const Page = () => {
             color="text.secondary"
             sx={{ mt: 0.5 }}
           >
-            You either tried some shady route or you came here by mistake. Whichever it is, try
-            using the navigation.
+            Re-login required. Token expired or was cleared from your browser.
           </Typography>
           <Box
             sx={{
@@ -69,9 +68,9 @@ const Page = () => {
           >
             <Button
               component={RouterLink}
-              href={paths.index}
+              href={paths.auth.jwt.login}
             >
-              Back to Home
+              Back to Login
             </Button>
           </Box>
         </Container>

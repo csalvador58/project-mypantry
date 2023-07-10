@@ -21,15 +21,28 @@ import type { PantryAdd } from 'src/types/pantry';
 
 import { myPantryApi } from 'src/api/myPantry';
 import ErrorHandler from 'src/error/error-handler';
+import { useAuth } from 'src/hooks/use-auth';
+import { ErrorLogger } from 'src/error/error-logger';
 
 // interface PantryAddFormProps {
 //   pantry: Pantry;
 // }
 
+const useThrowAsyncError = () => {
+  const [state, setState] = useState();
+
+  return (error: any) => {
+    setState(() => {
+      throw error;
+    });
+  };
+};
+
 // export const PantryAddForm: FC<PantryAddFormProps> = () => {
 export const PantryAddForm: FC = () => {
-  const [error, setError] = useState<Error | null>(null);
   // const { pantry, ...other } = props;
+  const throwAsyncError = useThrowAsyncError();
+  const authContext = useAuth();
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -89,13 +102,21 @@ export const PantryAddForm: FC = () => {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
-        setError(err);
+
+        if (err.message.includes('jwt expired')) {
+          ErrorLogger(err)
+          console.log('signout!');
+          authContext.signOut();
+          router.replace(paths.auth.jwt.login)
+        }
+  
+        throwAsyncError(err);
       }
     },
   });
 
   return (
-    <ErrorHandler error={error}>
+    <>
       {/* <form onSubmit={formik.handleSubmit} {...other}> */}
       <form onSubmit={formik.handleSubmit}>
         <Card>
@@ -267,7 +288,7 @@ export const PantryAddForm: FC = () => {
           </Stack>
         </Card>
       </form>
-    </ErrorHandler>
+    </>
   );
 };
 

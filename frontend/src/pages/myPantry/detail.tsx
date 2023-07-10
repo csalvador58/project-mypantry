@@ -30,15 +30,28 @@ import { getInitials } from 'src/utils/get-initials';
 import { useParams } from 'react-router-dom';
 import { useRouter } from 'src/hooks/use-router';
 import ErrorHandler from 'src/error/error-handler';
+import { useAuth } from 'src/hooks/use-auth';
+import { ErrorLogger } from 'src/error/error-logger';
 
 const tabs = [{ label: 'Details', value: 'details' }];
 
-const usePantry = (
-  setError: Dispatch<SetStateAction<Error | null>>
-): Pantry | null => {
+const useThrowAsyncError = () => {
+  const [state, setState] = useState();
+
+  return (error: any) => {
+    setState(() => {
+      throw error;
+    });
+  };
+};
+
+const usePantry = (): Pantry | null => {
   const isMounted = useMounted();
   const [pantry, setPantry] = useState<Pantry | null>(null);
   const { pantryId } = useParams();
+  const throwAsyncError = useThrowAsyncError();
+  const authContext = useAuth();
+  const router = useRouter();
 
   const handlePantryGet = useCallback(async () => {
     try {
@@ -53,7 +66,15 @@ const usePantry = (
       if (isMounted()) {
         setPantry(null);
       }
-      setError(err);
+
+      if (err.message.includes('jwt expired')) {
+        ErrorLogger(err);
+        console.log('signout!');
+        authContext.signOut();
+        router.replace(paths.auth.jwt.login);
+      }
+
+      throwAsyncError(err);
     }
   }, [isMounted, pantryId]);
 
@@ -70,8 +91,9 @@ const usePantry = (
 
 const Page = () => {
   const [currentTab, setCurrentTab] = useState<string>('details');
-  const [error, setError] = useState<Error | null>(null);
-  const pantry = usePantry(setError);
+  const pantry = usePantry();
+  const throwAsyncError = useThrowAsyncError();
+  const authContext = useAuth();
   const router = useRouter();
 
   usePageView();
@@ -125,12 +147,19 @@ const Page = () => {
         alert('Error encountered during update, item may be corrupted.');
       }
     } catch (err) {
-      console.error(err);
+      if (err.message.includes('jwt expired')) {
+        ErrorLogger(err);
+        console.log('signout!');
+        authContext.signOut();
+        router.replace(paths.auth.jwt.login);
+      }
+
+      throwAsyncError(err);
     }
   };
 
   return (
-    <ErrorHandler error={error}>
+    <>
       <Seo title='Dashboard: Pantry Details' />
       <Box
         component='main'
@@ -246,7 +275,7 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
-    </ErrorHandler>
+    </>
   );
 };
 

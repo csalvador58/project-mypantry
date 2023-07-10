@@ -1,7 +1,7 @@
 // Remove if simplebar is not used
 import 'simplebar-react/dist/simplebar.min.css';
 
-import type { FC } from 'react';
+import { lazy, type FC } from 'react';
 import { useRoutes } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -25,6 +25,7 @@ import { createTheme } from 'src/theme';
 import 'src/locales/i18n';
 import { SplashScreen } from './components/splash-screen';
 import ErrorBoundary from './error/error-boundary';
+import Error401Page from 'src/pages/401';
 
 export const App: FC = () => {
   useNprogress();
@@ -32,51 +33,49 @@ export const App: FC = () => {
   const element = useRoutes(routes);
 
   return (
-    <ErrorBoundary
-      fallback={<div>An error occurred in the component tree.</div>}
-    >
-      <ReduxProvider store={store}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <AuthProvider>
-            <AuthConsumer>
-              {(auth) => (
-                <SettingsProvider>
-                  <SettingsConsumer>
-                    {(settings) => {
-                      // Prevent theme flicker when restoring custom settings from browser storage
-                      if (!settings.isInitialized) {
-                        // return null;
-                      }
+    <ReduxProvider store={store}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <AuthProvider>
+          <AuthConsumer>
+            {(auth) => (
+              <SettingsProvider>
+                <SettingsConsumer>
+                  {(settings) => {
+                    // Prevent theme flicker when restoring custom settings from browser storage
+                    if (!settings.isInitialized) {
+                      // return null;
+                    }
 
-                      const theme = createTheme({
-                        colorPreset: settings.colorPreset,
-                        contrast: settings.contrast,
-                        direction: settings.direction,
-                        paletteMode: settings.paletteMode,
-                        responsiveFontSizes: settings.responsiveFontSizes,
-                      });
+                    const theme = createTheme({
+                      colorPreset: settings.colorPreset,
+                      contrast: settings.contrast,
+                      direction: settings.direction,
+                      paletteMode: settings.paletteMode,
+                      responsiveFontSizes: settings.responsiveFontSizes,
+                    });
 
-                      // Prevent guards from redirecting
-                      const showSlashScreen = !auth.isInitialized;
+                    // Prevent guards from redirecting
+                    const showSlashScreen = !auth.isInitialized;
 
-                      return (
-                        <ThemeProvider theme={theme}>
-                          <Helmet>
-                            <meta
-                              name='color-scheme'
-                              content={settings.paletteMode}
-                            />
-                            <meta
-                              name='theme-color'
-                              content={theme.palette.neutral[900]}
-                            />
-                          </Helmet>
-                          <RTL direction={settings.direction}>
-                            <CssBaseline />
-                            {showSlashScreen ? (
-                              <SplashScreen />
-                            ) : (
-                              <>
+                    return (
+                      <ThemeProvider theme={theme}>
+                        <Helmet>
+                          <meta
+                            name='color-scheme'
+                            content={settings.paletteMode}
+                          />
+                          <meta
+                            name='theme-color'
+                            content={theme.palette.neutral[900]}
+                          />
+                        </Helmet>
+                        <RTL direction={settings.direction}>
+                          <CssBaseline />
+                          {showSlashScreen ? (
+                            <SplashScreen />
+                          ) : (
+                            <>
+                              <ErrorBoundary fallback={<Error401Page/>}>
                                 {element}
                                 <SettingsButton
                                   onClick={settings.handleDrawerOpen}
@@ -99,20 +98,20 @@ export const App: FC = () => {
                                     navColor: settings.navColor,
                                   }}
                                 />
-                              </>
-                            )}
-                            <Toaster />
-                          </RTL>
-                        </ThemeProvider>
-                      );
-                    }}
-                  </SettingsConsumer>
-                </SettingsProvider>
-              )}
-            </AuthConsumer>
-          </AuthProvider>
-        </LocalizationProvider>
-      </ReduxProvider>
-    </ErrorBoundary>
+                              </ErrorBoundary>
+                            </>
+                          )}
+                          <Toaster />
+                        </RTL>
+                      </ThemeProvider>
+                    );
+                  }}
+                </SettingsConsumer>
+              </SettingsProvider>
+            )}
+          </AuthConsumer>
+        </AuthProvider>
+      </LocalizationProvider>
+    </ReduxProvider>
   );
 };

@@ -21,6 +21,8 @@ import { paths } from 'src/paths';
 import { RouterLink } from 'src/components/router-link';
 import { ErrorLogger } from 'src/error/error-logger';
 import ErrorHandler from 'src/error/error-handler';
+import { useAuth } from 'src/hooks/use-auth';
+import { useRouter } from 'src/hooks/use-router';
 
 interface Filters {
   query?: string;
@@ -107,15 +109,25 @@ interface MyPantryStoreState {
   myPantryCount: number;
 }
 
-const useMyPantryStore = (
-  searchState: MyPantrySearchState,
-  setError: Dispatch<SetStateAction<Error | null>>
-) => {
+const useThrowAsyncError = () => {
+  const [state, setState] = useState();
+
+  return (error: any) => {
+    setState(() => {
+      throw error;
+    });
+  };
+};
+
+const useMyPantryStore = (searchState: MyPantrySearchState) => {
   const isMounted = useMounted();
   const [state, setState] = useState<MyPantryStoreState>({
     myPantry: [],
     myPantryCount: 0,
   });
+  const throwAsyncError = useThrowAsyncError();
+  const authContext = useAuth();
+  const router = useRouter();
 
   const handleMyPantryGet = useCallback(async () => {
     try {
@@ -134,8 +146,15 @@ const useMyPantryStore = (
           myPantryCount: 0,
         });
       }
-      // ErrorLogger(err);
-      setError(err);
+
+      if (err.message.includes('jwt expired')) {
+        ErrorLogger(err)
+        console.log('signout!');
+        authContext.signOut();
+        router.replace(paths.auth.jwt.login)
+      }
+
+      throwAsyncError(err);
     }
   }, [searchState, isMounted]);
 
@@ -159,16 +178,15 @@ const useMyPantryIds = (myPantry: Pantry[] = []) => {
 };
 
 const Page = () => {
-  const [error, setError] = useState<Error | null>(null);
   const myPantrySearch = useMyPantrySearch();
-  const myPantryStore = useMyPantryStore(myPantrySearch.state, setError);
+  const myPantryStore = useMyPantryStore(myPantrySearch.state);
   const myPantryIds = useMyPantryIds(myPantryStore.myPantry);
   const myPantrySelection = useSelection<string>(myPantryIds);
 
   usePageView();
 
   return (
-    <ErrorHandler error={error}>
+    <>
       <Seo title='Dashboard: Pantry List' />
       <Box
         component='main'
@@ -222,7 +240,7 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
-    </ErrorHandler>
+    </>
   );
 };
 

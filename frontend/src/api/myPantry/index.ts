@@ -50,22 +50,38 @@ type GetPantryCountResponse = Promise<PantryCount>;
 
 class MyPantryApi {
   async addPantryItem(request: PantryAdd): Promise<AddUpdatePantryResponse> {
-    let data = await fetchPantryItemAdd(request);
-    return data;
+    try {
+      let data = await fetchPantryItemAdd(request);
+      return data;
+    } catch (error) {
+      console.log('2nd throw');
+      throw new ApiError(error);
+    }
   }
 
   async deletePantryItem(
     request: DeletePantryItemRequest
   ): Promise<GetPantryResponse> {
-    let data = await fetchPantryItemDelete(request.id);
-    return deepCopy(data);
+    try {
+      let data = await fetchPantryItemDelete(request.id);
+      return deepCopy(data);
+    } catch (error) {
+      console.log('2nd throw');
+      throw new ApiError(error);
+    }
   }
 
   async getMyPantry(request: GetMyPantryRequest): Promise<GetMyPantryResponse> {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;
 
-    // let data = deepCopy(myPantry) as Pantry[];
-    let data = deepCopy(await fetchPantry()) as Pantry[];
+    let data: Pantry[];
+    try {
+      // let data = deepCopy(myPantry) as Pantry[];
+      data = deepCopy(await fetchPantry());
+    } catch (error) {
+      console.log('2nd throw');
+      throw new ApiError(error);
+    }
 
     let count = data.length;
 
@@ -141,23 +157,33 @@ class MyPantryApi {
   async getPantryItem(
     request: GetPantryItemRequest
   ): Promise<GetPantryResponse> {
-    let data = await fetchPantryItem(request.id);
-    return deepCopy(data);
+    try {
+      let data = await fetchPantryItem(request.id);
+      return deepCopy(data);
+    } catch (error) {
+      console.log('2nd throw');
+      throw new ApiError(error);
+    }
   }
 
   async getPantryCount(): Promise<GetPantryCountResponse> {
     try {
       let count = await fetchPantryCount();
       return deepCopy(count);
-      
     } catch (error) {
-      throw new ApiError(error)
+      console.log('2nd throw');
+      throw new ApiError(error);
     }
   }
 
   async updatePantryItem(request: Pantry): Promise<AddUpdatePantryResponse> {
-    let data = await fetchPantryItemUpdate(request);
-    return data;
+    try {
+      let data = await fetchPantryItemUpdate(request);
+      return data;
+    } catch (error) {
+      console.log('2nd throw');
+      throw new ApiError(error);
+    }
   }
 }
 

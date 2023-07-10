@@ -20,7 +20,7 @@ const ErrorHandler: FC<ErrorHandlerProps> = ({ error, children }) => {
       ErrorLogger(error);
       if (error.message.includes('jwt expired')) {
         alert('Login token expired. Please re-login.');
-        authContext.signOut();
+        // authContext.signOut();
       }
     }
   }, [error]);

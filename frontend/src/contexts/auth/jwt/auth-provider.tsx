@@ -130,7 +130,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         });
       }
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       dispatch({
         type: ActionType.INITIALIZE,
         payload: {

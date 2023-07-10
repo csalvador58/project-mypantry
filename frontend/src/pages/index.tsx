@@ -19,8 +19,7 @@ import { OverviewRecipeSuggestions } from 'src/sections/dashboard/overview/overv
 import { myPantryApi } from 'src/api/myPantry';
 import { useMounted } from 'src/hooks/use-mounted';
 import {
-  Dispatch,
-  SetStateAction,
+  lazy,
   useCallback,
   useEffect,
   useState,
@@ -28,15 +27,29 @@ import {
 import { PantryCount } from 'src/types/pantry';
 import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
-import ErrorHandler from 'src/error/error-handler';
+import { useAuth } from 'src/hooks/use-auth';
+import { ErrorLogger } from 'src/error/error-logger';
+import { useRouter } from 'src/hooks/use-router';
+const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
 
 const now = new Date();
 
-const usePantry = (
-  setError: Dispatch<SetStateAction<Error | null>>
-): PantryCount => {
+const useThrowAsyncError = () => {
+  const [state, setState] = useState();
+
+  return (error: any) => {
+    setState(() => {
+      throw error;
+    });
+  };
+};
+
+const usePantry = (): PantryCount => {
   const isMounted = useMounted();
   const [pantryCount, setPantryCount] = useState<PantryCount>({ count: 0 });
+  const throwAsyncError = useThrowAsyncError();
+  const authContext = useAuth();
+  const router = useRouter();
 
   const handlePantryGet = useCallback(async () => {
     try {
@@ -46,10 +59,19 @@ const usePantry = (
         setPantryCount(response);
       }
     } catch (err) {
+      console.log('3rd throw')
       if (isMounted()) {
         setPantryCount({ count: 0 });
       }
-      setError(err);
+
+      if (err.message.includes('jwt expired')) {
+        ErrorLogger(err)
+        console.log('signout!');
+        authContext.signOut();
+        router.replace(paths.auth.jwt.login)
+      }
+
+      throwAsyncError(err);
     }
   }, [isMounted]);
 
@@ -65,12 +87,11 @@ const usePantry = (
 };
 
 const Page = () => {
-  const [error, setError] = useState<Error | null>(null);
-  const pantry = usePantry(setError);
+  const pantry = usePantry();
   const settings = useSettings();
 
   return (
-    <ErrorHandler error={error}>
+    <>
       <Seo title='My Pantry: Overview' />
       <Box
         component='main'
@@ -172,7 +193,7 @@ const Page = () => {
           </Grid>
         </Container>
       </Box>
-    </ErrorHandler>
+    </>
   );
 };
 

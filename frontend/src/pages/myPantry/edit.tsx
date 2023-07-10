@@ -25,13 +25,27 @@ import { PantryEditForm } from 'src/sections/dashboard/pantry/pantry-edit-form';
 import type { Pantry } from 'src/types/pantry';
 import { useParams } from 'react-router-dom';
 import ErrorHandler from 'src/error/error-handler';
+import { useAuth } from 'src/hooks/use-auth';
+import { useRouter } from 'src/hooks/use-router';
+import { ErrorLogger } from 'src/error/error-logger';
 
-const usePantry = (
-  setError: Dispatch<SetStateAction<Error | null>>
-): Pantry | null => {
+const useThrowAsyncError = () => {
+  const [state, setState] = useState();
+
+  return (error: any) => {
+    setState(() => {
+      throw error;
+    });
+  };
+};
+
+const usePantry = (): Pantry | null => {
   const isMounted = useMounted();
   const [pantry, setPantry] = useState<Pantry | null>(null);
   const { pantryId } = useParams();
+  const throwAsyncError = useThrowAsyncError();
+  const authContext = useAuth();
+  const router = useRouter();
 
   const handlePantryGet = useCallback(async () => {
     try {
@@ -45,7 +59,14 @@ const usePantry = (
       if (isMounted()) {
         setPantry(null);
       }
-      setError(err);
+      if (err.message.includes('jwt expired')) {
+        ErrorLogger(err)
+        console.log('signout!');
+        authContext.signOut();
+        router.replace(paths.auth.jwt.login)
+      }
+
+      throwAsyncError(err);
     }
   }, [isMounted, pantryId]);
 
@@ -61,8 +82,7 @@ const usePantry = (
 };
 
 const Page = () => {
-  const [error, setError] = useState<Error | null>(null);
-  const pantry = usePantry(setError);
+  const pantry = usePantry();
 
   usePageView();
 
@@ -71,7 +91,7 @@ const Page = () => {
   }
 
   return (
-    <ErrorHandler error={error}>
+    <>
       <Seo title='Dashboard: Edit Item' />
       <Box
         component='main'
@@ -124,7 +144,7 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
-    </ErrorHandler>
+    </>
   );
 };
 
