@@ -49,6 +49,7 @@ export const Layout: FC<LayoutProps> = (props) => {
         }}
       >
         <Box maxWidth="md">
+          <Logo/>
           <Typography
             sx={{ mb: 1 }}
             variant="h4"
