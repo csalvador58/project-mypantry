@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useTheme } from '@mui/material/styles';
-import LogoSvg from '../../public/assets/mypantry.svg'; 
+import LogoSvg from '../assets/mypantry.svg'; 
 
 export const Logo: FC = () => {
   const theme = useTheme();
