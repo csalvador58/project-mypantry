@@ -14,8 +14,8 @@ import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { useSelection } from 'src/hooks/use-selection';
-import { PantryListSearch } from 'src/sections/pantry/pantry-list-search';
-import { PantryListTable } from 'src/sections/pantry/pantry-list-table';
+import { SalesListSearch } from 'src/sections/sales/sales-list-search';
+import { SalesListTable } from 'src/sections/sales/sales-list-table';
 import type { Pantry } from 'src/types/pantry';
 import { paths } from 'src/paths';
 import { RouterLink } from 'src/components/router-link';
@@ -34,7 +34,7 @@ interface Filters {
   location5?: boolean;
 }
 
-interface MyPantrySearchState {
+interface SalesSearchState {
   filters: Filters;
   page: number;
   rowsPerPage: number;
@@ -42,8 +42,8 @@ interface MyPantrySearchState {
   sortDir: 'asc' | 'desc';
 }
 
-const useMyPantrySearch = () => {
-  const [state, setState] = useState<MyPantrySearchState>({
+const useSalesSearch = () => {
+  const [state, setState] = useState<SalesSearchState>({
     filters: {
       query: undefined,
       location1: undefined,
@@ -105,7 +105,7 @@ const useMyPantrySearch = () => {
   };
 };
 
-interface MyPantryStoreState {
+interface SalesStoreState {
   myPantry: Pantry[];
   myPantryCount: number;
 }
@@ -120,9 +120,9 @@ const useThrowAsyncError = () => {
   };
 };
 
-const useMyPantryStore = (searchState: MyPantrySearchState) => {
+const useSalesStore = (searchState: SalesSearchState) => {
   const isMounted = useMounted();
-  const [state, setState] = useState<MyPantryStoreState>({
+  const [state, setState] = useState<SalesStoreState>({
     myPantry: [],
     myPantryCount: 0,
   });
@@ -179,8 +179,8 @@ const useMyPantryIds = (myPantry: Pantry[] = []) => {
 };
 
 const Page = () => {
-  const myPantrySearch = useMyPantrySearch();
-  const myPantryStore = useMyPantryStore(myPantrySearch.state);
+  const myPantrySearch = useSalesSearch();
+  const myPantryStore = useSalesStore(myPantrySearch.state);
   const myPantryIds = useMyPantryIds(myPantryStore.myPantry);
   const myPantrySelection = useSelection<string>(myPantryIds);
 
@@ -188,7 +188,7 @@ const Page = () => {
 
   return (
     <>
-      <Seo title='Dashboard: Pantry List' />
+      <Seo title='Dashboard: Current Sales' />
       <Box
         component='main'
         sx={{
@@ -200,7 +200,7 @@ const Page = () => {
           <Stack spacing={4}>
             <Stack direction='row' justifyContent='space-between' spacing={4}>
               <Stack spacing={1}>
-                <Typography variant='h4'>Pantry</Typography>
+                <Typography variant='h4'>Current Sales</Typography>
               </Stack>
               <Stack alignItems='center' direction='row' spacing={3}>
                 <Button
@@ -210,21 +210,21 @@ const Page = () => {
                     </SvgIcon>
                   }
                   variant='contained'
-                  component={RouterLink}
-                  href={paths.myPantry.add}
+                //   component={RouterLink}
+                //   href={paths.myPantry.add}
                 >
-                  Add To Pantry
+                  Refresh Sales
                 </Button>
               </Stack>
             </Stack>
             <Card>
-              <PantryListSearch
+              <SalesListSearch
                 onFiltersChange={myPantrySearch.handleFiltersChange}
                 onSortChange={myPantrySearch.handleSortChange}
                 sortBy={myPantrySearch.state.sortBy}
                 sortDir={myPantrySearch.state.sortDir}
               />
-              <PantryListTable
+              <SalesListTable
                 count={myPantryStore.myPantryCount}
                 items={myPantryStore.myPantry}
                 onDeselectAll={myPantrySelection.handleDeselectAll}

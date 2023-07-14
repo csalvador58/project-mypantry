@@ -21,7 +21,7 @@ import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
-import { PantryEditForm } from 'src/sections/dashboard/pantry/pantry-edit-form';
+import { PantryEditForm } from 'src/sections/pantry/pantry-edit-form';
 import type { Pantry } from 'src/types/pantry';
 import { useParams } from 'react-router-dom';
 import ErrorHandler from 'src/error/error-handler';

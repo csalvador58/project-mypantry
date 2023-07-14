@@ -3,11 +3,11 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SvgIcon } from '@mui/material';
 
-import File01Icon from 'src/icons/untitled-ui/duocolor/file-01';
 import HomeSmileIcon from 'src/icons/untitled-ui/duocolor/home-smile';
 import Users03Icon from 'src/icons/untitled-ui/duocolor/users-03';
 import { tokens } from 'src/locales/tokens';
 import { paths } from 'src/paths';
+import ShoppingBag03 from 'src/icons/untitled-ui/duocolor/shopping-bag-03';
 
 export interface Item {
   disabled?: boolean;
@@ -62,6 +62,15 @@ export const useSections = () => {
               //   path: paths.myPantry.edit
               // }
             ],
+          },
+          {
+            title: 'Sales',
+            path: paths.sales.index,
+            icon: (
+              <SvgIcon fontSize='small'>
+                <ShoppingBag03 />
+              </SvgIcon>
+            ),
           },
         ],
       },

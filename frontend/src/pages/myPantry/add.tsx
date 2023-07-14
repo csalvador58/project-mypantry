@@ -12,7 +12,7 @@ import { RouterLink } from 'src/components/router-link';
 import { Seo } from 'src/components/seo';
 import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
-import { PantryAddForm } from 'src/sections/dashboard/pantry/pantry-add-form';
+import { PantryAddForm } from 'src/sections/pantry/pantry-add-form';
 
 const Page = () => {
   usePageView();

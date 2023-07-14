@@ -6,6 +6,9 @@ export const paths = {
     details: '/myPantry/:pantryId',
     edit: '/myPantry/:pantryId/edit'
   },
+  sales: {
+    index: '/sales'
+  },
   auth: {
     jwt: {
       login: '/auth/jwt/login',

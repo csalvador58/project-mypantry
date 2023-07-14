@@ -10,11 +10,11 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-interface OverviewDealsProps {
+interface OverviewSalesProps {
   amount: number;
 }
 
-export const OverviewDeals: FC<OverviewDealsProps> = (props) => {
+export const OverviewSales: FC<OverviewSalesProps> = (props) => {
   const { amount } = props;
 
   return (
@@ -42,7 +42,7 @@ export const OverviewDeals: FC<OverviewDealsProps> = (props) => {
             color="text.secondary"
             variant="body2"
           >
-            Current Deals
+            Current Sales
           </Typography>
           <Typography
             color="text.primary"
@@ -63,13 +63,13 @@ export const OverviewDeals: FC<OverviewDealsProps> = (props) => {
           )}
           size="small"
         >
-          See all deals
+          See all Sales
         </Button>
       </CardActions>
     </Card>
   );
 };
 
-OverviewDeals.propTypes = {
+OverviewSales.propTypes = {
   amount: PropTypes.number.isRequired
 };

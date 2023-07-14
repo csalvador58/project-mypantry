@@ -5,6 +5,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard';
 import { authRoutes } from './auth';
 import { myPantryRoutes } from './myPantry';
+import { salesRoutes } from './sales';
 import { useAuth } from 'src/hooks/use-auth';
 // import HomePage from 'src/pages';
 const HomePage = lazy(() => import('src/pages/index'));
@@ -38,6 +39,7 @@ export const routes: RouteObject[] = [
         element: <HomePage />,
       },
       ...myPantryRoutes,
+      ...salesRoutes,
     ],
   },
   ...authRoutes,
