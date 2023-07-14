@@ -5,15 +5,15 @@ import 'dotenv/config';
 import InvalidTokenError from '../errors/InvalidTokenError';
 
 const ONE_DAY = 24 * 60 * 60; // 24hrs in seconds
-const TEST_ONE_MIN = 30; // 60 seconds
+const TEST_ONE_MIN = 60; // 60 seconds
 
 export const generateToken = async (
   userId: mongoose.Schema.Types.ObjectId,
   secret: string = process.env['JWT_SECRET']!
 ): Promise<string | null> => {
   const currentDateInSeconds = Date.now() / 1000;
-  // const expDateInSeconds = currentDateInSeconds + ONE_DAY;
-  const expDateInSeconds = currentDateInSeconds + TEST_ONE_MIN;  // TESTING ONLY
+  const expDateInSeconds = currentDateInSeconds + ONE_DAY;
+  // const expDateInSeconds = currentDateInSeconds + TEST_ONE_MIN;  // TESTING ONLY
   const payload: IPayload = {
     sub: userId.toString(),
     iat: currentDateInSeconds,

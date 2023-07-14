@@ -63,9 +63,6 @@ const Page = () => {
     validationSchema,
     onSubmit: async (values, helpers): Promise<void> => {
 
-      console.log('Register clicked')
-      console.log(values.username, values.password)
-
       try {
         await signUp(values.username, values.password);
 

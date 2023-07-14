@@ -60,7 +60,6 @@ const usePantry = (): PantryCount => {
         setPantryCount(response);
       }
     } catch (err) {
-      console.log('3rd throw')
       if (isMounted()) {
         setPantryCount({ count: 0 });
       }
@@ -68,7 +67,6 @@ const usePantry = (): PantryCount => {
       if (err.message.includes('jwt expired')) {
         toast.error('Login token expired, please re-login.');
         ErrorLogger(err)
-        console.log('signout!');
         authContext.signOut();
         router.replace(paths.auth.jwt.login)
       }

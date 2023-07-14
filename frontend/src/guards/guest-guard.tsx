@@ -19,8 +19,6 @@ export const GuestGuard: FC<GuestGuardProps> = (props) => {
   const check = useCallback(
     () => {
       if (isAuthenticated) {
-        console.log('isAuthenticated')
-        console.log(isAuthenticated)
         router.replace(paths.myPantry.index);
       } else {
         setChecked(true);

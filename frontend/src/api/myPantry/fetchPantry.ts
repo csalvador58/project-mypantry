@@ -263,7 +263,6 @@ export const fetchPantryCount = async (): Promise<PantryCount> => {
     return data ? { count: data.pantryCount } : pantryNull;
   } catch (error) {
     // console.error(error);
-    console.log('1st throw')
     throw new ApiError(error);
   }
 };

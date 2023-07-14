@@ -23,6 +23,7 @@ import { Router } from 'express';
 import authRoute from './auth.route';
 import pantryRoute from './pantry.route';
 import requestLogger from '../utils/reqLogger.route'
+import dealsRoute from './deals.route';
 
 const router = Router();
 
@@ -44,6 +45,10 @@ const defaultIRoute: IRoute[] = [
   {
     path: '/pantry',
     route: pantryRoute,
+  },
+  {
+    path: '/deals',
+    route: dealsRoute,
   },
 ];
 

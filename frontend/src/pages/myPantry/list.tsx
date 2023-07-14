@@ -151,7 +151,6 @@ const useMyPantryStore = (searchState: MyPantrySearchState) => {
       if (err.message.includes('jwt expired')) {
         toast.error('Login token expired, please re-login.');
         ErrorLogger(err)
-        console.log('signout!');
         authContext.signOut();
         router.replace(paths.auth.jwt.login)
       }

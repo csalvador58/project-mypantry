@@ -54,7 +54,6 @@ class MyPantryApi {
       let data = await fetchPantryItemAdd(request);
       return data;
     } catch (error) {
-      console.log('2nd throw');
       throw new ApiError(error);
     }
   }
@@ -66,7 +65,6 @@ class MyPantryApi {
       let data = await fetchPantryItemDelete(request.id);
       return deepCopy(data);
     } catch (error) {
-      console.log('2nd throw');
       throw new ApiError(error);
     }
   }
@@ -79,7 +77,6 @@ class MyPantryApi {
       // let data = deepCopy(myPantry) as Pantry[];
       data = deepCopy(await fetchPantry());
     } catch (error) {
-      console.log('2nd throw');
       throw new ApiError(error);
     }
 
@@ -161,7 +158,6 @@ class MyPantryApi {
       let data = await fetchPantryItem(request.id);
       return deepCopy(data);
     } catch (error) {
-      console.log('2nd throw');
       throw new ApiError(error);
     }
   }
@@ -171,7 +167,6 @@ class MyPantryApi {
       let count = await fetchPantryCount();
       return deepCopy(count);
     } catch (error) {
-      console.log('2nd throw');
       throw new ApiError(error);
     }
   }
@@ -181,7 +176,6 @@ class MyPantryApi {
       let data = await fetchPantryItemUpdate(request);
       return data;
     } catch (error) {
-      console.log('2nd throw');
       throw new ApiError(error);
     }
   }

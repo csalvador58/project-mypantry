@@ -12,8 +12,6 @@ interface ErrorHandlerProps {
 // export const ErrorHandler = async (error: AppError): Promise<void> => {
 const ErrorHandler: FC<ErrorHandlerProps> = ({ error, children }) => {
   const authContext = useContext(AuthContext);
-  console.log('ErrorHandler - error');
-  console.log(error);
 
   useEffect(() => {
     if (error) {

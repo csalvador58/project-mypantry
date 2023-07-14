@@ -104,8 +104,6 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
       const userId = window.sessionStorage.getItem(STORAGE_USER_ID);
       const username = window.sessionStorage.getItem(STORAGE_USER);
 
-      console.log('AuthProvider - initialize');
-
       if (accessToken && userId && username) {
         dispatch({
           type: ActionType.INITIALIZE,
@@ -151,7 +149,6 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
 
   const signIn = useCallback(
     async (username: string, password: string): Promise<void> => {
-      console.log('AuthProvider - signIn');
       const {
         accessToken,
         userId,
@@ -180,14 +177,11 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
 
   const signUp = useCallback(
     async (username: string, password: string): Promise<void> => {
-      console.log('AuthProvider - signUp');
+
       const { userId, username: user } = await authApi.signUp({
         username,
         password,
       });
-
-      console.log('AuthProvider - signUp - accessToken');
-      console.log(userId, user);
 
       const { accessToken } = await authApi.signIn({ username, password });
 
@@ -209,7 +203,6 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
   );
 
   const signOut = useCallback(async (): Promise<void> => {
-    console.log('AuthProvider - signOut');
     sessionStorage.removeItem(STORAGE_KEY);
     sessionStorage.removeItem(STORAGE_USER);
     sessionStorage.removeItem(STORAGE_USER_ID);

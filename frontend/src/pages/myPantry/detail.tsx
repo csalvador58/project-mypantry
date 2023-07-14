@@ -71,7 +71,6 @@ const usePantry = (): Pantry | null => {
       if (err.message.includes('jwt expired')) {
         toast.error('Login token expired, please re-login.');
         ErrorLogger(err);
-        console.log('signout!');
         authContext.signOut();
         router.replace(paths.auth.jwt.login);
       }
@@ -152,7 +151,6 @@ const Page = () => {
       if (err.message.includes('jwt expired')) {
         toast.error('Login token expired, please re-login.');
         ErrorLogger(err);
-        console.log('signout!');
         authContext.signOut();
         router.replace(paths.auth.jwt.login);
       }

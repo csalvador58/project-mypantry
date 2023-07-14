@@ -1,0 +1,1100 @@
+{
+    "message": "Store 01 deals",
+    "deals": {
+      "total": 15,
+      "items": [
+        {
+          "id": "3141946572992942033",
+          "reference_id": "ad_ad_1369_211_2023_07_12_00_00_00_0b2747523e32af0b6591d2c1a2e121ea",
+          "type_id": "2",
+          "config": {
+            "text": "$5.98",
+            "type": "fixed_price",
+            "price": 5.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144110062012730566"
+          ],
+          "product_ids": [
+            "1564405684713623896"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "21490707",
+            "21512974",
+            "21573314",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22707136",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:13:05 +0000",
+          "cover_image_url": "https://images.freshop.com/1564405684713623896/c180df348f652ca7b18d53efb47a3bae_medium.png",
+          "similarity_id": "c3eb9feafbbe1dd34be5278cb00fc9eb",
+          "similarity_priority": 5,
+          "name": "Mishima Reserve Wagyu Ground Beef 80% Lean.",
+          "status_id": "14875",
+          "cover_image": "1564405684713623896/c180df348f652ca7b18d53efb47a3bae",
+          "size": "lb",
+          "price": "$11.49",
+          "sale_price": "$5.98",
+          "base_price": 11.49,
+          "split_quantity": 1,
+          "sale_price_md": "**$5.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946562817560400",
+          "reference_id": "ad_ad_1205_211_2023_07_12_00_00_00_ed1c857ae6f1df0f9c35dfdf3ace9e4f",
+          "type_id": "2",
+          "config": {
+            "text": "2/$5.00",
+            "type": "fixed_price_with_qty",
+            "price": 5,
+            "type_id": "2",
+            "for_quantity": 2
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144109741467242375"
+          ],
+          "product_ids": [
+            "59624",
+            "529138",
+            "2464372",
+            "2464373",
+            "2464374",
+            "2464375",
+            "2464376",
+            "2464378",
+            "2464379",
+            "2464380",
+            "2611050",
+            "2978794",
+            "2978795",
+            "5329157",
+            "5331044",
+            "5347267",
+            "6393064",
+            "6635277",
+            "6879439",
+            "1564405684702755649",
+            "1564405684702755650",
+            "1564405684702755651",
+            "1564405684702755652",
+            "1564405684705235210",
+            "1564405684707002940",
+            "1564405684710356251",
+            "1564405684711692182",
+            "1564405684711693710"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "214132",
+            "230985",
+            "230986",
+            "230989",
+            "312148",
+            "21488506",
+            "21488521",
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "210922",
+            "214132",
+            "230985",
+            "230986",
+            "230989",
+            "312148",
+            "740632",
+            "21488506",
+            "21488521",
+            "21491513",
+            "21566520",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:13:05 +0000",
+          "cover_image_url": "https://images.freshop.com/59624/5062076af583cffeef24bc671ac2458b_medium.png",
+          "similarity_id": "1220867ec25bee4de7069a1e5a56ffbc",
+          "similarity_priority": 5,
+          "name": "Theo Chocolate Bars 1.3 To 3 Oz., Assorted Varieties.",
+          "status_id": "14875",
+          "cover_image": "59624/5062076af583cffeef24bc671ac2458b",
+          "size": "3 oz",
+          "price": "$4.59",
+          "sale_price": "2 for $5.00",
+          "base_price": 4.59,
+          "split_quantity": 1,
+          "sale_price_md": "**2 for $5.00** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946562565902156",
+          "reference_id": "ad_ad_1162_211_2023_07_12_00_00_00_50b74d37e82378452aa176dc46f5626e",
+          "type_id": "2",
+          "config": {
+            "text": "$3.98",
+            "type": "fixed_price",
+            "price": 3.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144100770421411756"
+          ],
+          "product_ids": [
+            "5636253",
+            "5636254",
+            "5636255",
+            "7169853",
+            "7170700",
+            "1564405684702578188",
+            "1564405684702578189",
+            "1564405684707521042"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "337077",
+            "21490637",
+            "21566504",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:07:34 +0000",
+          "cover_image_url": "https://images.freshop.com/5636253/ac9940231bfa93f99e2b1f96089343a6_medium.png",
+          "similarity_id": "068d3e7cc7b962c313681b9c84b46efe",
+          "similarity_priority": 5,
+          "name": "Cadia Italian Gelato 30 Oz. Assorted Varieties.",
+          "status_id": "14875",
+          "cover_image": "5636253/ac9940231bfa93f99e2b1f96089343a6",
+          "size": "30 oz",
+          "price": "$7.99",
+          "sale_price": "$3.98",
+          "base_price": 7.99,
+          "split_quantity": 1,
+          "sale_price_md": "**$3.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946562867892051",
+          "reference_id": "ad_ad_1204_211_2023_07_12_00_00_00_62b6e8956ced0a374110a34a3efe7b32",
+          "type_id": "2",
+          "config": {
+            "text": "$7.98",
+            "type": "fixed_price",
+            "price": 7.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144112328430063438"
+          ],
+          "product_ids": [
+            "7293",
+            "521595",
+            "523349",
+            "529490",
+            "537590",
+            "540172",
+            "543261",
+            "4810006",
+            "4813687",
+            "4813988",
+            "5635831",
+            "6887085",
+            "6887087",
+            "6887088",
+            "1564405684696870747",
+            "1564405684704176972",
+            "1564405684704628769",
+            "1564405684704628770",
+            "1564405684704628771",
+            "1564405684704628772",
+            "1564405684704628773",
+            "1564405684704628774",
+            "1564405684704628775",
+            "1564405684707276553",
+            "1564405684707276557",
+            "1564405684707276561",
+            "1564405684707276565",
+            "1564405684709718220",
+            "1564405684711309043",
+            "1564405684711309045",
+            "1564405684711309046",
+            "1564405684711309048",
+            "1564405684711309050",
+            "1564405684711309051",
+            "1564405684711811246",
+            "1564405684711811250",
+            "1564405684711811251",
+            "1564405684712924385",
+            "1564405684712924386",
+            "1564405684712924720",
+            "1564405684712924721",
+            "1564405684712924722",
+            "1564405684712924723",
+            "1564405684712925538",
+            "1564405684714357154",
+            "1564405684714357160",
+            "1564405684714357170",
+            "1564405684714361569"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "214132",
+            "230986",
+            "21488506",
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "214132",
+            "230986",
+            "248650",
+            "310636",
+            "740626",
+            "740757",
+            "21488506",
+            "21491108",
+            "21491110",
+            "21566512",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:17:12 +0000",
+          "cover_image_url": "https://images.freshop.com/6887085/2028cc3b48b8620d567563780989aff9_medium.png",
+          "similarity_id": "2d7bd87f7ed46060e754c12d93664e2b",
+          "similarity_priority": 5,
+          "name": "Peet'S Coffee 10-12-Oz. Bags And 10-Ct. K-Cups. Assorted Varieties.",
+          "status_id": "14875",
+          "cover_image": "6887085/2028cc3b48b8620d567563780989aff9",
+          "size": "10.5 oz",
+          "price": "$14.29",
+          "sale_price": "$7.98",
+          "base_price": 14.29,
+          "split_quantity": 1,
+          "sale_price_md": "**$7.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946571239722937",
+          "reference_id": "ad_ad_1263_211_2023_07_12_00_00_00_4200a9a7aad923d14f06534d85e546e8",
+          "type_id": "2",
+          "config": {
+            "text": "$12.98",
+            "type": "fixed_price",
+            "price": 12.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144110203587268125"
+          ],
+          "product_ids": [
+            "1564405684711325817"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "248455",
+            "21490450",
+            "21643536",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:13:58 +0000",
+          "cover_image_url": "https://images.freshop.com/1564405684711325817/48009d9601f797214feaf40b4b2e079d_medium.png",
+          "similarity_id": "acfc8042368163bac74b2be35a5f6041",
+          "similarity_priority": 5,
+          "name": "Ocean Beauty Peeled & Deveined Prawns 1-Lb. Bag. 13/15 Ct. Farmed.",
+          "status_id": "14875",
+          "cover_image": "1564405684711325817/48009d9601f797214feaf40b4b2e079d",
+          "size": "16 oz",
+          "price": "$19.99",
+          "sale_price": "$12.98",
+          "base_price": 19.99,
+          "split_quantity": 1,
+          "sale_price_md": "**$12.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946562633011021",
+          "reference_id": "ad_ad_1044_211_2023_07_12_00_00_00_50b74d37e82378452aa176dc46f5626e",
+          "type_id": "2",
+          "config": {
+            "text": "$3.98",
+            "type": "fixed_price",
+            "price": 3.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144109135289650665"
+          ],
+          "product_ids": [
+            "7878800"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "21490336",
+            "21499868",
+            "21566527",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:11:56 +0000",
+          "cover_image_url": "https://images.freshop.com/7878800/7d8127047ab1f509ec427c818cc9e6ee_medium.png",
+          "similarity_id": "068d3e7cc7b962c313681b9c84b46efe",
+          "similarity_priority": 5,
+          "name": "Grand Central Sliced Como Loaf Artisan Bread.",
+          "status_id": "14875",
+          "cover_image": "7878800/7d8127047ab1f509ec427c818cc9e6ee",
+          "size": "27 oz",
+          "price": "$8.59",
+          "sale_price": "$3.98",
+          "base_price": 8.59,
+          "split_quantity": 1,
+          "sale_price_md": "**$3.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946562985332566",
+          "reference_id": "ad_ad_1220_211_2023_07_12_00_00_00_62b6e8956ced0a374110a34a3efe7b32",
+          "type_id": "2",
+          "config": {
+            "text": "$7.98",
+            "type": "fixed_price",
+            "price": 7.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144107338466594154"
+          ],
+          "product_ids": [
+            "1564405684713582131",
+            "1564405684713582132",
+            "1564405684713582133",
+            "1564405684713582134"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "245407",
+            "254450",
+            "21490367",
+            "21490593",
+            "21512974",
+            "21566539",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:07:35 +0000",
+          "cover_image_url": "https://images.freshop.com/00271150000008/9eac955caf258a5dac559af9e46bff7a_medium.png",
+          "similarity_id": "2d7bd87f7ed46060e754c12d93664e2b",
+          "similarity_priority": 5,
+          "name": "Schaller & Weber Sliced Turkey Oven-Roasted Or Smoked. Sliced To Order Or Pre-Packed.",
+          "status_id": "14875",
+          "cover_image": "00271150000008/9eac955caf258a5dac559af9e46bff7a",
+          "size": "lb",
+          "price": "$16.99",
+          "sale_price": "$7.98",
+          "base_price": 16.99,
+          "split_quantity": 1,
+          "sale_price_md": "**$7.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946573101993940",
+          "reference_id": "ad_ad_1383_211_2023_07_12_00_00_00_28381ed2548c2afb570cbbd0338dcf4c",
+          "type_id": "2",
+          "config": {
+            "text": "$2.98",
+            "type": "fixed_price",
+            "price": 2.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144107999983832475"
+          ],
+          "product_ids": [
+            "7973",
+            "8939",
+            "22952",
+            "22967",
+            "22969",
+            "22971",
+            "22973",
+            "22975",
+            "22978",
+            "22983",
+            "2339963",
+            "3017513",
+            "5570977",
+            "1564405684708671294",
+            "1564405684708824763",
+            "1564405684709257725",
+            "1564405684709934528",
+            "1564405684710049807",
+            "1564405684710344016",
+            "1564405684710452051",
+            "1564405684710452052",
+            "1564405684712287419"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "214132",
+            "230989",
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "214132",
+            "230989",
+            "245858",
+            "262682",
+            "740594",
+            "740657",
+            "740706",
+            "741376",
+            "21490432",
+            "21573299",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:11:16 +0000",
+          "cover_image_url": "https://images.freshop.com/7973/9b4be22c97ad297c86c9de447b0fa521_medium.png",
+          "similarity_id": "fb84b81e563145ca97835d718411e266",
+          "similarity_priority": 5,
+          "name": "Earthbound Farm Salad Blends 5 Oz. Assorted Varieties.",
+          "status_id": "14875",
+          "cover_image": "7973/9b4be22c97ad297c86c9de447b0fa521",
+          "size": "5 oz",
+          "price": "$4.98",
+          "sale_price": "$2.98",
+          "base_price": 4.98,
+          "split_quantity": 1,
+          "sale_price_md": "**$2.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946571147448248",
+          "reference_id": "ad_ad_1222_211_2023_07_12_00_00_00_b0a1e17afa29c1386689a164ee260992",
+          "type_id": "2",
+          "config": {
+            "text": "$4.98",
+            "type": "fixed_price",
+            "price": 4.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144110565295656891"
+          ],
+          "product_ids": [
+            "1266707",
+            "2324064",
+            "6898511"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22155228",
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "245620",
+            "740583",
+            "21573323",
+            "21701664",
+            "21707866",
+            "21931050",
+            "22155228",
+            "22165414",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:13:59 +0000",
+          "cover_image_url": "https://images.freshop.com/1266707/a963be06d20c436d48012900a0c83954_medium.png",
+          "similarity_id": "29ee7645d74a0f6b4c1dd05d9dfaabc6",
+          "similarity_priority": 5,
+          "name": "Fiorucci Panino 5-6 Oz. Select Varieties.",
+          "status_id": "14875",
+          "cover_image": "1266707/a963be06d20c436d48012900a0c83954",
+          "size": "5 oz",
+          "price": "$10.49",
+          "sale_price": "$4.98",
+          "base_price": 10.49,
+          "split_quantity": 1,
+          "sale_price_md": "**$4.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946572565123020",
+          "reference_id": "ad_ad_1341_211_2023_07_12_00_00_00_50b74d37e82378452aa176dc46f5626e",
+          "type_id": "2",
+          "config": {
+            "text": "$3.98",
+            "type": "fixed_price",
+            "price": 3.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144107594830843747"
+          ],
+          "product_ids": [
+            "56545",
+            "2341041",
+            "2439753",
+            "2457921",
+            "1564405684702646246",
+            "1564405684702757247",
+            "1564405684703057393",
+            "1564405684709718173"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "288629",
+            "21490928",
+            "21701664",
+            "21706031",
+            "21931050",
+            "22448301",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:09:10 +0000",
+          "cover_image_url": "https://images.freshop.com/56545/604f8cffa91f3195f6b9c5de1d93ec83_medium.png",
+          "similarity_id": "068d3e7cc7b962c313681b9c84b46efe",
+          "similarity_priority": 5,
+          "name": "Organic Red Ripe Strawberries 1 Lb.",
+          "status_id": "14875",
+          "cover_image": "56545/604f8cffa91f3195f6b9c5de1d93ec83",
+          "size": "1 lb",
+          "price": "$5.98",
+          "sale_price": "$3.98",
+          "base_price": 5.98,
+          "split_quantity": 1,
+          "sale_price_md": "**$3.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946571122282422",
+          "reference_id": "ad_ad_1252_211_2023_07_12_00_00_00_b0a1e17afa29c1386689a164ee260992",
+          "type_id": "2",
+          "config": {
+            "text": "$4.98",
+            "type": "fixed_price",
+            "price": 4.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144112492217633972"
+          ],
+          "product_ids": [
+            "4755244"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "261197",
+            "21573323",
+            "21701664",
+            "21931050",
+            "22165414",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:18:04 +0000",
+          "cover_image_url": "https://images.freshop.com/4755244/a35da1b1840d5adf1755853b668783c5_medium.png",
+          "similarity_id": "29ee7645d74a0f6b4c1dd05d9dfaabc6",
+          "similarity_priority": 5,
+          "name": "Bellentani Sliced Prosciutto 3 Oz.",
+          "status_id": "14875",
+          "cover_image": "4755244/a35da1b1840d5adf1755853b668783c5",
+          "size": "3 oz",
+          "price": "$8.99",
+          "sale_price": "$4.98",
+          "base_price": 8.99,
+          "split_quantity": 1,
+          "sale_price_md": "**$4.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946574175735775",
+          "reference_id": "ad_ad_1384_211_2023_07_12_00_00_00_eec05e0cb56680edbdeb097038740cd8",
+          "type_id": "2",
+          "config": {
+            "text": "$17.98",
+            "type": "fixed_price",
+            "price": 17.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144111059376279148"
+          ],
+          "product_ids": [
+            "1564405684707530202"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "212474",
+            "21512974",
+            "21643536",
+            "21701664",
+            "21931050",
+            "22398813",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:17:11 +0000",
+          "cover_image_url": "https://images.freshop.com/1564405684707530202/e0f80e6f1bdf3a36789faf9f58359c34_medium.png",
+          "similarity_id": "932bbc4f68da8efb8132d0af36c4ee4f",
+          "similarity_priority": 5,
+          "name": "Fresh King Salmon Fillet Wild",
+          "status_id": "14875",
+          "cover_image": "1564405684707530202/e0f80e6f1bdf3a36789faf9f58359c34",
+          "size": "lb",
+          "price": "$35.99",
+          "sale_price": "$17.98",
+          "base_price": 35.99,
+          "split_quantity": 1,
+          "sale_price_md": "**$17.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946562851114833",
+          "reference_id": "ad_ad_1212_211_2023_07_12_00_00_00_8aaf293bc3c73edb7dafe2c486ea779d",
+          "type_id": "2",
+          "config": {
+            "text": "$9.98",
+            "type": "fixed_price",
+            "price": 9.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144110764793531490"
+          ],
+          "product_ids": [
+            "1564405684707503178",
+            "1564405684707534226"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 307,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "245407",
+            "21512597",
+            "21512974",
+            "21566529",
+            "21681648",
+            "21701664",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:14:21 +0000",
+          "cover_image_url": "https://images.freshop.com/1564405684707534226/d6ccab72a9b73c529ebc20445a656690_medium.png",
+          "similarity_id": "fe31a79d72e259a04016b9b9b6d61b83",
+          "similarity_priority": 5,
+          "name": "Glorybee Mango Cheeks",
+          "status_id": "14875",
+          "cover_image": "1564405684707534226/d6ccab72a9b73c529ebc20445a656690",
+          "size": "lb",
+          "price": "$18.29",
+          "sale_price": "$9.98",
+          "base_price": 18.29,
+          "split_quantity": 1,
+          "sale_price_md": "**$9.98** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946563060830039",
+          "reference_id": "ad_ad_1206_211_2023_07_12_00_00_00_b06da6ad336042cc99ed1b5b9b48b20c",
+          "type_id": "2",
+          "config": {
+            "buy": 1,
+            "get": 1,
+            "text": "B1g1",
+            "type": "buy_x_get_x_free",
+            "type_id": "5"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144100464346271185"
+          ],
+          "product_ids": [
+            "7791060",
+            "8120315",
+            "1564405684702577823",
+            "1564405684703446697",
+            "1564405684704558108",
+            "1564405684704706401",
+            "1564405684707699310",
+            "1564405684707919632",
+            "1564405684713841892"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "21488521"
+          ],
+          "product_tag_ids": [
+            "886115",
+            "21488521",
+            "21490389",
+            "21490397",
+            "21573314",
+            "21573316",
+            "21701664",
+            "21931050",
+            "22475760"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-10 22:07:37 +0000",
+          "cover_image_url": "https://images.freshop.com/8120315/95b347171ce36015c7a2189264a8c2c5_medium.png",
+          "similarity_id": "b51a9eb1ba4da07f3c8804e985806bc1",
+          "similarity_priority": 5,
+          "name": "Beelers Bacon 10 To 12 Oz. Assorted Varieties.",
+          "status_id": "14875",
+          "cover_image": "8120315/95b347171ce36015c7a2189264a8c2c5",
+          "size": "12 oz",
+          "price": "$8.99",
+          "sale_price": "Buy 1 get 1 free",
+          "base_price": 8.99,
+          "split_quantity": 1,
+          "sale_price_md": "**Buy 1 get 1 free** (07/12/23 - 07/18/23)"
+        },
+        {
+          "id": "3141946562968555349",
+          "reference_id": "ad_ad_1215_211_2023_07_12_00_00_00_28381ed2548c2afb570cbbd0338dcf4c",
+          "type_id": "2",
+          "config": {
+            "text": "$2.98",
+            "type": "fixed_price",
+            "price": 2.98,
+            "type_id": "1"
+          },
+          "circular_ids": [
+            "3143047253363526687"
+          ],
+          "circular_file_ids": [
+            "3143047253942340641"
+          ],
+          "circular_page_ids": [
+            "3143047272363723820"
+          ],
+          "circular_spot_ids": [
+            "3144100267440475309"
+          ],
+          "product_ids": [
+            "12424",
+            "12482",
+            "78505",
+            "2311478",
+            "5642387",
+            "5642389",
+            "5642395",
+            "5989737",
+            "6025935",
+            "7892327",
+            "7908734",
+            "1564405684689876275",
+            "1564405684689876281",
+            "1564405684702379991",
+            "1564405684711149147",
+            "1564405684711149632",
+            "1564405684711636386",
+            "1564405684713623467"
+          ],
+          "store_ids": [
+            "4236"
+          ],
+          "start_date": "2023-07-12 00:00:00 +0000",
+          "finish_date": "2023-07-18 23:59:59 +0000",
+          "is_suppressed": false,
+          "popularity": 1,
+          "product_shelf_tag_ids": [
+            "22804368"
+          ],
+          "product_tag_ids": [
+            "21490937",
+            "21499175",
+            "21512974",
+            "21684709",
+            "21701664",
+            "21706030",
+            "21931050",
+            "22475760",
+            "22803816",
+            "22804368"
+          ],
+          "product_status_id": "1",
+          "published_at": "2023-07-13 23:06:51 +0000",
+          "cover_image_url": "https://images.freshop.com/12482/5f51958bef2b4adb960335c5366365b3_medium.png",
+          "similarity_id": "fb84b81e563145ca97835d718411e266",
+          "similarity_priority": 5,
+          "name": "Yellow Flesh Honey Nectarines Sweet",
+          "status_id": "14875",
+          "cover_image": "12482/5f51958bef2b4adb960335c5366365b3",
+          "size": "lb",
+          "price": "$4.98",
+          "sale_price": "$2.98",
+          "base_price": 4.98,
+          "split_quantity": 1,
+          "sale_price_md": "**$2.98** (07/12/23 - 07/18/23)"
+        }
+      ],
+      "name": "Prices good 07/12/2023 through 07/18/2023"
+    }
+  }

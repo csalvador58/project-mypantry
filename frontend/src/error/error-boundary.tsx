@@ -38,7 +38,6 @@ class ErrorBoundary extends React.Component<
     if (error.message.includes('jwt expired')) {
       toast.error('Login token expired, please re-login.');
       this.setState({ redirectPage: <JwtLoginPage /> });
-      console.log('signout!');
       authContext.signOut();
     }
   }
