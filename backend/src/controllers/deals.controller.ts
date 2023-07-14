@@ -1,25 +1,13 @@
 import { RequestHandler } from 'express';
+import SaleItem, { ISaleItem, ISaleItemDocument } from '../models/deals.model';
 import { catchAsync } from '../utils';
 import { AuthenticatedRequest } from './token.controller';
-
-interface TItemDeal {
-  id: string;
-  startDate: Date;
-  endDate: Date;
-  imageUrl: string;
-  name: string;
-  size: string;
-  salePrice: number;
-  saleQuantity: number;
-  basePrice: number;
-  baseQuantity: number;
-  note: string;
-}
+import { STORE_CONSTANTS } from '../utils/constants';
 
 interface TStore01Response {
   id: string;
   start_date?: string;
-  end_date?: string;
+  finish_date?: string;
   cover_image_url?: string;
   name?: string;
   size?: string;
@@ -30,6 +18,7 @@ interface TStore01Response {
   base_price: number;
   split_quantity: number;
   sale_price_md: string;
+  store_ids: string[];
 }
 
 export const getStore01Deals: RequestHandler = catchAsync(
@@ -69,11 +58,11 @@ export const getStore01Deals: RequestHandler = catchAsync(
 
     const data = await response.json();
 
-    const filteredData: TItemDeal[] = data.items.map(
+    const filteredData: ISaleItem[] = data.items.map(
       (item: TStore01Response) => ({
-        id: item.id,
+        itemId: item.id,
         startDate: item.start_date && new Date(item.start_date),
-        endDate: item.end_date && new Date(item.end_date),
+        endDate: item.finish_date && new Date(item.finish_date),
         imageUrl: item.cover_image_url,
         name: item.name,
         size: item.size,
@@ -82,12 +71,32 @@ export const getStore01Deals: RequestHandler = catchAsync(
         basePrice: item.base_price,
         baseQuantity: item.split_quantity,
         note: item.sale_price_md,
+        storeName: STORE_CONSTANTS[item.store_ids[0]!],
+        storeId: item.store_ids[0],
       })
     );
 
     console.log('filteredData');
     console.log(filteredData);
 
-    return res.status(200).json({ message: 'Store 01 deals', deals: filteredData });
+    let storedItems: ISaleItemDocument[] = [];
+
+    for(const item of filteredData) {
+      try {
+        const storedItem = await SaleItem.findOneAndReplace(
+          { itemId: item.itemId },
+          item, {upsert: true, new: true}
+        );
+        if (storedItem) {
+          storedItems.push(storedItem);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    return res
+      .status(200)
+      .json({ message: 'Sale items: ', deals: storedItems });
   }
 );
