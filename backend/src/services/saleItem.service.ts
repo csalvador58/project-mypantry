@@ -27,7 +27,7 @@ export const deleteSaleItem = async (
   return SaleItem.findByIdAndDelete(new mongoose.Types.ObjectId(itemId));
 };
 
-export const getSaleItems = async () => {
+export const getSaleItemsFromApi = async () => {
     const myHeaders = new Headers();
     myHeaders.append(
       'Accept',
@@ -61,6 +61,9 @@ export const getSaleItems = async () => {
 
     const data = await response.json();
 
+    console.log('salesItem service - raw api data')
+    console.log(data)
+
     const filteredData: ISaleItem[] = data.items.map(
       (item: TStore01Response) => ({
         storeItemId: item.id,
@@ -74,7 +77,7 @@ export const getSaleItems = async () => {
         basePrice: item.base_price,
         baseQuantity: item.split_quantity,
         note: item.sale_price_md,
-        storeName: STORE_CONSTANTS[item.store_ids[0]![0]!],
+        storeName: STORE_CONSTANTS[item.store_ids[0]!] ? STORE_CONSTANTS[item.store_ids[0]!]![0] : '',
         storeId: item.store_ids[0],
         location1: STORE_CONSTANTS[item.store_ids[0]!]?.includes('location1') || false,
         location2: STORE_CONSTANTS[item.store_ids[0]!]?.includes('location2') || false,
@@ -94,6 +97,9 @@ export const getSaleItemsFromDB = async () => {
 
 export const updateSaleItems = async (saleItems: ISaleItem[]): Promise<ISaleItemDocument[]> => {
   let storedItems: ISaleItemDocument[] = [];
+
+  console.log('sale item service - update sale items - saleItems')
+  console.log(saleItems)
 
   for(const item of saleItems) {
     try {

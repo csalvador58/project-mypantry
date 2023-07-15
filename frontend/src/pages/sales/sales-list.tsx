@@ -25,6 +25,7 @@ import { useAuth } from 'src/hooks/use-auth';
 import { useRouter } from 'src/hooks/use-router';
 import toast from 'react-hot-toast';
 import { Sales } from 'src/types/sales';
+import { myPantryApi } from 'src/api/myPantry';
 
 interface Filters {
   query?: string;
@@ -133,8 +134,8 @@ const useSalesStore = (searchState: SalesSearchState) => {
 
   const handleSalesGet = useCallback(async () => {
     try {
-        console.log('searchState')
-        console.log(searchState)
+      console.log('searchState');
+      console.log(searchState);
       const response = await salesApi.getSalesFromDB(searchState);
 
       if (isMounted()) {
@@ -153,9 +154,9 @@ const useSalesStore = (searchState: SalesSearchState) => {
 
       if (err.message.includes('jwt expired')) {
         toast.error('Login token expired, please re-login.');
-        ErrorLogger(err)
+        ErrorLogger(err);
         authContext.signOut();
-        router.replace(paths.auth.jwt.login)
+        router.replace(paths.auth.jwt.login);
       }
 
       throwAsyncError(err);
@@ -186,10 +187,28 @@ const Page = () => {
   const salesStore = useSalesStore(salesSearch.state);
   const salesIds = useSaleItemIds(salesStore.sales);
   const salesSelection = useSelection<string>(salesIds);
+  const throwAsyncError = useThrowAsyncError();
+  const authContext = useAuth();
+  const router = useRouter();
 
   usePageView();
 
-  const refreshSalesHandler = () => {}
+  const refreshSalesHandler = async () => {
+    try {
+        console.log('refresh button clicked')
+      await salesApi.updateSalesData();
+
+    } catch (err) {
+      if (err.message.includes('jwt expired')) {
+        toast.error('Login token expired, please re-login.');
+        ErrorLogger(err);
+        authContext.signOut();
+        router.replace(paths.auth.jwt.login);
+      }
+
+      throwAsyncError(err);
+    }
+  };
 
   return (
     <>
@@ -210,8 +229,8 @@ const Page = () => {
               <Stack alignItems='center' direction='row' spacing={3}>
                 <Button
                   variant='contained'
-                //   component={RouterLink}
-                //   href={paths.myPantry.add}
+                  //   component={RouterLink}
+                  //   href={paths.myPantry.add}
                   onClick={refreshSalesHandler}
                 >
                   Refresh Sales

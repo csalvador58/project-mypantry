@@ -187,13 +187,13 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                         >
                           {saleItem.name}
                         </Link>
-                        <Typography color='text.secondary' variant='body2'>
+                        {/* <Typography color='text.secondary' variant='body2'>
                           {saleItem.note}
-                        </Typography>
+                        </Typography> */}
                       </div>
                     </Stack>
                   </TableCell>
-                  <TableCell>{storeLocation}</TableCell>
+                  <TableCell>{saleItem.note}</TableCell>
                   <TableCell>
                     <Typography variant='subtitle2'>{salePrice}</Typography>
                   </TableCell>
@@ -202,7 +202,7 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                     <Typography variant='subtitle2'>{regPrice}</Typography>
                   </TableCell>
                   <TableCell>{saleItem.baseQuantity}</TableCell>
-                  <TableCell>{saleItem.note}</TableCell>
+                  <TableCell>{storeLocation}</TableCell>
                   {/* <TableCell align='right'> */}
                     {/* <IconButton
                       component={RouterLink}

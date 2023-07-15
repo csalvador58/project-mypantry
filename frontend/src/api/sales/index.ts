@@ -7,10 +7,11 @@ import {
   fetchSalesFromDB,
   fetchSalesCount,
   fetchSalesItemDelete,
+  fetchSalesFromApi,
 } from './fetchSales';
 import { ApiError } from 'src/error/error-classes';
 
-export type GetMySalesRequest = {
+export type GetSalesRequest = {
   filters?: {
     query?: string;
     location1?: boolean;
@@ -25,7 +26,7 @@ export type GetMySalesRequest = {
   sortDir?: 'asc' | 'desc';
 };
 
-type GetMySalesResponse = Promise<{
+type GetSalesResponse = Promise<{
   data: Sales[];
   count: number;
 }>;
@@ -40,22 +41,22 @@ export type DeleteSalesItemRequest = { id: string };
 
 type AddUpdateSalesResponse = boolean;
 
-type GetSalesResponse = Promise<Sales>;
+type GetSalesItemResponse = Promise<Sales>;
 type GetSalesCountResponse = Promise<SalesCount>;
 
 class SalesApi {
-//   async deleteSalesItem(
-//     request: DeleteSalesItemRequest
-//   ): Promise<GetSalesResponse> {
-//     try {
-//       let data = await fetchSalesItemDelete(request.id);
-//       return deepCopy(data);
-//     } catch (error) {
-//       throw new ApiError(error);
-//     }
-//   }
+  //   async deleteSalesItem(
+  //     request: DeleteSalesItemRequest
+  //   ): Promise<GetSalesResponse> {
+  //     try {
+  //       let data = await fetchSalesItemDelete(request.id);
+  //       return deepCopy(data);
+  //     } catch (error) {
+  //       throw new ApiError(error);
+  //     }
+  //   }
 
-  async getSalesFromDB(request: GetMySalesRequest): Promise<GetMySalesResponse> {
+  async getSalesFromDB(request: GetSalesRequest): Promise<GetSalesResponse> {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;
 
     let data: Sales[];
@@ -63,8 +64,8 @@ class SalesApi {
       // let data = deepCopy(myPantry) as Pantry[];
       data = deepCopy(await fetchSalesFromDB());
 
-      console.log('index - data')
-      console.log(data)
+      console.log('index - data');
+      console.log(data);
     } catch (error) {
       throw new ApiError(error);
     }
@@ -73,8 +74,8 @@ class SalesApi {
 
     if (typeof filters !== 'undefined') {
       data = data.filter((sale) => {
-        console.log('sale')
-        console.log(sale)
+        console.log('sale');
+        console.log(sale);
         if (typeof filters.query !== 'undefined' && filters.query !== '') {
           let queryMatched = false;
           const properties: ('name' | 'storeName')[] = ['name', 'storeName'];
@@ -139,6 +140,23 @@ class SalesApi {
       data,
       count,
     };
+  }
+
+  async updateSalesData(): Promise<GetSalesResponse> {
+    try {
+      const data = deepCopy(await fetchSalesFromApi());
+      let count = data.length;
+
+      console.log('index - data');
+      console.log(data);
+
+      return {
+        data,
+        count,
+      };
+    } catch (error) {
+      throw new ApiError(error);
+    }
   }
 
   async getPantryCount(): Promise<GetSalesCountResponse> {

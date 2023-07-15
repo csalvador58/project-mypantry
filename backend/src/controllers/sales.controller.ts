@@ -5,13 +5,18 @@ import { catchAsync } from '../utils';
 import { AuthenticatedRequest } from './token.controller';
 
 
-export const getStore01Sales: RequestHandler = catchAsync(
+export const updateStore01SalesFromApi: RequestHandler = catchAsync(
   async (req: AuthenticatedRequest, res, next) => {
     console.log('sales.controller: getStore01Sales');
 
-    const storeSalesData: ISaleItem[] = await salesService.getSaleItems();
+    const storeSalesData: ISaleItem[] = await salesService.getSaleItemsFromApi();
+    console.log(' sales.comtroller - storeSalesData')
+    console.log(storeSalesData)
     const storedItems: ISaleItemDocument[] = await salesService.updateSaleItems(storeSalesData)
 
+    console.log('sales.controller - storedItems')
+    console.log(storedItems)
+    
     return res
       .status(200)
       .json({ message: 'Sale items: ', sales: storedItems });
