@@ -8,8 +8,9 @@
     "test": "jest --verbose --runInBand",
     "ci": "jest --json --runInBand | node .github/workflows/parseOutput.js",
     "tdd": "jest --watch --verbose --runInBand",
-    "start": "node ./dist/index.js",
-    "devStart": "nodemon ./dist/index.js"
+    "devStart": "nodemon ./dist/index.js",
+    "build": "tsc",
+    "start": "node ./dist/index.js"
   },
   "jest": {
     "preset": "ts-jest",
