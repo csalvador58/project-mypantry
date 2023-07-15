@@ -1,21 +1,16 @@
-import type { Pantry, PantryAdd, PantryCount } from 'src/types/pantry';
+import type { Sales, SalesCount } from 'src/types/sales';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { applySort } from 'src/utils/apply-sort';
 import { deepCopy } from 'src/utils/deep-copy';
 
-import { pantry, myPantry } from './data';
 import {
-  fetchPantry,
-  fetchPantryCount,
-  fetchPantryItem,
-  fetchPantryItemAdd,
-  fetchPantryItemDelete,
-  fetchPantryItemUpdate,
-  // fetchUpdatePantryItem,
-} from './fetchPantry';
+  fetchSalesFromDB,
+  fetchSalesCount,
+  fetchSalesItemDelete,
+} from './fetchSales';
 import { ApiError } from 'src/error/error-classes';
 
-export type GetMyPantryRequest = {
+export type GetMySalesRequest = {
   filters?: {
     query?: string;
     location1?: boolean;
@@ -30,52 +25,46 @@ export type GetMyPantryRequest = {
   sortDir?: 'asc' | 'desc';
 };
 
-type GetMyPantryResponse = Promise<{
-  data: Pantry[];
+type GetMySalesResponse = Promise<{
+  data: Sales[];
   count: number;
 }>;
 
-export type GetPantryItemRequest = { id: string };
-export type DeletePantryItemRequest = { id: string };
+export type GetSalesItemRequest = { id: string };
+export type DeleteSalesItemRequest = { id: string };
 
 // export type UpdatePantryItemRequest = {
 //   id: string;
 //   data: PantryUpdate;
 // };
 
-type AddUpdatePantryResponse = boolean;
+type AddUpdateSalesResponse = boolean;
 
-type GetPantryResponse = Promise<Pantry>;
-type GetPantryCountResponse = Promise<PantryCount>;
+type GetSalesResponse = Promise<Sales>;
+type GetSalesCountResponse = Promise<SalesCount>;
 
-class MyPantryApi {
-  async addPantryItem(request: PantryAdd): Promise<AddUpdatePantryResponse> {
-    try {
-      let data = await fetchPantryItemAdd(request);
-      return data;
-    } catch (error) {
-      throw new ApiError(error);
-    }
-  }
+class SalesApi {
+//   async deleteSalesItem(
+//     request: DeleteSalesItemRequest
+//   ): Promise<GetSalesResponse> {
+//     try {
+//       let data = await fetchSalesItemDelete(request.id);
+//       return deepCopy(data);
+//     } catch (error) {
+//       throw new ApiError(error);
+//     }
+//   }
 
-  async deletePantryItem(
-    request: DeletePantryItemRequest
-  ): Promise<GetPantryResponse> {
-    try {
-      let data = await fetchPantryItemDelete(request.id);
-      return deepCopy(data);
-    } catch (error) {
-      throw new ApiError(error);
-    }
-  }
-
-  async getMyPantry(request: GetMyPantryRequest): Promise<GetMyPantryResponse> {
+  async getSalesFromDB(request: GetMySalesRequest): Promise<GetMySalesResponse> {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;
 
-    let data: Pantry[];
+    let data: Sales[];
     try {
       // let data = deepCopy(myPantry) as Pantry[];
-      data = deepCopy(await fetchPantry());
+      data = deepCopy(await fetchSalesFromDB());
+
+      console.log('index - data')
+      console.log(data)
     } catch (error) {
       throw new ApiError(error);
     }
@@ -83,14 +72,16 @@ class MyPantryApi {
     let count = data.length;
 
     if (typeof filters !== 'undefined') {
-      data = data.filter((pantry) => {
+      data = data.filter((sale) => {
+        console.log('sale')
+        console.log(sale)
         if (typeof filters.query !== 'undefined' && filters.query !== '') {
           let queryMatched = false;
-          const properties: ('note' | 'name')[] = ['note', 'name'];
+          const properties: ('name' | 'storeName')[] = ['name', 'storeName'];
 
           properties.forEach((property) => {
             if (
-              pantry[property]
+              sale[property]
                 .toLowerCase()
                 .includes(filters.query!.toLowerCase())
             ) {
@@ -104,29 +95,29 @@ class MyPantryApi {
         }
 
         if (typeof filters.location1 !== 'undefined') {
-          if (pantry.location1 !== filters.location1) {
+          if (sale.location1 !== filters.location1) {
             return false;
           }
         }
         if (typeof filters.location2 !== 'undefined') {
-          if (pantry.location2 !== filters.location2) {
+          if (sale.location2 !== filters.location2) {
             return false;
           }
         }
         if (typeof filters.location3 !== 'undefined') {
-          if (pantry.location3 !== filters.location3) {
+          if (sale.location3 !== filters.location3) {
             return false;
           }
         }
 
         if (typeof filters.location4 !== 'undefined') {
-          if (pantry.location4 !== filters.location4) {
+          if (sale.location4 !== filters.location4) {
             return false;
           }
         }
 
         if (typeof filters.location5 !== 'undefined') {
-          if (pantry.location5 !== filters.location5) {
+          if (sale.location5 !== filters.location5) {
             return false;
           }
         }
@@ -150,35 +141,14 @@ class MyPantryApi {
     };
   }
 
-  // async getPantryItem(request?: GetPantryRequest): Promise<GetPantryResponse> {
-  async getPantryItem(
-    request: GetPantryItemRequest
-  ): Promise<GetPantryResponse> {
+  async getPantryCount(): Promise<GetSalesCountResponse> {
     try {
-      let data = await fetchPantryItem(request.id);
-      return deepCopy(data);
-    } catch (error) {
-      throw new ApiError(error);
-    }
-  }
-
-  async getPantryCount(): Promise<GetPantryCountResponse> {
-    try {
-      let count = await fetchPantryCount();
+      let count = await fetchSalesCount();
       return deepCopy(count);
-    } catch (error) {
-      throw new ApiError(error);
-    }
-  }
-
-  async updatePantryItem(request: Pantry): Promise<AddUpdatePantryResponse> {
-    try {
-      let data = await fetchPantryItemUpdate(request);
-      return data;
     } catch (error) {
       throw new ApiError(error);
     }
   }
 }
 
-export const myPantryApi = new MyPantryApi();
+export const salesApi = new SalesApi();

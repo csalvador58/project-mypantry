@@ -1,27 +1,26 @@
 export interface Sales {
     id: string;
+    storeItemId: string;
+    startDate?: Date;
+    endDate?: Date;
+    imageUrl?: string;
     name: string;
-    currency?: string;
-    favorite?: boolean;
+    size?: string;
+    salePrice: number;
+    saleQuantity: number;
+    basePrice?: number;
+    baseQuantity?: number;
+    note?: string;
+    storeName: string;
+    storeId?: string;
     location1?: boolean;
     location2?: boolean;
     location3?: boolean;
     location4?: boolean;
     location5?: boolean;
-    note: string;
-    price?: number | null;
-    quantity?: number | null;
-    createdAt?: Date;
-    updatedAt?: Date;
+    currency?: string;
   }
   
   export interface SalesCount {
     count: number;
-  }
-  
-  export interface SalesAdd
-    extends Omit<Sales, 'id' | 'currency' | 'createdAt' | 'updatedAt'> {}
-  
-  export interface SalesUpdateStatus {
-    status: boolean;
   }

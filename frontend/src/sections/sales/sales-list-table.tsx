@@ -22,20 +22,20 @@ import Typography from '@mui/material/Typography';
 import { RouterLink } from 'src/components/router-link';
 import { Scrollbar } from 'src/components/scrollbar';
 import { paths } from 'src/paths';
-import type { Pantry } from 'src/types/pantry';
+import { Sales } from 'src/types/sales';
 
 interface SalesListTableProps {
   count?: number;
-  items?: Pantry[];
+  items?: Sales[];
   onDeselectAll?: () => void;
-  onDeselectOne?: (pantryId: string) => void;
+  onDeselectOne?: (itemId: string) => void;
   onPageChange?: (
     event: MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => void;
   onRowsPerPageChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onSelectAll?: () => void;
-  onSelectOne?: (pantryId: string) => void;
+  onSelectOne?: (itemId: string) => void;
   page?: number;
   rowsPerPage?: number;
   selected?: string[];
@@ -117,35 +117,41 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                 />
               </TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Cost</TableCell>
-              <TableCell align='right'>Actions</TableCell>
+              <TableCell>Store</TableCell>
+              <TableCell>Sale Price</TableCell>
+              <TableCell>Sale Qty</TableCell>
+              <TableCell>Reg Price</TableCell>
+              <TableCell>Reg Qty</TableCell>
+              <TableCell>Notes</TableCell>
+              {/* <TableCell align='right'>Actions</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((pantry) => {
-              const isSelected = selected.includes(pantry.id);
+            {items.map((saleItem) => {
+              const isSelected = selected.includes(saleItem.id);
               const data = {
-                'Pantry 1': pantry.location1 || false,
-                'Pantry 2': pantry.location2 || false,
-                'Pantry 3': pantry.location3 || false,
-                'Freezer': pantry.location4 || false,
-                'Other': pantry.location5 || false,
+                'Central Market': saleItem.location1 || false,
+                'Location2 not defined': saleItem.location2 || false,
+                'Location3 not defined': saleItem.location3 || false,
+                'Location4 not defined': saleItem.location4 || false,
+                'Location5 not defined': saleItem.location5 || false,
               };
-              const locationString: string[] = [];
+              const storeLocationString: string[] = [];
               Object.entries(data).forEach(([key, value]) => {
                 if (value) {
-                  locationString.push(key);
+                  storeLocationString.push(key);
                 }
               });
-              const location = locationString.join(', ');
-              const price = numeral(pantry.price).format(
-                `${pantry.currency}0,0.00`
+              const storeLocation = storeLocationString.join(', ');
+              const salePrice = numeral(saleItem.salePrice).format(
+                `${saleItem.currency}0,0.00`
+              );
+              const regPrice = numeral(saleItem.basePrice).format(
+                `${saleItem.currency}0,0.00`
               );
 
               return (
-                <TableRow hover key={pantry.id} selected={isSelected}>
+                <TableRow hover key={saleItem.id} selected={isSelected}>
                   <TableCell padding='checkbox'>
                     <Checkbox
                       checked={isSelected}
@@ -153,9 +159,9 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                         event: ChangeEvent<HTMLInputElement>
                       ): void => {
                         if (event.target.checked) {
-                          onSelectOne?.(pantry.id);
+                          onSelectOne?.(saleItem.id);
                         } else {
-                          onDeselectOne?.(pantry.id);
+                          onDeselectOne?.(saleItem.id);
                         }
                       }}
                       value={isSelected}
@@ -164,13 +170,13 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                   <TableCell>
                     <Stack alignItems='center' direction='row' spacing={1}>
                       {/* <Avatar
-                        src={pantry.avatar}
+                        src={saleItem.avatar}
                         sx={{
                           height: 42,
                           width: 42
                         }}
                       >
-                        {getInitials(pantry.name)}
+                        {getInitials(saleItem.name)}
                       </Avatar> */}
                       <div>
                         <Link
@@ -179,39 +185,44 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                           href={paths.myPantry.details}
                           variant='subtitle2'
                         >
-                          {pantry.name}
+                          {saleItem.name}
                         </Link>
                         <Typography color='text.secondary' variant='body2'>
-                          {pantry.note}
+                          {saleItem.note}
                         </Typography>
                       </div>
                     </Stack>
                   </TableCell>
-                  <TableCell>{location}</TableCell>
-                  <TableCell>{pantry.quantity}</TableCell>
+                  <TableCell>{storeLocation}</TableCell>
                   <TableCell>
-                    <Typography variant='subtitle2'>{price}</Typography>
+                    <Typography variant='subtitle2'>{salePrice}</Typography>
                   </TableCell>
-                  <TableCell align='right'>
-                    <IconButton
+                  <TableCell>{saleItem.saleQuantity}</TableCell>
+                  <TableCell>
+                    <Typography variant='subtitle2'>{regPrice}</Typography>
+                  </TableCell>
+                  <TableCell>{saleItem.baseQuantity}</TableCell>
+                  <TableCell>{saleItem.note}</TableCell>
+                  {/* <TableCell align='right'> */}
+                    {/* <IconButton
                       component={RouterLink}
                       // href={paths.myPantry.edit}
-                      href={`/myPantry/${pantry.id}/edit`}
+                      href={`/myPantry/${saleItem.id}/edit`}
                     >
                       <SvgIcon>
                         <Edit02Icon />
                       </SvgIcon>
-                    </IconButton>
-                    <IconButton
+                    </IconButton> */}
+                    {/* <IconButton
                       component={RouterLink}
-                      href={`/myPantry/${pantry.id}`}
+                      href={`/myPantry/${saleItem.id}`}
                       // href={paths.myPantry.details}
                     >
                       <SvgIcon>
                         <ArrowRightIcon />
                       </SvgIcon>
-                    </IconButton>
-                  </TableCell>
+                    </IconButton> */}
+                  {/* </TableCell> */}
                 </TableRow>
               );
             })}

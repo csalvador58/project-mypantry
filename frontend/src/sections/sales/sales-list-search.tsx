@@ -36,24 +36,8 @@ const tabs: TabOption[] = [
     value: 'all'
   },
   {
-    label: 'Pantry 1',
+    label: 'Central Market',
     value: 'location1'
-  },
-  {
-    label: 'Pantry 2',
-    value: 'location2'
-  },
-  {
-    label: 'Pantry 3',
-    value: 'location3'
-  },
-  {
-    label: 'Freezer',
-    value: 'location4'
-  },
-  {
-    label: 'Other',
-    value: 'location5'
   }
 ];
 

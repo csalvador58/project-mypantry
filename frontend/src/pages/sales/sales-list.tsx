@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-import { myPantryApi } from 'src/api/myPantry';
+import { salesApi } from 'src/api/sales';
 import { Seo } from 'src/components/seo';
 import { useMounted } from 'src/hooks/use-mounted';
 import { usePageView } from 'src/hooks/use-page-view';
@@ -24,6 +24,7 @@ import ErrorHandler from 'src/error/error-handler';
 import { useAuth } from 'src/hooks/use-auth';
 import { useRouter } from 'src/hooks/use-router';
 import toast from 'react-hot-toast';
+import { Sales } from 'src/types/sales';
 
 interface Filters {
   query?: string;
@@ -53,7 +54,7 @@ const useSalesSearch = () => {
       location5: undefined,
     },
     page: 0,
-    rowsPerPage: 5,
+    rowsPerPage: 10,
     sortBy: 'updatedAt',
     sortDir: 'desc',
   });
@@ -106,8 +107,8 @@ const useSalesSearch = () => {
 };
 
 interface SalesStoreState {
-  myPantry: Pantry[];
-  myPantryCount: number;
+  sales: Sales[];
+  salesCount: number;
 }
 
 const useThrowAsyncError = () => {
@@ -123,28 +124,30 @@ const useThrowAsyncError = () => {
 const useSalesStore = (searchState: SalesSearchState) => {
   const isMounted = useMounted();
   const [state, setState] = useState<SalesStoreState>({
-    myPantry: [],
-    myPantryCount: 0,
+    sales: [],
+    salesCount: 0,
   });
   const throwAsyncError = useThrowAsyncError();
   const authContext = useAuth();
   const router = useRouter();
 
-  const handleMyPantryGet = useCallback(async () => {
+  const handleSalesGet = useCallback(async () => {
     try {
-      const response = await myPantryApi.getMyPantry(searchState);
+        console.log('searchState')
+        console.log(searchState)
+      const response = await salesApi.getSalesFromDB(searchState);
 
       if (isMounted()) {
         setState({
-          myPantry: response.data,
-          myPantryCount: response.count,
+          sales: response.data,
+          salesCount: response.count,
         });
       }
     } catch (err) {
       if (isMounted()) {
         setState({
-          myPantry: [],
-          myPantryCount: 0,
+          sales: [],
+          salesCount: 0,
         });
       }
 
@@ -161,7 +164,7 @@ const useSalesStore = (searchState: SalesSearchState) => {
 
   useEffect(
     () => {
-      handleMyPantryGet();
+      handleSalesGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchState]
@@ -172,19 +175,21 @@ const useSalesStore = (searchState: SalesSearchState) => {
   };
 };
 
-const useMyPantryIds = (myPantry: Pantry[] = []) => {
+const useSaleItemIds = (sales: Sales[] = []) => {
   return useMemo(() => {
-    return myPantry.map((pantry) => pantry.id);
-  }, [myPantry]);
+    return sales.map((item) => item.id);
+  }, [sales]);
 };
 
 const Page = () => {
-  const myPantrySearch = useSalesSearch();
-  const myPantryStore = useSalesStore(myPantrySearch.state);
-  const myPantryIds = useMyPantryIds(myPantryStore.myPantry);
-  const myPantrySelection = useSelection<string>(myPantryIds);
+  const salesSearch = useSalesSearch();
+  const salesStore = useSalesStore(salesSearch.state);
+  const salesIds = useSaleItemIds(salesStore.sales);
+  const salesSelection = useSelection<string>(salesIds);
 
   usePageView();
+
+  const refreshSalesHandler = () => {}
 
   return (
     <>
@@ -204,14 +209,10 @@ const Page = () => {
               </Stack>
               <Stack alignItems='center' direction='row' spacing={3}>
                 <Button
-                  startIcon={
-                    <SvgIcon>
-                      <PlusIcon />
-                    </SvgIcon>
-                  }
                   variant='contained'
                 //   component={RouterLink}
                 //   href={paths.myPantry.add}
+                  onClick={refreshSalesHandler}
                 >
                   Refresh Sales
                 </Button>
@@ -219,23 +220,23 @@ const Page = () => {
             </Stack>
             <Card>
               <SalesListSearch
-                onFiltersChange={myPantrySearch.handleFiltersChange}
-                onSortChange={myPantrySearch.handleSortChange}
-                sortBy={myPantrySearch.state.sortBy}
-                sortDir={myPantrySearch.state.sortDir}
+                onFiltersChange={salesSearch.handleFiltersChange}
+                onSortChange={salesSearch.handleSortChange}
+                sortBy={salesSearch.state.sortBy}
+                sortDir={salesSearch.state.sortDir}
               />
               <SalesListTable
-                count={myPantryStore.myPantryCount}
-                items={myPantryStore.myPantry}
-                onDeselectAll={myPantrySelection.handleDeselectAll}
-                onDeselectOne={myPantrySelection.handleDeselectOne}
-                onPageChange={myPantrySearch.handlePageChange}
-                onRowsPerPageChange={myPantrySearch.handleRowsPerPageChange}
-                onSelectAll={myPantrySelection.handleSelectAll}
-                onSelectOne={myPantrySelection.handleSelectOne}
-                page={myPantrySearch.state.page}
-                rowsPerPage={myPantrySearch.state.rowsPerPage}
-                selected={myPantrySelection.selected}
+                count={salesStore.salesCount}
+                items={salesStore.sales}
+                onDeselectAll={salesSelection.handleDeselectAll}
+                onDeselectOne={salesSelection.handleDeselectOne}
+                onPageChange={salesSearch.handlePageChange}
+                onRowsPerPageChange={salesSearch.handleRowsPerPageChange}
+                onSelectAll={salesSelection.handleSelectAll}
+                onSelectOne={salesSelection.handleSelectOne}
+                page={salesSearch.state.page}
+                rowsPerPage={salesSearch.state.rowsPerPage}
+                selected={salesSelection.selected}
               />
             </Card>
           </Stack>

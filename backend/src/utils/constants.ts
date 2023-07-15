@@ -5,7 +5,7 @@ export const PANTRY_CONSTANTS = {
   MAX_NAME: 26,
 };
 
-export const STORE_CONSTANTS: Record<string, string> = {
-  "4236": 'Central Market',
+export const STORE_CONSTANTS: Record<string, string[]> = {
+  "4236": ['Central Market', 'location1'],
 };
 

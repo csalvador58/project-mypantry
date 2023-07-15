@@ -7,7 +7,7 @@ const express_1 = require("express");
 const auth_route_1 = __importDefault(require("./auth.route"));
 const pantry_route_1 = __importDefault(require("./pantry.route"));
 const reqLogger_route_1 = __importDefault(require("../utils/reqLogger.route"));
-const deals_route_1 = __importDefault(require("./deals.route"));
+const sales_route_1 = __importDefault(require("./sales.route"));
 const router = (0, express_1.Router)();
 const defaultIRoute = [
     {
@@ -23,8 +23,8 @@ const defaultIRoute = [
         route: pantry_route_1.default,
     },
     {
-        path: '/deals',
-        route: deals_route_1.default,
+        path: '/sales',
+        route: sales_route_1.default,
     },
 ];
 defaultIRoute.forEach((route) => {

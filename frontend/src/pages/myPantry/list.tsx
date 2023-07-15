@@ -53,7 +53,7 @@ const useMyPantrySearch = () => {
       location5: undefined,
     },
     page: 0,
-    rowsPerPage: 5,
+    rowsPerPage: 10,
     sortBy: 'updatedAt',
     sortDir: 'desc',
   });
@@ -132,6 +132,8 @@ const useMyPantryStore = (searchState: MyPantrySearchState) => {
 
   const handleMyPantryGet = useCallback(async () => {
     try {
+      console.log('searchState')
+        console.log(searchState)
       const response = await myPantryApi.getMyPantry(searchState);
 
       if (isMounted()) {
