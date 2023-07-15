@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 
 const port = process.env['PORT'] || 3000;
-const mongoURL = process.env['MONGODB_URL'] || 'mongodb://127.0.0.1/mypantry';
+const mongoURL = process.env['MONGODB_URL'] || 'mongodb://127.0.0.1/mypantry'; 
 
 mongoose
   .connect(mongoURL, {})

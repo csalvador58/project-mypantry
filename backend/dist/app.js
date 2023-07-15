@@ -19,6 +19,15 @@ const corsOptions = {
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use(routes_1.default);
+app.get('/', (req, res, next) => {
+    res.send(`
+    <html>
+      <body>
+        <h1> Server deployed! </h1>
+      </body>
+    </html>
+  `);
+});
 app.use(errorHandler_1.errorHandler);
 exports.default = app;
 //# sourceMappingURL=app.js.map
