@@ -9,6 +9,8 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
+import { paths } from 'src/paths';
+import { RouterLink } from 'src/components/router-link';
 
 interface OverviewSalesProps {
   amount: number;
@@ -55,6 +57,8 @@ export const OverviewSales: FC<OverviewSalesProps> = (props) => {
       <Divider />
       <CardActions>
         <Button
+           component={RouterLink}
+           href={paths.sales.index}
           color="inherit"
           endIcon={(
             <SvgIcon>

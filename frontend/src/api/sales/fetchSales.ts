@@ -33,9 +33,6 @@ export const fetchSalesFromApi = async () => {
 
     const data = await response.json();
 
-    console.log('fetch sales api - data')
-    console.log(data)
-
     if (data.sales && data.sales.length) {
       data.sales.forEach((item: IItem) => {
         salesData.push({
@@ -182,6 +179,9 @@ export const fetchSalesCount = async (): Promise<SalesCount> => {
     }
 
     const data = await response.json();
+
+    console.log('fetch sales count - data')
+    console.log(data)
 
     return data ? { count: data.salesCount } : salesNull;
   } catch (error) {

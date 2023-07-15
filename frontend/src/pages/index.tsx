@@ -18,12 +18,7 @@ import { OverviewRecipeSuggestions } from 'src/sections/dashboard/overview/overv
 
 import { myPantryApi } from 'src/api/myPantry';
 import { useMounted } from 'src/hooks/use-mounted';
-import {
-  lazy,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { lazy, useCallback, useEffect, useState } from 'react';
 import { PantryCount } from 'src/types/pantry';
 import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
@@ -31,6 +26,8 @@ import { useAuth } from 'src/hooks/use-auth';
 import { ErrorLogger } from 'src/error/error-logger';
 import { useRouter } from 'src/hooks/use-router';
 import toast from 'react-hot-toast';
+import { SalesCount } from 'src/types/sales';
+import { salesApi } from 'src/api/sales';
 const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
 
 const now = new Date();
@@ -45,30 +42,34 @@ const useThrowAsyncError = () => {
   };
 };
 
-const usePantry = (): PantryCount => {
+const usePantry = (): {pantry: PantryCount, sales: SalesCount} => {
   const isMounted = useMounted();
   const [pantryCount, setPantryCount] = useState<PantryCount>({ count: 0 });
+  const [salesCount, setSalesCount] = useState<SalesCount>({ count: 0 });
   const throwAsyncError = useThrowAsyncError();
   const authContext = useAuth();
   const router = useRouter();
 
   const handlePantryGet = useCallback(async () => {
     try {
-      const response = await myPantryApi.getPantryCount();
+      const pantryResponse = await myPantryApi.getPantryCount();
+      const salesResponse = await salesApi.getSalesCount();
 
       if (isMounted()) {
-        setPantryCount(response);
+        setPantryCount(pantryResponse);
+        setSalesCount(salesResponse);
       }
     } catch (err) {
       if (isMounted()) {
-        setPantryCount({ count: 0 });
+        setSalesCount({ count: 0 });
+        // setSalesCount({ count: 0 });
       }
 
       if (err.message.includes('jwt expired')) {
         toast.error('Login token expired, please re-login.');
-        ErrorLogger(err)
+        ErrorLogger(err);
         authContext.signOut();
-        router.replace(paths.auth.jwt.login)
+        router.replace(paths.auth.jwt.login);
       }
 
       throwAsyncError(err);
@@ -83,11 +84,11 @@ const usePantry = (): PantryCount => {
     []
   );
 
-  return pantryCount;
+  return {pantry: pantryCount, sales: salesCount};
 };
 
 const Page = () => {
-  const pantry = usePantry();
+  const {pantry, sales} = usePantry();
   const settings = useSettings();
 
   return (
@@ -139,7 +140,7 @@ const Page = () => {
               <OverviewToBuy amount={12} />
             </Grid>
             <Grid xs={12} md={4}>
-              <OverviewSales amount={5} />
+              <OverviewSales amount={sales.count} />
             </Grid>
             <Grid xs={12} md={5}>
               <OverviewRecipeSuggestions

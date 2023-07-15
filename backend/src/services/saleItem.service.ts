@@ -24,7 +24,7 @@ export const deleteSaleItem = async (
 ): Promise<ISaleItem[] | null> => {
   // console.log('pantryItem.service - getPantryItems';
   
-  return SaleItem.findByIdAndDelete(new mongoose.Types.ObjectId(itemId));
+  return await SaleItem.findByIdAndDelete(new mongoose.Types.ObjectId(itemId));
 };
 
 export const getSaleItemsFromApi = async () => {
@@ -91,7 +91,7 @@ export const getSaleItemsFromApi = async () => {
 }
 
 export const getSaleItemsFromDB = async () => {
-  return SaleItem.find().lean();
+  return await SaleItem.find().lean();
 }
 
 
@@ -120,7 +120,6 @@ export const updateSaleItems = async (saleItems: ISaleItem[]): Promise<ISaleItem
 };
 
 export const getSaleItemsCount = async (): Promise<number> => {
-
-  return SaleItem.countDocuments();
+  return await SaleItem.countDocuments().lean();
 };
 

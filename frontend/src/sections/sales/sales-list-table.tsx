@@ -203,26 +203,6 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                   </TableCell>
                   <TableCell>{saleItem.baseQuantity}</TableCell>
                   <TableCell>{storeLocation}</TableCell>
-                  {/* <TableCell align='right'> */}
-                    {/* <IconButton
-                      component={RouterLink}
-                      // href={paths.myPantry.edit}
-                      href={`/myPantry/${saleItem.id}/edit`}
-                    >
-                      <SvgIcon>
-                        <Edit02Icon />
-                      </SvgIcon>
-                    </IconButton> */}
-                    {/* <IconButton
-                      component={RouterLink}
-                      href={`/myPantry/${saleItem.id}`}
-                      // href={paths.myPantry.details}
-                    >
-                      <SvgIcon>
-                        <ArrowRightIcon />
-                      </SvgIcon>
-                    </IconButton> */}
-                  {/* </TableCell> */}
                 </TableRow>
               );
             })}

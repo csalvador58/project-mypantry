@@ -134,8 +134,6 @@ const useSalesStore = (searchState: SalesSearchState) => {
 
   const handleSalesGet = useCallback(async () => {
     try {
-      console.log('searchState');
-      console.log(searchState);
       const response = await salesApi.getSalesFromDB(searchState);
 
       if (isMounted()) {

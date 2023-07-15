@@ -1,7 +1,6 @@
 import Router from 'express'
 import { isTokenBlacklisted, isTokenValid } from '../controllers/token.controller';
-import { getStore01SalesFromDB, updateStore01SalesFromApi } from '../controllers/sales.controller';
-import { getSaleItemsCount } from '../services/saleItem.service';
+import { getSaleItemsCount, getStore01SalesFromDB, updateStore01SalesFromApi } from '../controllers/sales.controller';
 
 const router = Router();
 

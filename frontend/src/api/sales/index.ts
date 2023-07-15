@@ -64,8 +64,6 @@ class SalesApi {
       // let data = deepCopy(myPantry) as Pantry[];
       data = deepCopy(await fetchSalesFromDB());
 
-      console.log('index - data');
-      console.log(data);
     } catch (error) {
       throw new ApiError(error);
     }
@@ -74,8 +72,6 @@ class SalesApi {
 
     if (typeof filters !== 'undefined') {
       data = data.filter((sale) => {
-        console.log('sale');
-        console.log(sale);
         if (typeof filters.query !== 'undefined' && filters.query !== '') {
           let queryMatched = false;
           const properties: ('name' | 'storeName')[] = ['name', 'storeName'];
@@ -147,9 +143,6 @@ class SalesApi {
       const data = deepCopy(await fetchSalesFromApi());
       let count = data.length;
 
-      console.log('index - data');
-      console.log(data);
-
       return {
         data,
         count,
@@ -159,7 +152,7 @@ class SalesApi {
     }
   }
 
-  async getPantryCount(): Promise<GetSalesCountResponse> {
+  async getSalesCount(): Promise<GetSalesCountResponse> {
     try {
       let count = await fetchSalesCount();
       return deepCopy(count);
