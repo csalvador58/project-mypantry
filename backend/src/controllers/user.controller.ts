@@ -9,16 +9,17 @@ import 'dotenv/config';
 
 const SALT_ROUNDS = parseInt(process.env['BCRYPT_SALT_ROUNDS']!) || 10;
 
+interface IUserRequest extends Omit<IUser, 'roles'> {}
+
 export const registerUser: RequestHandler = catchAsync(async (req, res) => {
   console.log('user.controller - registerUser')
-  const { username, password, role } = req.body as IUser;
+  const { username, password } = req.body as IUser;
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
   const result = await userService.registerUser({
     username: username,
-    password: hashedPassword,
-    role: role,
+    password: hashedPassword
   });
 
   res
