@@ -1,9 +1,9 @@
-import User, { IUser, IUserDocument, Roles } from '../models/user.model';
+import User, { IUser, IUserDocument, IUserRequest, Roles } from '../models/user.model';
 
-export const registerUser = async (userBody: IUser): Promise<IUserDocument> => {
+export const registerUser = async (user: IUserRequest): Promise<IUserDocument> => {
   console.log('user.service - register user');
-  userBody = {
-    ...userBody,
+  const userBody: IUser = {
+    ...user,
     role: Roles.User,
   };
   console.log('userBody');

@@ -14,6 +14,8 @@ export interface IUser {
 export interface IUserDocument extends IUser, Document {}
 export interface IUserModel extends Model<IUserDocument> {}
 
+export interface IUserRequest extends Omit<IUser, 'role'> {}
+
 export type LoginUser = Omit<IUser, 'role'>;
 
 const userSchema = new mongoose.Schema<IUserDocument, IUserModel>({
