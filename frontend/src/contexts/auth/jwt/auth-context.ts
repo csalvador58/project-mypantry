@@ -19,7 +19,7 @@ export interface AuthContextType extends State {
   issuer: Issuer.JWT;
   signIn: (username: string, password: string) => Promise<void>;
   // signUp: (username: string, name: string, password: string) => Promise<void>;
-  signUp: (username: string, password: string) => Promise<void>;
+  signUp: (username: string, password: string) => Promise<boolean>;
   signOut: () => Promise<void>;
 }
 
@@ -27,6 +27,6 @@ export const AuthContext = createContext<AuthContextType>({
   ...initialState,
   issuer: Issuer.JWT,
   signIn: () => Promise.resolve(),
-  signUp: () => Promise.resolve(),
+  signUp: () => Promise.resolve(false),
   signOut: () => Promise.resolve()
 });

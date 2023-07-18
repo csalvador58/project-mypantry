@@ -132,8 +132,6 @@ const useMyPantryStore = (searchState: MyPantrySearchState) => {
 
   const handleMyPantryGet = useCallback(async () => {
     try {
-      console.log('searchState')
-        console.log(searchState)
       const response = await myPantryApi.getMyPantry(searchState);
 
       if (isMounted()) {

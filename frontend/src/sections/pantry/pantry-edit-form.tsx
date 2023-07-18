@@ -97,7 +97,6 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
         helpers.setSubmitting(false);
         toast.success('Pantry updated');
       } catch (err) {
-        // console.error(err);
         toast.error('Something went wrong!');
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });

@@ -9,6 +9,8 @@ import { Issuer } from 'src/utils/auth';
 import type { State } from './auth-context';
 import { AuthContext, initialState } from './auth-context';
 import { MY_PANTRY } from 'src/utils/constants';
+import { ApiError } from 'src/error/error-classes';
+import { ErrorLogger } from 'src/error/error-logger';
 
 const STORAGE_KEY = MY_PANTRY.STORAGE_KEY;
 const STORAGE_USER = MY_PANTRY.STORAGE_USER;
@@ -128,7 +130,6 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         });
       }
     } catch (err) {
-      // console.error(err);
       dispatch({
         type: ActionType.INITIALIZE,
         payload: {
@@ -136,6 +137,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
           user: null,
         },
       });
+      ErrorLogger(err)
     }
   }, [dispatch]);
 
@@ -149,55 +151,60 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
 
   const signIn = useCallback(
     async (username: string, password: string): Promise<void> => {
-      const {
-        accessToken,
-        userId,
-        username: user,
-      } = await authApi.signIn({ username, password });
+      try {
+        const {
+          accessToken,
+          userId,
+          username: user,
+        } = await authApi.signIn({ username, password });
 
-      // console.log('AuthProvider - signIn - accessToken')
-      // console.log(accessToken, userId, user)
+        sessionStorage.setItem(STORAGE_KEY, accessToken);
+        sessionStorage.setItem(STORAGE_USER, user);
+        sessionStorage.setItem(STORAGE_USER_ID, userId);
 
-      sessionStorage.setItem(STORAGE_KEY, accessToken);
-      sessionStorage.setItem(STORAGE_USER, user);
-      sessionStorage.setItem(STORAGE_USER_ID, userId);
-
-      dispatch({
-        type: ActionType.SIGN_IN,
-        payload: {
-          user: {
-            id: userId,
-            username: user,
+        dispatch({
+          type: ActionType.SIGN_IN,
+          payload: {
+            user: {
+              id: userId,
+              username: user,
+            },
           },
-        },
-      });
+        });
+      } catch (error) {
+        throw new ApiError(error);
+      }
     },
     [dispatch]
   );
 
   const signUp = useCallback(
-    async (username: string, password: string): Promise<void> => {
+    async (username: string, password: string): Promise<boolean> => {
+      try {
+        const { userId, username: user } = await authApi.signUp({
+          username,
+          password,
+        });
 
-      const { userId, username: user } = await authApi.signUp({
-        username,
-        password,
-      });
+        const { accessToken } = await authApi.signIn({ username, password });
+        sessionStorage.setItem(STORAGE_KEY, accessToken);
+        sessionStorage.setItem(STORAGE_USER, user);
+        sessionStorage.setItem(STORAGE_USER_ID, userId);
 
-      const { accessToken } = await authApi.signIn({ username, password });
-
-      sessionStorage.setItem(STORAGE_KEY, accessToken);
-      sessionStorage.setItem(STORAGE_USER, user);
-      sessionStorage.setItem(STORAGE_USER_ID, userId);
-
-      dispatch({
-        type: ActionType.SIGN_UP,
-        payload: {
-          user: {
-            id: userId,
-            username: user,
+        dispatch({
+          type: ActionType.SIGN_UP,
+          payload: {
+            user: {
+              id: userId,
+              username: user,
+            },
           },
-        },
-      });
+        });
+
+        return true;
+      } catch (error) {
+        throw new ApiError(error);
+      }
     },
     [dispatch]
   );

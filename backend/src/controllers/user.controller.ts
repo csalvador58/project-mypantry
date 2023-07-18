@@ -12,6 +12,8 @@ const SALT_ROUNDS = parseInt(process.env['BCRYPT_SALT_ROUNDS']!) || 10;
 export const registerUser: RequestHandler = catchAsync(async (req, res) => {
   console.log('user.controller - registerUser')
   const { username, password } = req.body as IUserRequest;
+  console.log('username, password')
+  console.log(username, password)
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 

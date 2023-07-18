@@ -3,6 +3,7 @@ import InvalidInputError from './InvalidInputError';
 import mongoose from 'mongoose';
 import InvalidTokenError from './InvalidTokenError';
 import { JsonWebTokenError } from 'jsonwebtoken';
+import InvalidAPIRequestError from './InvalidAPIRequest';
 
 interface MongoError extends Error {
   code: number;
@@ -14,6 +15,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('Backend- Error Handler');
   console.log('err.message');
   console.log(err.message);
   console.log('err.code');
@@ -40,6 +42,12 @@ export const errorHandler = (
     return res
       .status(400)
       .json({ error: 'InvalidInputError - ' + err.message });
+  }
+
+  if (err instanceof InvalidAPIRequestError) {
+    return res
+      .status(400)
+      .json({ error: 'InvalidAPIRequestError - ' + err.message });
   }
 
   if (

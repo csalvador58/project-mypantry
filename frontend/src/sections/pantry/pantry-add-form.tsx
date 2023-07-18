@@ -88,15 +88,16 @@ export const PantryAddForm: FC = () => {
         } as PantryAdd);
 
         if (response) {
-          alert('Pantry Item Added!');
+          helpers.setStatus({ success: true });
+          helpers.setSubmitting(false);
+          toast.success('Pantry Item Added!');
           router.replace(paths.myPantry.index);
         } else {
-          alert('Error encountered during update, item may be corrupted.');
+          toast.error('Error encountered during update, item may be corrupted.');
+          helpers.setStatus({ success: false });
+          helpers.setSubmitting(false);
         }
         // await wait(500);
-        helpers.setStatus({ success: true });
-        helpers.setSubmitting(false);
-        toast.success('Pantry updated');
       } catch (err) {
         toast.error('Something went wrong!');
         helpers.setStatus({ success: false });

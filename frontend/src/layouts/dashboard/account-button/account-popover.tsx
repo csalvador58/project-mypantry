@@ -48,8 +48,6 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
             console.warn('Using an unknown Auth Issuer, did not log out');
           }
         }
-        // console.log('logout')
-        // router.push(paths.index);
       } catch (err) {
         console.error(err);
         toast.error('Something went wrong!');

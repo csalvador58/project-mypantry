@@ -1,5 +1,6 @@
 import type { User } from 'src/types/user';
 import { fetchAuthSignIn, fetchAuthSignUp } from './fetchAuth';
+import { ApiError } from 'src/error/error-classes';
 
 
 type SignInRequest = {
@@ -39,8 +40,7 @@ class AuthApi {
 
         resolve(response);
       } catch (err) {
-        // console.error('[Auth Api]: ', err);
-        reject(new Error('Internal server error'));
+        reject(new ApiError(err));
       }
     });
   }
@@ -55,8 +55,7 @@ class AuthApi {
 
         resolve(response);
       } catch (err) {
-        // console.error('[Auth Api]: ', err);
-        reject(new Error('Internal server error'));
+        reject(new ApiError(err));
       }
     });
   }

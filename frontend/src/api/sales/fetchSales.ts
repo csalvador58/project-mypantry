@@ -180,12 +180,8 @@ export const fetchSalesCount = async (): Promise<SalesCount> => {
 
     const data = await response.json();
 
-    console.log('fetch sales count - data')
-    console.log(data)
-
     return data ? { count: data.salesCount } : salesNull;
   } catch (error) {
-    // console.error(error);
     throw new ApiError(error);
   }
 };

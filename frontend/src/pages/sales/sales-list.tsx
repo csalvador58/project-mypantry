@@ -193,7 +193,6 @@ const Page = () => {
 
   const refreshSalesHandler = async () => {
     try {
-        console.log('refresh button clicked')
       await salesApi.updateSalesData();
 
     } catch (err) {

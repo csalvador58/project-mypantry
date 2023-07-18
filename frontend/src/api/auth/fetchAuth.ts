@@ -59,6 +59,9 @@ export const fetchAuthSignUp = async (
     const method = 'POST';
     const response = await fetch(url, {
       method: method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
     });
 
