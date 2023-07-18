@@ -142,7 +142,7 @@ const Page = () => {
       const response = await myPantryApi.deletePantryItem({ id: itemId });
 
       if (response) {
-        alert('Pantry Item Deleted');
+        toast('Pantry Item Deleted');
         router.replace(paths.myPantry.index);
       } else {
         alert('Error encountered during update, item may be corrupted.');

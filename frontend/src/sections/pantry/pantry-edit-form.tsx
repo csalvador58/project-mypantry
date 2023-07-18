@@ -27,7 +27,6 @@ interface PantryEditFormProps {
   pantry: Pantry;
 }
 
-
 const useThrowAsyncError = () => {
   const [state, setState] = useState();
 
@@ -83,32 +82,38 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
           name: values.name,
           note: values.note,
           price: values.price ? +values.price : null,
-          quantity: values.quantity? +values.quantity : null,
+          quantity: values.quantity ? +values.quantity : null,
         } as Pantry);
-        
-        if(response) {
-          alert('Pantry Item Updated!')
-          router.replace(paths.myPantry.index)
+
+        if (response) {
+          toast.success('Pantry Item Updated!');
+          helpers.setStatus({ success: true });
+          helpers.setSubmitting(false);
+          router.replace(paths.myPantry.index);
         } else {
-          alert('Error encountered during update, item may be corrupted.')
+          helpers.setStatus({ success: false });
+          helpers.setSubmitting(false);
+          alert('Error encountered during update, item may be corrupted.');
         }
-        // await wait(500);
-        helpers.setStatus({ success: true });
-        helpers.setSubmitting(false);
-        toast.success('Pantry updated');
       } catch (err) {
-        toast.error('Something went wrong!');
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
 
         if (err.message.includes('jwt expired')) {
           toast.error('Login token expired, please re-login.');
-          ErrorLogger(err)
+          ErrorLogger(err);
           authContext.signOut();
-          router.replace(paths.auth.jwt.login)
+          router.replace(paths.auth.jwt.login);
         }
-  
+
+        if (err.message.includes('MongoServerError E11000')) {
+          alert(
+            'Pantry Item name already exists, please select another name or delete the item first.'
+          );
+          return;
+        }
+
         throwAsyncError(err);
       }
     },

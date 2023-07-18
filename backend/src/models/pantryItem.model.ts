@@ -45,7 +45,6 @@ const pantryItemSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      unique: true,
       required: true,
       minLength: PANTRY.MIN_NAME,
       maxLength: PANTRY.MAX_NAME,
@@ -69,8 +68,12 @@ const pantryItemSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
+// Use compound index make a field unique
+pantryItemSchema.index({ userId: 1, name: 1 }, { unique: true });
+
 // create text index
-pantryItemSchema.index({ note: 'text' });
+pantryItemSchema.index({ name: 'text', note: 'text'});
 
 const PantryItem = mongoose.model<IPantryItemDocument, IPantryItemModel>(
   'PantryItem',

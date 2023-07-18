@@ -93,24 +93,30 @@ export const PantryAddForm: FC = () => {
           toast.success('Pantry Item Added!');
           router.replace(paths.myPantry.index);
         } else {
-          toast.error('Error encountered during update, item may be corrupted.');
+          alert('Error encountered during update, item may be corrupted.');
           helpers.setStatus({ success: false });
           helpers.setSubmitting(false);
         }
         // await wait(500);
       } catch (err) {
-        toast.error('Something went wrong!');
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
 
         if (err.message.includes('jwt expired')) {
           toast.error('Login token expired, please re-login.');
-          ErrorLogger(err)
+          ErrorLogger(err);
           authContext.signOut();
-          router.replace(paths.auth.jwt.login)
+          router.replace(paths.auth.jwt.login);
         }
-  
+
+        if (err.message.includes('MongoServerError E11000')) {
+          alert(
+            'Pantry Item name already exists, please select another name or delete the item first.'
+          );
+          return;
+        }
+
         throwAsyncError(err);
       }
     },

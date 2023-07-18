@@ -193,7 +193,10 @@ const Page = () => {
 
   const refreshSalesHandler = async () => {
     try {
-      await salesApi.updateSalesData();
+      const response = await salesApi.updateSalesData();
+      toast.success('Sales data updated!');
+      console.log('Updating Sales data - response')
+      console.log(response)
 
     } catch (err) {
       if (err.message.includes('jwt expired')) {
