@@ -1,6 +1,6 @@
-import catchAsync from './catchAsync';
-import { isPasswordValid } from './isPasswordValid';
-import { isUsernameValid } from './isUsernameValid';
+import catchAsync from './catchAsync.js';
+import { isPasswordValid } from './isPasswordValid.js';
+import { isUsernameValid } from './isUsernameValid.js';
 
 export { catchAsync, isPasswordValid, isUsernameValid };
 

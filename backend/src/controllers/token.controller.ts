@@ -1,8 +1,8 @@
 import { RequestHandler, Request } from 'express';
-import catchAsync from '../utils/catchAsync';
-import InvalidTokenError from '../errors/InvalidTokenError';
-import * as TokenService from '../services/token.service';
-import { IPayload } from '../models/token.model';
+import catchAsync from '../utils/catchAsync.js';
+import InvalidTokenError from '../errors/InvalidTokenError.js';
+import * as TokenService from '../services/token.service.js';
+import { IPayload } from '../models/token.model.js';
 
 export interface AuthenticatedRequest extends Request {
     auth?: {

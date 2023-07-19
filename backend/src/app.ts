@@ -1,11 +1,10 @@
 import express, { Express } from 'express';
 import cors from 'cors';
-import { json } from 'body-parser';
-import routes from './routes/';
-import { errorHandler } from './errors/errorHandler';
+import routes from './routes/index.js';
+import { errorHandler } from './errors/errorHandler.js';
 
 const app: Express = express();
-app.use(json());
+app.use(express.json());
 
 const corsOptions = {
   origin: 'http://localhost:3000',

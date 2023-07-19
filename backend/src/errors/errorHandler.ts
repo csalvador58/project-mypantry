@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import InvalidInputError from './InvalidInputError';
+import InvalidInputError from './InvalidInputError.js';
 import mongoose from 'mongoose';
-import InvalidTokenError from './InvalidTokenError';
-import { JsonWebTokenError } from 'jsonwebtoken';
-import InvalidAPIRequestError from './InvalidAPIRequest';
-import ErrorLog, { IErrorLog } from '../models/errorLog.model';
+import InvalidTokenError from './InvalidTokenError.js';
+import jwt from 'jsonwebtoken';
+import InvalidAPIRequestError from './InvalidAPIRequest.js';
+import ErrorLog, { IErrorLog } from '../models/errorLog.model.js';
 
 interface MongoError extends Error {
   code: number;
@@ -16,6 +16,7 @@ export const errorHandler = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { JsonWebTokenError } = jwt;
   console.log('Backend- Error Handler');
   console.log('err.message');
   console.log(err.message);

@@ -1,11 +1,11 @@
 import request from 'supertest';
-import app from '../../app';
+import app from '../../app.js';
 import PantryItem, {
   IPantryItem,
   IPantryItemDocument,
-} from '../../models/pantryItem.model';
-import * as testUtils from '../../utils/jest/setupDB';
-import { IUser, Roles } from '../../models/user.model';
+} from '../../models/pantryItem.model.js';
+import * as testUtils from '../../utils/jest/setupDB.js';
+import { IUser, Roles } from '../../models/user.model.js';
 console.log = jest.fn();
 
 interface ITestItem

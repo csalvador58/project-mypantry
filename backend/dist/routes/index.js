@@ -1,34 +1,29 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const auth_route_1 = __importDefault(require("./auth.route"));
-const pantry_route_1 = __importDefault(require("./pantry.route"));
-const reqLogger_route_1 = __importDefault(require("../utils/reqLogger.route"));
-const sales_route_1 = __importDefault(require("./sales.route"));
-const router = (0, express_1.Router)();
+import { Router } from 'express';
+import authRoute from './auth.route.js';
+import pantryRoute from './pantry.route.js';
+import requestLogger from '../utils/reqLogger.route.js';
+import salesRoute from './sales.route.js';
+const router = Router();
 const defaultIRoute = [
     {
         path: '/',
-        route: reqLogger_route_1.default,
+        route: requestLogger,
     },
     {
         path: '/auth',
-        route: auth_route_1.default,
+        route: authRoute,
     },
     {
         path: '/pantry',
-        route: pantry_route_1.default,
+        route: pantryRoute,
     },
     {
         path: '/sales',
-        route: sales_route_1.default,
+        route: salesRoute,
     },
 ];
 defaultIRoute.forEach((route) => {
     router.use(route.path, route.route);
 });
-exports.default = router;
+export default router;
 //# sourceMappingURL=index.js.map

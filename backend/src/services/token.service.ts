@@ -1,8 +1,12 @@
-import Token, { IPayload, IToken, ITokenDocument } from '../models/token.model';
-import jwt, {JsonWebTokenError} from 'jsonwebtoken';
+import Token, {
+  IPayload,
+  IToken,
+  ITokenDocument,
+} from '../models/token.model.js';
+import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import InvalidTokenError from '../errors/InvalidTokenError';
+import InvalidTokenError from '../errors/InvalidTokenError.js';
 
 const ONE_DAY = 24 * 60 * 60; // 24hrs in seconds
 const TEST_ONE_MIN = 60; // 60 seconds
@@ -40,25 +44,28 @@ export const generateToken = async (
 };
 
 export const validateToken = (tokenString: string): IPayload | void => {
+  const { JsonWebTokenError } = jwt;
   try {
-    const verifiedToken = jwt.verify(tokenString, process.env['JWT_SECRET']!) as IPayload;
+    const verifiedToken = jwt.verify(
+      tokenString,
+      process.env['JWT_SECRET']!
+    ) as IPayload;
     return verifiedToken;
   } catch (error: any) {
-    if(error instanceof JsonWebTokenError) {
-      throw new JsonWebTokenError(error.message)
-    }
-    else {
-      throw new InvalidTokenError(error.message)
+    if (error instanceof JsonWebTokenError) {
+      throw new JsonWebTokenError(error.message);
+    } else {
+      throw new InvalidTokenError(error.message);
     }
   }
-}
+};
 
 export const verifyBlacklist = async (jwtSub: string) => {
-  console.log('token.service - verify blacklist')
+  console.log('token.service - verify blacklist');
 
   const userId = new mongoose.Types.ObjectId(jwtSub);
-  return await Token.findOne({userId: userId}).lean();
-}
+  return await Token.findOne({ userId: userId }).lean();
+};
 
 export const saveToken = async (
   userId: mongoose.Schema.Types.ObjectId,

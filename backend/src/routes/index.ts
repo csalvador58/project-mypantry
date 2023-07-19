@@ -20,10 +20,10 @@
 // export default router;
 
 import { Router } from 'express';
-import authRoute from './auth.route';
-import pantryRoute from './pantry.route';
-import requestLogger from '../utils/reqLogger.route'
-import salesRoute from './sales.route';
+import authRoute from './auth.route.js';
+import pantryRoute from './pantry.route.js';
+import requestLogger from '../utils/reqLogger.route.js'
+import salesRoute from './sales.route.js';
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
-import InvalidInputError from '../errors/InvalidInputError';
-import catchAsync from '../utils/catchAsync';
+import InvalidInputError from '../errors/InvalidInputError.js';
+import catchAsync from '../utils/catchAsync.js';
 
 
 export const isPasswordValid: RequestHandler = catchAsync((req, res, next) => {

@@ -1,15 +1,9 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const body_parser_1 = require("body-parser");
-const routes_1 = __importDefault(require("./routes/"));
-const errorHandler_1 = require("./errors/errorHandler");
-const app = (0, express_1.default)();
-app.use((0, body_parser_1.json)());
+import express from 'express';
+import cors from 'cors';
+import routes from './routes/index.js';
+import { errorHandler } from './errors/errorHandler.js';
+const app = express();
+app.use(express.json());
 const corsOptions = {
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -17,8 +11,8 @@ const corsOptions = {
     credentials: true,
     optionsSuccessStatus: 200,
 };
-app.use((0, cors_1.default)(corsOptions));
-app.use(routes_1.default);
+app.use(cors(corsOptions));
+app.use(routes);
 app.get('/', (req, res, next) => {
     res.send(`
     <html>
@@ -28,6 +22,6 @@ app.get('/', (req, res, next) => {
     </html>
   `);
 });
-app.use(errorHandler_1.errorHandler);
-exports.default = app;
+app.use(errorHandler);
+export default app;
 //# sourceMappingURL=app.js.map
