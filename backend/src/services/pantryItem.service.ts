@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import PantryItem, {
   IPantryItem,
   IPantryItemDocument,
-} from '../models/pantryItem.model';
+} from '../models/pantryItem.model.js';
 
 export const addPantryItem = async (
   pantryItemBody: IPantryItem

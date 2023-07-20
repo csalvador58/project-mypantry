@@ -1,5 +1,5 @@
 import mongoose, { Document, Model } from 'mongoose';
-import { PANTRY_CONSTANTS as PANTRY } from '../utils/constants';
+import { PANTRY_CONSTANTS as PANTRY } from '../utils/constants.js';
 
 export interface IPantryItem {
   name: string;

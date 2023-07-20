@@ -3,8 +3,8 @@ import fetch, { Headers, RequestRedirect, RequestInit } from 'node-fetch';
 import SaleItem, {
   ISaleItem,
   ISaleItemDocument,
-} from '../models/saleItem.model';
-import { STORE_CONSTANTS } from '../utils/constants';
+} from '../models/saleItem.model.js';
+import { STORE_CONSTANTS } from '../utils/constants.js';
 
 interface TStore01Response {
   id: string;

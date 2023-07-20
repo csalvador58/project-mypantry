@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import { ISaleItem, ISaleItemDocument } from '../models/saleItem.model';
-import * as salesService from '../services/saleItem.service';
-import { catchAsync } from '../utils';
-import { AuthenticatedRequest } from './token.controller';
+import { ISaleItem, ISaleItemDocument } from '../models/saleItem.model.js';
+import * as salesService from '../services/saleItem.service.js';
+import { catchAsync } from '../utils/index.js';
+import { AuthenticatedRequest } from './token.controller.js';
 
 
 export const updateStore01SalesFromApi: RequestHandler = catchAsync(

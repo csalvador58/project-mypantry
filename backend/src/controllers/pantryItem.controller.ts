@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import { IPantryItem, IPantryItemDocument } from '../models/pantryItem.model';
-import * as pantryService from '../services/pantryItem.service';
-import catchAsync from '../utils/catchAsync';
-import { AuthenticatedRequest } from './token.controller';
+import { IPantryItem, IPantryItemDocument } from '../models/pantryItem.model.js';
+import * as pantryService from '../services/pantryItem.service.js';
+import {catchAsync} from '../utils/index.js';
+import { AuthenticatedRequest } from './token.controller.js';
 
 export const addPantryItem: RequestHandler = catchAsync(
   async (req: AuthenticatedRequest, res) => {

@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import InvalidInputError from '../errors/InvalidInputError';
-import catchAsync from '../utils/catchAsync';
-import InvalidAPIRequestError from '../errors/InvalidAPIRequest';
+import InvalidInputError from '../errors/InvalidInputError.js';
+import {catchAsync} from '../utils/index.js';
+import InvalidAPIRequestError from '../errors/InvalidAPIRequest.js';
 
 export const isUsernameValid: RequestHandler = catchAsync((req, res, next) => {
   console.log('isUsernameValid - req.body')

@@ -4,7 +4,9 @@
   "author": "Chris Salvador",
   "private": true,
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "clean": "rm -rf dist",
     "test": "jest --verbose --runInBand",
     "ci": "jest --json --runInBand | node .github/workflows/parseOutput.js",
     "tdd": "jest --watch --verbose --runInBand",
@@ -15,9 +17,19 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    },
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
     "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "setupDB.ts"
+      "/node_modules/"
     ],
     "watchPathIgnorePatterns": [
       "globalConfig"

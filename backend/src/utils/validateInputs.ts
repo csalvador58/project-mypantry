@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
-import InvalidInputError from '../errors/InvalidInputError';
-import catchAsync from '../utils/catchAsync';
-import { IUpdatePantryItem } from '../models/pantryItem.model';
-import { regexTextHelper } from './regexTextHelper';
-import { PANTRY_CONSTANTS as PANTRY } from './constants';
+import InvalidInputError from '../errors/InvalidInputError.js';
+import {catchAsync} from '../utils/index.js';
+import { IUpdatePantryItem } from '../models/pantryItem.model.js';
+import { regexTextHelper } from './regexTextHelper.js';
+import { PANTRY_CONSTANTS as PANTRY } from './constants.js';
 
 export const validateInputs: RequestHandler = catchAsync((req, res, next) => {
   const pantryItem: IUpdatePantryItem = req.body;

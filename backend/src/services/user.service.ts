@@ -1,4 +1,4 @@
-import User, { IUser, IUserDocument, IUserRequest, Roles } from '../models/user.model';
+import User, { IUser, IUserDocument, IUserRequest, Roles } from '../models/user.model.js';
 
 export const registerUser = async (user: IUserRequest): Promise<IUserDocument> => {
   console.log('user.service - register user');

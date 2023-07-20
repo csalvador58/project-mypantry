@@ -1,7 +1,7 @@
 import Router from 'express';
-import { addPantryItem, deletePantryItem, getPantryItems, getPantryItemsCount, updatePantryItem } from '../controllers/pantryItem.controller';
-import { isTokenBlacklisted, isTokenValid } from '../controllers/token.controller';
-import { validateInputs } from '../utils/validateInputs';
+import { addPantryItem, deletePantryItem, getPantryItems, getPantryItemsCount, updatePantryItem } from '../controllers/pantryItem.controller.js';
+import { isTokenBlacklisted, isTokenValid } from '../controllers/token.controller.js';
+import { validateInputs } from '../utils/validateInputs.js';
 
 const router = Router();
 

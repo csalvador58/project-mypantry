@@ -1,8 +1,8 @@
-import Token, { IPayload, IToken, ITokenDocument } from '../models/token.model';
-import jwt, {JsonWebTokenError} from 'jsonwebtoken';
+import Token, { IPayload, IToken, ITokenDocument } from '../models/token.model.js';
+import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import InvalidTokenError from '../errors/InvalidTokenError';
+import InvalidTokenError from '../errors/InvalidTokenError.js';
 
 const ONE_DAY = 24 * 60 * 60; // 24hrs in seconds
 const TEST_ONE_MIN = 60; // 60 seconds
@@ -40,6 +40,7 @@ export const generateToken = async (
 };
 
 export const validateToken = (tokenString: string): IPayload | void => {
+  const { JsonWebTokenError } = jwt;
   try {
     const verifiedToken = jwt.verify(tokenString, process.env['JWT_SECRET']!) as IPayload;
     return verifiedToken;

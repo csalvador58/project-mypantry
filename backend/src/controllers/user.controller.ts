@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
-import { IUserRequest } from '../models/user.model';
-import { ITokenLogin } from '../models/token.model';
-import * as userService from '../services/user.service';
-import * as tokenService from '../services/token.service';
-import catchAsync from '../utils/catchAsync';
+import { IUserRequest } from '../models/user.model.js';
+import { ITokenLogin } from '../models/token.model.js';
+import * as userService from '../services/user.service.js';
+import * as tokenService from '../services/token.service.js';
+import {catchAsync} from '../utils/index.js';
 import bcrypt from 'bcrypt';
 import 'dotenv/config';
 
