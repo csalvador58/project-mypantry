@@ -67,6 +67,7 @@
     "ts-jest": "^29.1.0"
   },
   "overrides": {
-    "semver": "^7.5.3"
+    "semver": "^7.5.3",
+    "word-wrap": "^1.2.4"
   }
 }
