@@ -36,7 +36,8 @@ type GetMyPantryResponse = Promise<{
 }>;
 
 export type GetPantryItemRequest = { id: string };
-export type DeletePantryItemRequest = { id: string };
+// export type DeletePantryItemRequest = { id: string };
+export type DeletePantryItemRequest = string[];
 
 // export type UpdatePantryItemRequest = {
 //   id: string;
@@ -62,7 +63,7 @@ class MyPantryApi {
     request: DeletePantryItemRequest
   ): Promise<GetPantryResponse> {
     try {
-      let data = await fetchPantryItemDelete(request.id);
+      let data = await fetchPantryItemDelete(request);
       return deepCopy(data);
     } catch (error) {
       throw new ApiError(error);

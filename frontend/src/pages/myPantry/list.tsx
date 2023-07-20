@@ -150,9 +150,9 @@ const useMyPantryStore = (searchState: MyPantrySearchState) => {
 
       if (err.message.includes('jwt expired')) {
         toast.error('Login token expired, please re-login.');
-        ErrorLogger(err)
+        ErrorLogger(err);
         authContext.signOut();
-        router.replace(paths.auth.jwt.login)
+        router.replace(paths.auth.jwt.login);
       }
 
       throwAsyncError(err);
@@ -179,12 +179,43 @@ const useMyPantryIds = (myPantry: Pantry[] = []) => {
 };
 
 const Page = () => {
+  const [refreshState, setRefreshState] = useState(false)
   const myPantrySearch = useMyPantrySearch();
   const myPantryStore = useMyPantryStore(myPantrySearch.state);
   const myPantryIds = useMyPantryIds(myPantryStore.myPantry);
   const myPantrySelection = useSelection<string>(myPantryIds);
+  const authContext = useAuth();
+  const throwAsyncError = useThrowAsyncError();
+  const router = useRouter();
 
   usePageView();
+
+  const deleteHandler = async () => {
+    try {
+      // const response = await myPantryApi.deletePantryItem({ id: itemId });
+      const response = await myPantryApi.deletePantryItem(
+        myPantrySelection.selected
+      );
+
+      if (response) {
+        toast('Pantry Item Deleted');
+        setRefreshState(!refreshState);
+      } else {
+        alert(
+          'Partial or no items were deleted. Contact administrator for any issues.'
+        );
+      }
+    } catch (err) {
+      if (err.message.includes('jwt expired')) {
+        toast.error('Login token expired, please re-login.');
+        ErrorLogger(err);
+        authContext.signOut();
+        router.replace(paths.auth.jwt.login);
+      }
+
+      throwAsyncError(err);
+    }
+  };
 
   return (
     <>
@@ -223,6 +254,7 @@ const Page = () => {
                 onSortChange={myPantrySearch.handleSortChange}
                 sortBy={myPantrySearch.state.sortBy}
                 sortDir={myPantrySearch.state.sortDir}
+                triggerRefresh={refreshState}
               />
               <PantryListTable
                 count={myPantryStore.myPantryCount}
@@ -236,6 +268,7 @@ const Page = () => {
                 page={myPantrySearch.state.page}
                 rowsPerPage={myPantrySearch.state.rowsPerPage}
                 selected={myPantrySelection.selected}
+                deleteHandler={deleteHandler}
               />
             </Card>
           </Stack>

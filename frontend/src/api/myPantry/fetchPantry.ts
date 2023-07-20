@@ -158,7 +158,7 @@ export const fetchPantryItemAdd = async (
 };
 
 export const fetchPantryItemDelete = async (
-  itemId: string
+  itemId: string[]
 ): Promise<boolean> => {
   try {
     const token = window.sessionStorage.getItem(STORAGE_KEY);
@@ -181,7 +181,10 @@ export const fetchPantryItemDelete = async (
 
     const data = await response.json();
 
-    if (data.item) {
+    console.log('data')
+    console.log(data)
+
+    if (data.item.deletedCount) {
       return true;
     }
     return false;

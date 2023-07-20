@@ -139,7 +139,8 @@ const Page = () => {
 
   const deleteHandler = async (itemId: string) => {
     try {
-      const response = await myPantryApi.deletePantryItem({ id: itemId });
+      // const response = await myPantryApi.deletePantryItem({ id: itemId });
+      const response = await myPantryApi.deletePantryItem([itemId]);
 
       if (response) {
         toast('Pantry Item Deleted');

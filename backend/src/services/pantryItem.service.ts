@@ -18,6 +18,20 @@ export const deletePantryItem = async (
   return PantryItem.findByIdAndDelete(new mongoose.Types.ObjectId(itemId));
 };
 
+export const deletePantryItemTest = async (
+  itemId: string
+): Promise<IPantryItem[] | null> => {
+  // console.log('pantryItem.service - getPantryItems';
+  console.log('pantry item service - itemId')
+  console.log(itemId)
+  const items = itemId.split(',').map((item) => {
+    return new mongoose.Types.ObjectId(item);
+  })
+
+  return PantryItem.deleteMany({_id: {$in: items}}).lean();
+  // return null;
+};
+
 export const getPantryItems = async (
   userId: string,
   itemId?: string
