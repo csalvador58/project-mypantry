@@ -69,7 +69,14 @@ const usePantry = (): Pantry | null => {
       }
 
       if (err.message.includes('jwt expired')) {
-        toast.error('Login token expired, please re-login.');
+        toast.error('Login token expired, please re-login.',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         ErrorLogger(err);
         authContext.signOut();
         router.replace(paths.auth.jwt.login);
@@ -143,14 +150,35 @@ const Page = () => {
       const response = await myPantryApi.deletePantryItem([itemId]);
 
       if (response) {
-        toast('Pantry Item Deleted');
+        toast.success('Pantry Item Deleted',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         router.replace(paths.myPantry.index);
       } else {
-        alert('Error encountered during update, item may be corrupted.');
+        toast.error('Error encountered during update, item may be corrupted.', {
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        })
       }
     } catch (err) {
       if (err.message.includes('jwt expired')) {
-        toast.error('Login token expired, please re-login.');
+        toast.error('Login token expired, please re-login.',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         ErrorLogger(err);
         authContext.signOut();
         router.replace(paths.auth.jwt.login);

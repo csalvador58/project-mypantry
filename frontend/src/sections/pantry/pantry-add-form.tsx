@@ -90,10 +90,27 @@ export const PantryAddForm: FC = () => {
         if (response) {
           helpers.setStatus({ success: true });
           helpers.setSubmitting(false);
-          toast.success('Pantry Item Added!');
+          toast.success('Pantry Item Added!', {
+            duration: 3000,
+            position: 'top-center',
+            ariaProps: {
+              role: 'status',
+              'aria-live': 'polite',
+            },
+          });
           router.replace(paths.myPantry.index);
         } else {
-          alert('Error encountered during update, item may be corrupted.');
+          toast.error(
+            'Error encountered during update, item may be corrupted.',
+            {
+              duration: 3000,
+              position: 'top-center',
+              ariaProps: {
+                role: 'status',
+                'aria-live': 'polite',
+              },
+            }
+          );
           helpers.setStatus({ success: false });
           helpers.setSubmitting(false);
         }
@@ -104,15 +121,30 @@ export const PantryAddForm: FC = () => {
         helpers.setSubmitting(false);
 
         if (err.message.includes('jwt expired')) {
-          toast.error('Login token expired, please re-login.');
+          toast.error('Login token expired, please re-login.', {
+            duration: 3000,
+            position: 'top-center',
+            ariaProps: {
+              role: 'status',
+              'aria-live': 'polite',
+            },
+          });
           ErrorLogger(err);
           authContext.signOut();
           router.replace(paths.auth.jwt.login);
         }
 
         if (err.message.includes('MongoServerError E11000')) {
-          alert(
-            'Pantry Item name already exists, please select another name or delete the item first.'
+          toast.error(
+            'Pantry Item name already exists, please select another name or delete the item first.',
+            {
+              duration: 3000,
+              position: 'top-center',
+              ariaProps: {
+                role: 'status',
+                'aria-live': 'polite',
+              },
+            }
           );
           return;
         }

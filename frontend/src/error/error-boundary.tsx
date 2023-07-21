@@ -36,7 +36,14 @@ class ErrorBoundary extends React.Component<
     ErrorLogger(error, errorInfo);
     const authContext = this.context as React.ContextType<typeof AuthContext>;
     if (error.message.includes('jwt expired')) {
-      toast.error('Login token expired, please re-login.');
+      toast.error('Login token expired, please re-login.', {
+        duration: 3000,
+        position: 'top-center',
+        ariaProps: {
+          role: 'status',
+          'aria-live': 'polite',
+        },
+      });
       this.setState({ redirectPage: <JwtLoginPage /> });
       authContext.signOut();
     }

@@ -50,7 +50,14 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
         }
       } catch (err) {
         console.error(err);
-        toast.error('Something went wrong!');
+        toast.error('Something went wrong!', {
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
       }
     },
     [router, onClose]

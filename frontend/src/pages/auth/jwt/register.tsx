@@ -76,13 +76,27 @@ const Page = () => {
         if (response) {
           helpers.setStatus({ success: true });
           helpers.setSubmitting(false);
-          toast.success('Username successfully registered!');
+          toast.success('Username successfully registered!', {
+            duration: 3000,
+            position: 'top-center',
+            ariaProps: {
+              role: 'status',
+              'aria-live': 'polite',
+            },
+          });
           if (isMounted()) {
             router.push(returnTo || paths.index);
           }
         } else {
           toast.error(
-            'Error encountered during registering, please refresh page and try again.'
+            'Error encountered during registering, please refresh page and try again.', {
+              duration: 3000,
+              position: 'top-center',
+              ariaProps: {
+                role: 'status',
+                'aria-live': 'polite',
+              },
+            }
           );
           helpers.setStatus({ success: false });
           helpers.setSubmitting(false);
@@ -90,13 +104,27 @@ const Page = () => {
           router.replace(paths.auth.jwt.register);
         }
       } catch (err) {
-        toast.error('Something went wrong!');
+        toast.error('Something went wrong!',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
 
         if (err.message.includes('jwt expired')) {
-          toast.error('Login token expired, please re-login.');
+          toast.error('Login token expired, please re-login.',{
+            duration: 3000,
+            position: 'top-center',
+            ariaProps: {
+              role: 'status',
+              'aria-live': 'polite',
+            },
+          });
           ErrorLogger(err);
           authContext.signOut();
           router.replace(paths.auth.jwt.login);

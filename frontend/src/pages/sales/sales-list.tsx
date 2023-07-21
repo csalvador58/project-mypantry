@@ -151,7 +151,14 @@ const useSalesStore = (searchState: SalesSearchState) => {
       }
 
       if (err.message.includes('jwt expired')) {
-        toast.error('Login token expired, please re-login.');
+        toast.error('Login token expired, please re-login.',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         ErrorLogger(err);
         authContext.signOut();
         router.replace(paths.auth.jwt.login);
@@ -194,13 +201,25 @@ const Page = () => {
   const refreshSalesHandler = async () => {
     try {
       const response = await salesApi.updateSalesData();
-      toast.success('Sales data updated!');
-      console.log('Updating Sales data - response')
-      console.log(response)
+      toast.success('Sales data updated!',{
+        duration: 3000,
+        position: 'top-center',
+        ariaProps: {
+          role: 'status',
+          'aria-live': 'polite',
+        },
+      });
 
     } catch (err) {
       if (err.message.includes('jwt expired')) {
-        toast.error('Login token expired, please re-login.');
+        toast.error('Login token expired, please re-login.',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         ErrorLogger(err);
         authContext.signOut();
         router.replace(paths.auth.jwt.login);

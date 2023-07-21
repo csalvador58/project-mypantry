@@ -66,7 +66,14 @@ const usePantry = (): {pantry: PantryCount, sales: SalesCount} => {
       }
 
       if (err.message.includes('jwt expired')) {
-        toast.error('Login token expired, please re-login.');
+        toast.error('Login token expired, please re-login.', {
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         ErrorLogger(err);
         authContext.signOut();
         router.replace(paths.auth.jwt.login);

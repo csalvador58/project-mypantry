@@ -149,7 +149,14 @@ const useMyPantryStore = (searchState: MyPantrySearchState) => {
       }
 
       if (err.message.includes('jwt expired')) {
-        toast.error('Login token expired, please re-login.');
+        toast.error('Login token expired, please re-login.',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         ErrorLogger(err);
         authContext.signOut();
         router.replace(paths.auth.jwt.login);
@@ -179,7 +186,7 @@ const useMyPantryIds = (myPantry: Pantry[] = []) => {
 };
 
 const Page = () => {
-  const [refreshState, setRefreshState] = useState(false)
+  const [refreshState, setRefreshState] = useState(false);
   const myPantrySearch = useMyPantrySearch();
   const myPantryStore = useMyPantryStore(myPantrySearch.state);
   const myPantryIds = useMyPantryIds(myPantryStore.myPantry);
@@ -198,16 +205,35 @@ const Page = () => {
       );
 
       if (response) {
-        toast('Pantry Item Deleted');
+        toast.success('Pantry Item Deleted', {
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         setRefreshState(!refreshState);
       } else {
-        alert(
-          'Partial or no items were deleted. Contact administrator for any issues.'
-        );
+        toast.error('Partial or no items were deleted. Contact administrator for any issues.', {
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
       }
     } catch (err) {
       if (err.message.includes('jwt expired')) {
-        toast.error('Login token expired, please re-login.');
+        toast.error('Login token expired, please re-login.',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
         ErrorLogger(err);
         authContext.signOut();
         router.replace(paths.auth.jwt.login);

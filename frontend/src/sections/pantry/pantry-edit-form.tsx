@@ -86,14 +86,31 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
         } as Pantry);
 
         if (response) {
-          toast.success('Pantry Item Updated!');
+          toast.success('Pantry Item Updated!', {
+            duration: 3000,
+            position: 'top-center',
+            ariaProps: {
+              role: 'status',
+              'aria-live': 'polite',
+            },
+          });
           helpers.setStatus({ success: true });
           helpers.setSubmitting(false);
           router.replace(paths.myPantry.index);
         } else {
           helpers.setStatus({ success: false });
           helpers.setSubmitting(false);
-          alert('Error encountered during update, item may be corrupted.');
+          toast.error(
+            'Error encountered during update, item may be corrupted.',
+            {
+              duration: 3000,
+              position: 'top-center',
+              ariaProps: {
+                role: 'status',
+                'aria-live': 'polite',
+              },
+            }
+          );
         }
       } catch (err) {
         helpers.setStatus({ success: false });
@@ -101,15 +118,30 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
         helpers.setSubmitting(false);
 
         if (err.message.includes('jwt expired')) {
-          toast.error('Login token expired, please re-login.');
+          toast.error('Login token expired, please re-login.', {
+            duration: 3000,
+            position: 'top-center',
+            ariaProps: {
+              role: 'status',
+              'aria-live': 'polite',
+            },
+          });
           ErrorLogger(err);
           authContext.signOut();
           router.replace(paths.auth.jwt.login);
         }
 
         if (err.message.includes('MongoServerError E11000')) {
-          alert(
-            'Pantry Item name already exists, please select another name or delete the item first.'
+          toast.error(
+            'Pantry Item name already exists, please select another name or delete the item first.',
+            {
+              duration: 3000,
+              position: 'top-center',
+              ariaProps: {
+                role: 'status',
+                'aria-live': 'polite',
+              },
+            }
           );
           return;
         }
