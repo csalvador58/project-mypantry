@@ -7,7 +7,8 @@ const app: Express = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  // origin: 'http://localhost:3000',
+  origin: 'https://project-mypantry-frontend-production.up.railway.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Origin', 'Content-Type', 'Authorization', 'Accept'],
   credentials: true,
