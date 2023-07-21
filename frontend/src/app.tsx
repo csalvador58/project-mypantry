@@ -1,7 +1,7 @@
 // Remove if simplebar is not used
 import 'simplebar-react/dist/simplebar.min.css';
 
-import { lazy, type FC } from 'react';
+import { type FC } from 'react';
 import { useRoutes } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';

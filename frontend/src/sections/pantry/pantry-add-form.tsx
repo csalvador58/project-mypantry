@@ -1,5 +1,4 @@
 import { useState, type FC } from 'react';
-import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -20,7 +19,6 @@ import { paths } from 'src/paths';
 import type { PantryAdd } from 'src/types/pantry';
 
 import { myPantryApi } from 'src/api/myPantry';
-import ErrorHandler from 'src/error/error-handler';
 import { useAuth } from 'src/hooks/use-auth';
 import { ErrorLogger } from 'src/error/error-logger';
 

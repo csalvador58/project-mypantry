@@ -2,8 +2,6 @@ import { lazy, Suspense } from 'react';
 import type { RouteObject } from 'react-router';
 import { Outlet } from 'react-router-dom';
 
-const HomePage = lazy(() => import('src/pages/index'));
-
 // Pantry
 const SalesListPage = lazy(() => import('src/pages/sales/sales-list'));
 

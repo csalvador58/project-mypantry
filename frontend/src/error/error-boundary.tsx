@@ -1,8 +1,6 @@
 import React, { ErrorInfo, ReactNode, lazy } from 'react';
 import { ErrorLogger } from './error-logger';
 import { AuthContext } from 'src/contexts/auth/jwt';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { paths } from 'src/paths';
 import toast from 'react-hot-toast';
 const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
 

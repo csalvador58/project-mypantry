@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 
 import { PropertyList } from 'src/components/property-list';

@@ -2,10 +2,6 @@ import { lazy, Suspense } from 'react';
 import type { RouteObject } from 'react-router';
 import { Outlet } from 'react-router-dom';
 
-import { Layout as DashboardLayout } from 'src/layouts/dashboard';
-// import HomePage from 'src/pages';
-const HomePage = lazy(() => import('src/pages/index'));
-
 // Pantry
 const PantryListPage = lazy(() => import('src/pages/myPantry/list'));
 const PantryDetailPage = lazy(() => import('src/pages/myPantry/detail'));

@@ -22,7 +22,6 @@ import { useRouter } from 'src/hooks/use-router';
 import { useSearchParams } from 'src/hooks/use-search-params';
 import { paths } from 'src/paths';
 import { AuthIssuer } from 'src/sections/auth/auth-issuer';
-import { error } from 'console';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ErrorLogger } from 'src/error/error-logger';
