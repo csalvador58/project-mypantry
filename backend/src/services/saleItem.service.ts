@@ -33,7 +33,7 @@ export const deleteSaleItems = async (
     return new mongoose.Types.ObjectId(item);
   });
 
-  return SaleItem.deleteMany({ _id: { $in: items } }).lean();
+  return await SaleItem.deleteMany({ _id: { $in: items } }).lean();
   // return null;
 };
 

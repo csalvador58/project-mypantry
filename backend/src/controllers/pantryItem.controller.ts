@@ -23,16 +23,16 @@ export const addPantryItem: RequestHandler = catchAsync(
 export const deletePantryItem: RequestHandler = catchAsync(
   async (req: AuthenticatedRequest, res) => {
     console.log('pantry.controller: deletePantryItem');
-    const itemId = req.params?.['id'];
+    const query = req.params?.['id'];
 
-    console.log('itemId')
-    console.log(itemId)
+    console.log('query')
+    console.log(query)
 
-    if (!itemId) {
+    if (!query) {
       return res.status(400).json({ error: 'Invalid ID' });
     }
-    // const deletedItem = await pantryService.deletePantryItem(itemId);
-    const deletedItem = await pantryService.deletePantryItem(itemId);
+    // const deletedItem = await pantryService.deletePantryItem(query);
+    const deletedItem = await pantryService.deletePantryItem(query);
 
     console.log('deletedItem')
     console.log(deletedItem)

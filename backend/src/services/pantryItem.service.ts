@@ -28,7 +28,7 @@ export const deletePantryItem = async (
     return new mongoose.Types.ObjectId(item);
   })
 
-  return PantryItem.deleteMany({_id: {$in: items}}).lean();
+  return await PantryItem.deleteMany({_id: {$in: items}}).lean();
   // return null;
 };
 

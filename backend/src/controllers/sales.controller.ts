@@ -7,16 +7,13 @@ import { AuthenticatedRequest } from './token.controller.js';
 export const deleteSaleItems: RequestHandler = catchAsync(
   async (req: AuthenticatedRequest, res) => {
     console.log('sales.controller: deleteSalesItem');
-    const itemId = req.params?.['id'];
+    const query = req.params?.['id'];
 
-    console.log('itemId')
-    console.log(itemId)
-
-    if (!itemId) {
+    if (!query) {
       return res.status(400).json({ error: 'Invalid ID' });
     }
-    // const deletedItem = await pantryService.deletePantryItem(itemId);
-    const deletedItem = await salesService.deleteSaleItems(itemId);
+    // const deletedItem = await pantryService.deletePantryItem(query);
+    const deletedItem = await salesService.deleteSaleItems(query);
 
     console.log('deletedItem')
     console.log(deletedItem)

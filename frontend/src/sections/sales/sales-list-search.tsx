@@ -41,7 +41,7 @@ const tabs: TabOption[] = [
   }
 ];
 
-type SortValue = 'updatedAt|desc' | 'updatedAt|asc' | 'quantity|desc' | 'quantity|asc';
+type SortValue = 'endDate|desc' | 'endDate|asc' | 'salePrice|desc' | 'salePrice|asc';
 
 interface SortOption {
   label: string;
@@ -50,20 +50,20 @@ interface SortOption {
 
 const sortOptions: SortOption[] = [
   {
-    label: 'Last update (newest)',
-    value: 'updatedAt|desc'
+    label: 'Sale Ends (newest)',
+    value: 'endDate|desc'
   },
   {
-    label: 'Last update (oldest)',
-    value: 'updatedAt|asc'
+    label: 'Sale Ends (oldest)',
+    value: 'endDate|asc'
   },
   {
-    label: 'Quantity (highest)',
-    value: 'quantity|desc'
+    label: 'Sale Price (highest)',
+    value: 'salePrice|desc'
   },
   {
-    label: 'Quantity (lowest)',
-    value: 'quantity|asc'
+    label: 'Sale Price (lowest)',
+    value: 'salePrice|asc'
   }
 ];
 
