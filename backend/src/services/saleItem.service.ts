@@ -23,12 +23,18 @@ interface TStore01Response {
   store_ids: string[];
 }
 
-export const deleteSaleItem = async (
-  itemId: string
+export const deleteSaleItems = async (
+  query: string
 ): Promise<ISaleItem[] | null> => {
   // console.log('pantryItem.service - getPantryItems';
+  console.log('sale item service - query');
+  console.log(query);
+  const items = query.split(',').map((item) => {
+    return new mongoose.Types.ObjectId(item);
+  });
 
-  return await SaleItem.findByIdAndDelete(new mongoose.Types.ObjectId(itemId));
+  return SaleItem.deleteMany({ _id: { $in: items } }).lean();
+  // return null;
 };
 
 export const getSaleItemsFromApi = async () => {

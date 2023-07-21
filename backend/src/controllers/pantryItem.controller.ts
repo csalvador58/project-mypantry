@@ -32,7 +32,7 @@ export const deletePantryItem: RequestHandler = catchAsync(
       return res.status(400).json({ error: 'Invalid ID' });
     }
     // const deletedItem = await pantryService.deletePantryItem(itemId);
-    const deletedItem = await pantryService.deletePantryItemTest(itemId);
+    const deletedItem = await pantryService.deletePantryItem(itemId);
 
     console.log('deletedItem')
     console.log(deletedItem)
@@ -43,7 +43,7 @@ export const deletePantryItem: RequestHandler = catchAsync(
     }
     return res
       .status(200)
-      .json({ message: 'Item deleted successfully', item: deletedItem });
+      .json({ message: 'Item(s) deleted successfully', item: deletedItem });
   }
 );
 

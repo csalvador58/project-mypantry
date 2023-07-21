@@ -32,7 +32,7 @@ type GetSalesResponse = Promise<{
 }>;
 
 export type GetSalesItemRequest = { id: string };
-export type DeleteSalesItemRequest = { id: string };
+export type DeleteSalesItemRequest = string[];
 
 // export type UpdatePantryItemRequest = {
 //   id: string;
@@ -45,16 +45,16 @@ type GetSalesItemResponse = Promise<Sales>;
 type GetSalesCountResponse = Promise<SalesCount>;
 
 class SalesApi {
-  //   async deleteSalesItem(
-  //     request: DeleteSalesItemRequest
-  //   ): Promise<GetSalesResponse> {
-  //     try {
-  //       let data = await fetchSalesItemDelete(request.id);
-  //       return deepCopy(data);
-  //     } catch (error) {
-  //       throw new ApiError(error);
-  //     }
-  //   }
+    async deleteSalesItem(
+      request: DeleteSalesItemRequest
+    ): Promise<GetSalesResponse> {
+      try {
+        let data = await fetchSalesItemDelete(request);
+        return deepCopy(data);
+      } catch (error) {
+        throw new ApiError(error);
+      }
+    }
 
   async getSalesFromDB(request: GetSalesRequest): Promise<GetSalesResponse> {
     const { filters, page, rowsPerPage, sortBy, sortDir } = request;

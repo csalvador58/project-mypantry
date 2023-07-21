@@ -188,6 +188,7 @@ const useSaleItemIds = (sales: Sales[] = []) => {
 };
 
 const Page = () => {
+  const [refreshState, setRefreshState] = useState(false);
   const salesSearch = useSalesSearch();
   const salesStore = useSalesStore(salesSearch.state);
   const salesIds = useSaleItemIds(salesStore.sales);
@@ -210,6 +211,52 @@ const Page = () => {
         },
       });
 
+    } catch (err) {
+      if (err.message.includes('jwt expired')) {
+        toast.error('Login token expired, please re-login.',{
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
+        ErrorLogger(err);
+        authContext.signOut();
+        router.replace(paths.auth.jwt.login);
+      }
+
+      throwAsyncError(err);
+    }
+  };
+
+  const deleteHandler = async () => {
+    try {
+      // const response = await myPantryApi.deletePantryItem({ id: itemId });
+      const response = await salesApi.deleteSalesItem(
+        salesSelection.selected
+      );
+
+      if (response) {
+        toast.success('Pantry Item Deleted', {
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
+        setRefreshState(!refreshState);
+      } else {
+        toast.error('Partial or no items were deleted. Contact administrator for any issues.', {
+          duration: 3000,
+          position: 'top-center',
+          ariaProps: {
+            role: 'status',
+            'aria-live': 'polite',
+          },
+        });
+      }
     } catch (err) {
       if (err.message.includes('jwt expired')) {
         toast.error('Login token expired, please re-login.',{
@@ -262,6 +309,7 @@ const Page = () => {
                 onSortChange={salesSearch.handleSortChange}
                 sortBy={salesSearch.state.sortBy}
                 sortDir={salesSearch.state.sortDir}
+                triggerRefresh={refreshState}
               />
               <SalesListTable
                 count={salesStore.salesCount}
@@ -275,6 +323,7 @@ const Page = () => {
                 page={salesSearch.state.page}
                 rowsPerPage={salesSearch.state.rowsPerPage}
                 selected={salesSelection.selected}
+                deleteHandler={deleteHandler}
               />
             </Card>
           </Stack>

@@ -39,7 +39,7 @@ interface PantryListTableProps {
   page?: number;
   rowsPerPage?: number;
   selected?: string[];
-  deleteHandler?: () => void;
+  deleteHandler: () => void;
 }
 
 export const PantryListTable: FC<PantryListTableProps> = (props) => {
@@ -249,4 +249,5 @@ PantryListTable.propTypes = {
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
   selected: PropTypes.array,
+  deleteHandler: PropTypes.func.isRequired,
 };

@@ -181,9 +181,6 @@ export const fetchPantryItemDelete = async (
 
     const data = await response.json();
 
-    console.log('data')
-    console.log(data)
-
     if (data.item.deletedCount) {
       return true;
     }

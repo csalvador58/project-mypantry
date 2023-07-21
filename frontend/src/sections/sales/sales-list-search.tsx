@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { ChangeEvent, FormEvent, useCallback, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import Box from '@mui/material/Box';
@@ -74,10 +74,11 @@ interface SalesListSearchProps {
   onSortChange?: (sort: { sortBy: string; sortDir: SortDir }) => void;
   sortBy?: string;
   sortDir?: SortDir;
+  triggerRefresh: boolean;
 }
 
 export const SalesListSearch: FC<SalesListSearchProps> = (props) => {
-  const { onFiltersChange, onSortChange, sortBy, sortDir } = props;
+  const { onFiltersChange, onSortChange, sortBy, sortDir, triggerRefresh } = props;
   const queryRef = useRef<HTMLInputElement | null>(null);
   const [currentTab, setCurrentTab] = useState<TabValue>('all');
   const [filters, setFilters] = useState<Filters>({});
@@ -141,6 +142,21 @@ export const SalesListSearch: FC<SalesListSearchProps> = (props) => {
     },
     [onSortChange]
   );
+
+  useEffect(() => {
+    setCurrentTab('all');
+    setFilters((prevState) => {
+      const updatedFilters: Filters = {
+        ...prevState,
+        location1: undefined,
+        location2: undefined,
+        location3: undefined,
+        location4: undefined,
+        location5: undefined,
+      };
+      return updatedFilters;
+    });
+  }, [triggerRefresh]);
 
   return (
     <>
@@ -214,5 +230,6 @@ SalesListSearch.propTypes = {
   onFiltersChange: PropTypes.func,
   onSortChange: PropTypes.func,
   sortBy: PropTypes.string,
-  sortDir: PropTypes.oneOf<SortDir>(['asc', 'desc'])
+  sortDir: PropTypes.oneOf<SortDir>(['asc', 'desc']),
+  triggerRefresh: PropTypes.bool.isRequired,
 };

@@ -20,7 +20,6 @@ import Tabs from '@mui/material/Tabs';
 import TextField from '@mui/material/TextField';
 
 import { useUpdateEffect } from 'src/hooks/use-update-effect';
-import { Pantry } from 'src/types/pantry';
 
 interface Filters {
   query?: string;

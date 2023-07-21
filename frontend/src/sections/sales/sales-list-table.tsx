@@ -39,6 +39,7 @@ interface SalesListTableProps {
   page?: number;
   rowsPerPage?: number;
   selected?: string[];
+  deleteHandler: () => void;
 }
 
 export const SalesListTable: FC<SalesListTableProps> = (props) => {
@@ -54,11 +55,16 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
     page = 0,
     rowsPerPage = 0,
     selected = [],
+    deleteHandler = () =>{},
   } = props;
 
   const selectedSome = selected.length > 0 && selected.length < items.length;
   const selectedAll = items.length > 0 && selected.length === items.length;
   const enableBulkActions = selected.length > 0;
+
+  const handleDelete = () => {
+    deleteHandler();
+  }
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -91,12 +97,12 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
               }
             }}
           />
-          <Button color='inherit' size='small'>
+          <Button color='inherit' size='small' onClick={handleDelete}>
             Delete
           </Button>
-          <Button color='inherit' size='small'>
+          {/* <Button color='inherit' size='small'>
             Edit
-          </Button>
+          </Button> */}
         </Stack>
       )}
       <Scrollbar>
@@ -234,4 +240,5 @@ SalesListTable.propTypes = {
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
   selected: PropTypes.array,
+  deleteHandler: PropTypes.func.isRequired,
 };

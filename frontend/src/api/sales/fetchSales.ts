@@ -125,11 +125,11 @@ export const fetchSalesFromDB = async (): Promise<Sales[]> => {
 };
 
 export const fetchSalesItemDelete = async (
-  itemId: string
+  itemId: string[]
 ): Promise<boolean> => {
   try {
     const token = window.sessionStorage.getItem(STORAGE_KEY);
-    const url = `${DOMAIN}/pantry/${itemId}`;
+    const url = `${DOMAIN}/sales/${itemId}`;
     const method = 'DELETE';
     const response = await fetch(url, {
       method: method,
@@ -148,7 +148,7 @@ export const fetchSalesItemDelete = async (
 
     const data = await response.json();
 
-    if (data.item) {
+    if (data.item.deletedCount) {
       return true;
     }
     return false;

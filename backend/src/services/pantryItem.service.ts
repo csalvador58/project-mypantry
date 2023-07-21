@@ -10,21 +10,21 @@ export const addPantryItem = async (
   return PantryItem.create(pantryItemBody);
 };
 
+// export const deletePantryItem = async (
+//   itemId: string
+// ): Promise<IPantryItem | null> => {
+//   // console.log('pantryItem.service - getPantryItems';
+
+//   return PantryItem.findByIdAndDelete(new mongoose.Types.ObjectId(itemId));
+// };
+
 export const deletePantryItem = async (
-  itemId: string
-): Promise<IPantryItem | null> => {
-  // console.log('pantryItem.service - getPantryItems';
-
-  return PantryItem.findByIdAndDelete(new mongoose.Types.ObjectId(itemId));
-};
-
-export const deletePantryItemTest = async (
-  itemId: string
+  query: string
 ): Promise<IPantryItem[] | null> => {
   // console.log('pantryItem.service - getPantryItems';
-  console.log('pantry item service - itemId')
-  console.log(itemId)
-  const items = itemId.split(',').map((item) => {
+  console.log('pantry item service - query')
+  console.log(query)
+  const items = query.split(',').map((item) => {
     return new mongoose.Types.ObjectId(item);
   })
 
