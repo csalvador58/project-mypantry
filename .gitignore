@@ -10,6 +10,7 @@ node_modules*/
 coverage*/
 backend/dist*/
 frontend/dist*/
+tsconfig.tsbuildinfo
 
 # production
 /build

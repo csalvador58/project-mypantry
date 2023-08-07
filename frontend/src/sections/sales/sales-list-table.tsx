@@ -109,6 +109,15 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
+              
+              <TableCell>Name</TableCell>
+              <TableCell>Notes</TableCell>
+              <TableCell>Sale Price</TableCell>
+              <TableCell>Sale Qty</TableCell>
+              <TableCell>Reg Price</TableCell>
+              <TableCell>Reg Qty</TableCell>
+              <TableCell>Store</TableCell>
+              {/* <TableCell align='right'>Actions</TableCell> */}
               <TableCell padding='checkbox'>
                 <Checkbox
                   checked={selectedAll}
@@ -122,14 +131,6 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                   }}
                 />
               </TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Store</TableCell>
-              <TableCell>Sale Price</TableCell>
-              <TableCell>Sale Qty</TableCell>
-              <TableCell>Reg Price</TableCell>
-              <TableCell>Reg Qty</TableCell>
-              <TableCell>Notes</TableCell>
-              {/* <TableCell align='right'>Actions</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -158,21 +159,6 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
 
               return (
                 <TableRow hover key={saleItem.id} selected={isSelected}>
-                  <TableCell padding='checkbox'>
-                    <Checkbox
-                      checked={isSelected}
-                      onChange={(
-                        event: ChangeEvent<HTMLInputElement>
-                      ): void => {
-                        if (event.target.checked) {
-                          onSelectOne?.(saleItem.id);
-                        } else {
-                          onDeselectOne?.(saleItem.id);
-                        }
-                      }}
-                      value={isSelected}
-                    />
-                  </TableCell>
                   <TableCell>
                     <Stack alignItems='center' direction='row' spacing={1}>
                       {/* <Avatar
@@ -209,6 +195,21 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
                   </TableCell>
                   <TableCell>{saleItem.baseQuantity}</TableCell>
                   <TableCell>{storeLocation}</TableCell>
+                  <TableCell padding='checkbox'>
+                    <Checkbox
+                      checked={isSelected}
+                      onChange={(
+                        event: ChangeEvent<HTMLInputElement>
+                      ): void => {
+                        if (event.target.checked) {
+                          onSelectOne?.(saleItem.id);
+                        } else {
+                          onDeselectOne?.(saleItem.id);
+                        }
+                      }}
+                      value={isSelected}
+                    />
+                  </TableCell>
                 </TableRow>
               );
             })}

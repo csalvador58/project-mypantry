@@ -91,6 +91,7 @@ const usePantry = (): Pantry | null => {
 
 const Page = () => {
   const pantry = usePantry();
+  const authContext = useAuth();
 
   usePageView();
 
@@ -142,7 +143,7 @@ const Page = () => {
                     <Typography variant='h4'>{pantry.name}</Typography>
                     <Stack alignItems='center' direction='row' spacing={1}>
                       <Typography variant='subtitle2'>user_id:</Typography>
-                      <Chip label={pantry.id} size='small' />
+                      <Chip label={authContext.user?.id} size='small' />
                     </Stack>
                   </Stack>
                 </Stack>

@@ -211,6 +211,7 @@ export const PantryAddForm: FC = () => {
                 />
               </Grid>
             </Grid>
+
             <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
               <Stack alignItems='center' direction='row' spacing={3}>
                 <Stack spacing={1}>
@@ -239,6 +240,11 @@ export const PantryAddForm: FC = () => {
                   onChange={formik.handleChange}
                   value={formik.values.location2}
                 />
+              </Stack>
+            </Stack>
+
+            <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
+              <Stack alignItems='center' direction='row' spacing={3}>
                 <Stack spacing={1}>
                   <Typography gutterBottom variant='subtitle1'>
                     Pantry 3
@@ -265,7 +271,11 @@ export const PantryAddForm: FC = () => {
                   onChange={formik.handleChange}
                   value={formik.values.location4}
                 />
-                <Stack spacing={1}>
+              </Stack>
+            </Stack>
+            <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
+              <Stack alignItems='center' direction='row' spacing={3}>
+              <Stack spacing={1}>
                   <Typography gutterBottom variant='subtitle1'>
                     Other
                   </Typography>

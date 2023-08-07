@@ -13,8 +13,10 @@ import { Seo } from 'src/components/seo';
 import { usePageView } from 'src/hooks/use-page-view';
 import { paths } from 'src/paths';
 import { PantryAddForm } from 'src/sections/pantry/pantry-add-form';
+import { useAuth } from 'src/hooks/use-auth';
 
 const Page = () => {
+  const authContext = useAuth();
   usePageView();
 
   return (
@@ -62,7 +64,8 @@ const Page = () => {
                     <Stack alignItems='center' direction='row' spacing={1}>
                       <Typography variant='subtitle2'>user_id:</Typography>
                       {/* ACTION - Update below to userID when login is implemented */}
-                      <Chip label={'ACTION - This will be updated userID when login is implemented'} size='small' />
+                      {/* <Chip label={'ACTION - This will be updated userID when login is implemented'} size='small' /> */}
+                      <Chip label={authContext.user?.id} size='small' />
                     </Stack>
                   </Stack>
                 </Stack>
