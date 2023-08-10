@@ -2,7 +2,7 @@ import app from './app.js';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
-const port = parseInt(process.env['PORT'] ?? '3000');
+const port = parseInt(process.env['PORT'] ?? '3001');
 const mongoURL = process.env['MONGODB_URL'] ?? 'mongodb://127.0.0.1/mypantry'; 
 
 mongoose
