@@ -76,11 +76,22 @@ const Page = () => {
         await signIn(values.username, values.password);
 
         if (isMounted()) {
-          router.push(returnTo || paths.index);
+          router.push(returnTo || paths.myPantry.index);
           // router.push(paths.myPantry.index);
         }
       } catch (err) {
         if (isMounted()) {
+          if (
+            err.message.includes('Invalid password') ||
+            err.message.includes('Invalid User') ||
+            err.message.includes('Invalid username/password')
+          ) {
+            helpers.setStatus({ success: false });
+            helpers.setErrors({ submit: 'Invalid User/Password, try again!' });
+            helpers.setSubmitting(false);
+            return;
+          }
+
           toast.error('Something went wrong!', {
             duration: 3000,
             position: 'top-center',
@@ -107,7 +118,6 @@ const Page = () => {
             router.replace(paths.auth.jwt.login);
           }
         }
-
         throwAsyncError(err);
       }
     },

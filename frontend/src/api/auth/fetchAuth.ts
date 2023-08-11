@@ -41,7 +41,7 @@ export const fetchAuthSignIn = async (
       accessToken: data.token,
     };
   } catch (error) {
-    throw new ApiError('Error occurred during fetchAuthSignIn API call.');
+    throw new ApiError('Error occurred during fetchAuthSignIn API call.' + error);
   }
 };
 
@@ -76,6 +76,6 @@ export const fetchAuthSignUp = async (
 
     return { userId: data.user._id, username: data.user.username };
   } catch (error) {
-    throw new ApiError('Error occurred during fetchAuthSignUp API call.');
+    throw new ApiError('Error occurred during fetchAuthSignUp API call.' + error);
   }
 };

@@ -69,6 +69,7 @@ const Page = () => {
             <Button
               component={RouterLink}
               href={paths.auth.jwt.login}
+              // href={paths.index}
             >
               Back to Login
             </Button>

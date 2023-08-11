@@ -52,7 +52,7 @@ class AuthApi {
       try {
         let response: SignUpResponse =
           await fetchAuthSignUp(username, password);
-
+          
         resolve(response);
       } catch (err) {
         reject(new ApiError(err));
