@@ -55,7 +55,7 @@ const useSalesSearch = () => {
       location5: undefined,
     },
     page: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 25,
     sortBy: 'updatedAt',
     sortDir: 'desc',
   });

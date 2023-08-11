@@ -232,7 +232,7 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
         onRowsPerPageChange={onRowsPerPageChange}
         page={page}
         rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[25, 50, 100]}
       />
     </Box>
   );
