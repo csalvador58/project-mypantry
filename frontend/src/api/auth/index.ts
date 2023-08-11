@@ -37,7 +37,6 @@ class AuthApi {
     return new Promise(async (resolve, reject) => {
       try {
         let response: SignInResponse = await fetchAuthSignIn(username, password);
-
         resolve(response);
       } catch (err) {
         reject(new ApiError(err));
@@ -52,7 +51,6 @@ class AuthApi {
       try {
         let response: SignUpResponse =
           await fetchAuthSignUp(username, password);
-          
         resolve(response);
       } catch (err) {
         reject(new ApiError(err));
