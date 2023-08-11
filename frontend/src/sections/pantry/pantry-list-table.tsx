@@ -182,7 +182,8 @@ export const PantryListTable: FC<PantryListTableProps> = (props) => {
                         <Link
                           color='inherit'
                           component={RouterLink}
-                          href={paths.myPantry.details}
+                          // href={paths.myPantry.details}
+                          href={`/myPantry/${pantry.id}`}
                           variant='subtitle2'
                         >
                           {pantry.name}
