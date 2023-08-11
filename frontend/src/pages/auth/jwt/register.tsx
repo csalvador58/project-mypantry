@@ -103,20 +103,17 @@ const Page = () => {
           router.replace(paths.auth.jwt.register);
         }
       } catch (err) {
-        toast.error('Something went wrong!',{
-          duration: 3000,
-          position: 'top-center',
-          ariaProps: {
-            role: 'status',
-            'aria-live': 'polite',
-          },
-        });
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
-        helpers.setSubmitting(false);
+        if (isMounted()) {
+          if (
+            err.message.includes('Invalid username')
+          ) {
+            helpers.setStatus({ success: false });
+            helpers.setErrors({ submit: 'Username must be more than 2 letters, try again!' });
+            helpers.setSubmitting(false);
+            return;
+          }
 
-        if (err.message.includes('jwt expired')) {
-          toast.error('Login token expired, please re-login.',{
+          toast.error('Something went wrong!', {
             duration: 3000,
             position: 'top-center',
             ariaProps: {
@@ -124,11 +121,24 @@ const Page = () => {
               'aria-live': 'polite',
             },
           });
-          ErrorLogger(err);
-          authContext.signOut();
-          router.replace(paths.auth.jwt.login);
-        }
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: err.message });
+          helpers.setSubmitting(false);
 
+          if (err.message.includes('jwt expired')) {
+            toast.error('Login token expired, please re-login.', {
+              duration: 3000,
+              position: 'top-center',
+              ariaProps: {
+                role: 'status',
+                'aria-live': 'polite',
+              },
+            });
+            ErrorLogger(err);
+            authContext.signOut();
+            router.replace(paths.auth.jwt.login);
+          }
+        }
         throwAsyncError(err);
       }
     },
