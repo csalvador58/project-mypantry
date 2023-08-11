@@ -22,6 +22,7 @@ import { myPantryApi } from 'src/api/myPantry';
 import { useRouter } from 'src/hooks/use-router';
 import { ErrorLogger } from 'src/error/error-logger';
 import { useAuth } from 'src/hooks/use-auth';
+import Box from '@mui/material/Box';
 
 interface PantryEditFormProps {
   pantry: Pantry;
@@ -156,6 +157,7 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
       <Card>
         <CardHeader title={`Edit Pantry Item #: ${pantry.id}`} />
         <CardContent sx={{ pt: 0 }}>
+        <Grid container spacing={2}>
           <Grid container spacing={3}>
             <Grid xs={12} md={6}>
               <TextField
@@ -208,118 +210,121 @@ export const PantryEditForm: FC<PantryEditFormProps> = (props) => {
               />
             </Grid>
           </Grid>
-          <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
-            <Stack alignItems='center' direction='row' spacing={3}>
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Pantry 1
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location1}
-                color='primary'
-                edge='start'
-                name='location1'
-                onChange={formik.handleChange}
-                value={formik.values.location1}
-              />
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Pantry 2
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location2}
-                color='primary'
-                edge='start'
-                name='location2'
-                onChange={formik.handleChange}
-                value={formik.values.location2}
-              />
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Pantry 3
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location3}
-                color='primary'
-                edge='start'
-                name='location3'
-                onChange={formik.handleChange}
-                value={formik.values.location3}
-              />
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Freezer
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location4}
-                color='primary'
-                edge='start'
-                name='location4'
-                onChange={formik.handleChange}
-                value={formik.values.location4}
-              />
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Other
-                </Typography>
-              </Stack>
-              <Switch
-                checked={formik.values.location5}
-                color='primary'
-                edge='start'
-                name='location5'
-                onChange={formik.handleChange}
-                value={formik.values.location5}
-              />
-            </Stack>
-          </Stack>
-          <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
-            <Stack alignItems='center' direction='row' spacing={3}>
-              <Stack spacing={1}>
-                <Typography gutterBottom variant='subtitle1'>
-                  Favorite
-                </Typography>
-              </Stack>
+          <Grid container spacing={2} xs={8} sm={6} md={4} mt={2}>
+                <Grid xs={6} sm={4} component='div'>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Pantry 1
+                  </Typography>
+                  <Switch
+                    checked={formik.values.location1}
+                    color='primary'
+                    edge='end'
+                    name='location1'
+                    onChange={formik.handleChange}
+                    value={formik.values.location1}
+                    size='small'
+                  />
+                </Grid>
+                <Grid xs={6} sm={4} component='div'>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Pantry 2
+                  </Typography>
+                  <Switch
+                    checked={formik.values.location2}
+                    color='primary'
+                    edge='end'
+                    name='location2'
+                    onChange={formik.handleChange}
+                    value={formik.values.location2}
+                    size='small'
+                  />
+                </Grid>
+                <Grid xs={6} sm={4} component='div'>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Pantry 3
+                  </Typography>
+                  <Switch
+                    checked={formik.values.location3}
+                    color='primary'
+                    edge='end'
+                    name='location3'
+                    onChange={formik.handleChange}
+                    value={formik.values.location3}
+                    size='small'
+                  />
+                </Grid>
+                <Grid xs={6} sm={4} component='div'>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Freezer
+                  </Typography>
+                  <Switch
+                    checked={formik.values.location4}
+                    color='primary'
+                    edge='end'
+                    name='location4'
+                    onChange={formik.handleChange}
+                    value={formik.values.location4}
+                    size='small'
+                  />
+                </Grid>
+                <Grid xs={6} sm={4} component='div'>
+                  <Typography gutterBottom variant='subtitle1'>
+                    Other
+                  </Typography>
+                  <Switch
+                    checked={formik.values.location5}
+                    color='primary'
+                    edge='end'
+                    name='location5'
+                    onChange={formik.handleChange}
+                    value={formik.values.location5}
+                    size='small'
+                  />
+                  <Box flexGrow={1} />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Stack direction='column' mt={3}>
+              <Typography gutterBottom variant='subtitle1'>
+                Favorite
+              </Typography>
               <Switch
                 checked={formik.values.favorite}
                 color='primary'
-                edge='start'
+                edge='end'
                 name='favorite'
                 onChange={formik.handleChange}
                 value={formik.values.favorite}
+                size='small'
               />
             </Stack>
-          </Stack>
-        </CardContent>
-        <Stack
-          direction={{
-            xs: 'column',
-            sm: 'row',
-          }}
-          flexWrap='wrap'
-          spacing={3}
-          sx={{ p: 3 }}
-        >
-          <Button
-            disabled={formik.isSubmitting}
-            type='submit'
-            variant='contained'
-          >
-            Update
-          </Button>
-          <Button
-            color='inherit'
-            component={RouterLink}
-            disabled={formik.isSubmitting}
-            href={`/myPantry/${pantry.id}`}
-          >
-            Cancel
-          </Button>
-        </Stack>
+            <Stack
+              direction={{
+                xs: 'column',
+                sm: 'row',
+              }}
+              flexWrap='wrap'
+              spacing={3}
+              mt={3}
+              // sx={{ p: 3 }}
+            >
+              <Button
+                disabled={formik.isSubmitting}
+                type='submit'
+                variant='contained'
+              >
+                Add To Pantry
+              </Button>
+              <Button
+                color='inherit'
+                component={RouterLink}
+                disabled={formik.isSubmitting}
+                href={paths.myPantry.index}
+              >
+                Cancel
+              </Button>
+            </Stack>
+          </CardContent>
       </Card>
     </form>
   );

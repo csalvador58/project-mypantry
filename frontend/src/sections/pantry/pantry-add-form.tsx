@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 
 import { RouterLink } from 'src/components/router-link';
 import { useRouter } from 'src/hooks/use-router';
@@ -160,61 +160,65 @@ export const PantryAddForm: FC = () => {
         <Card>
           <CardHeader title={`Fill out form then click Add To Pantry:`} />
           <CardContent sx={{ pt: 0 }}>
-            <Grid container spacing={3}>
-              <Grid xs={12} md={6}>
-                <TextField
-                  error={!!(formik.touched.name && formik.errors.name)}
-                  fullWidth
-                  helperText={formik.touched.name && formik.errors.name}
-                  label='Name'
-                  name='name'
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  required
-                  value={formik.values.name}
-                />
+            <Grid container spacing={2}>
+              <Grid container spacing={3}>
+                <Grid xs={12} md={6}>
+                  <TextField
+                    error={!!(formik.touched.name && formik.errors.name)}
+                    fullWidth
+                    helperText={formik.touched.name && formik.errors.name}
+                    label='Name'
+                    name='name'
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    required
+                    value={formik.values.name}
+                  />
+                </Grid>
+                <Grid xs={12} md={6}>
+                  <TextField
+                    error={
+                      !!(formik.touched.quantity && formik.errors.quantity)
+                    }
+                    fullWidth
+                    helperText={
+                      formik.touched.quantity && formik.errors.quantity
+                    }
+                    label='Quantity'
+                    name='quantity'
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.quantity ? formik.values.quantity : ''}
+                  />
+                </Grid>
+                <Grid xs={12} md={6}>
+                  <TextField
+                    error={!!(formik.touched.price && formik.errors.price)}
+                    fullWidth
+                    helperText={formik.touched.price && formik.errors.price}
+                    label='Price Tracker'
+                    name='price'
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.price ? formik.values.price : ''}
+                  />
+                </Grid>
+                <Grid xs={12} md={6}>
+                  <TextField
+                    error={!!(formik.touched.note && formik.errors.note)}
+                    fullWidth
+                    helperText={formik.touched.note && formik.errors.note}
+                    label='Note'
+                    name='note'
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    required
+                    value={formik.values.note}
+                  />
+                </Grid>
               </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  error={!!(formik.touched.quantity && formik.errors.quantity)}
-                  fullWidth
-                  helperText={formik.touched.quantity && formik.errors.quantity}
-                  label='Quantity'
-                  name='quantity'
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.quantity ? formik.values.quantity : ''}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  error={!!(formik.touched.price && formik.errors.price)}
-                  fullWidth
-                  helperText={formik.touched.price && formik.errors.price}
-                  label='Price Tracker'
-                  name='price'
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.price ? formik.values.price : ''}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  error={!!(formik.touched.note && formik.errors.note)}
-                  fullWidth
-                  helperText={formik.touched.note && formik.errors.note}
-                  label='Note'
-                  name='note'
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  required
-                  value={formik.values.note}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid container spacing={2} xs={8} sm={6} md={4} mt={5}>
-              <Grid xs={6} sm={4} component='div'>
+              <Grid container spacing={2} xs={8} sm={6} md={4} mt={2}>
+                <Grid xs={6} sm={4} component='div'>
                   <Typography gutterBottom variant='subtitle1'>
                     Pantry 1
                   </Typography>
@@ -227,9 +231,8 @@ export const PantryAddForm: FC = () => {
                     value={formik.values.location1}
                     size='small'
                   />
-              </Grid>
-              <Grid xs={6} sm={4} component='div'>
-                
+                </Grid>
+                <Grid xs={6} sm={4} component='div'>
                   <Typography gutterBottom variant='subtitle1'>
                     Pantry 2
                   </Typography>
@@ -242,10 +245,8 @@ export const PantryAddForm: FC = () => {
                     value={formik.values.location2}
                     size='small'
                   />
-                
-              </Grid>
-              <Grid xs={6} sm={4} component='div'>
-                
+                </Grid>
+                <Grid xs={6} sm={4} component='div'>
                   <Typography gutterBottom variant='subtitle1'>
                     Pantry 3
                   </Typography>
@@ -258,10 +259,8 @@ export const PantryAddForm: FC = () => {
                     value={formik.values.location3}
                     size='small'
                   />
-               
-              </Grid>
-              <Grid xs={6} sm={4} component='div'>
-                
+                </Grid>
+                <Grid xs={6} sm={4} component='div'>
                   <Typography gutterBottom variant='subtitle1'>
                     Freezer
                   </Typography>
@@ -274,10 +273,8 @@ export const PantryAddForm: FC = () => {
                     value={formik.values.location4}
                     size='small'
                   />
-             
-              </Grid>
-              <Grid xs={6} sm={4} component='div'>
-                
+                </Grid>
+                <Grid xs={6} sm={4} component='div'>
                   <Typography gutterBottom variant='subtitle1'>
                     Other
                   </Typography>
@@ -290,52 +287,51 @@ export const PantryAddForm: FC = () => {
                     value={formik.values.location5}
                     size='small'
                   />
-                  <Box flexGrow={1}/>
-           
-              </Grid>
-              <Grid xs={6} sm={4} component='div'>
-                
-                  <Typography gutterBottom variant='subtitle1'>
-                    Favorite
-                  </Typography>
-                  <Switch
-                    checked={formik.values.favorite}
-                    color='primary'
-                    edge='end'
-                    name='favorite'
-                    onChange={formik.handleChange}
-                    value={formik.values.favorite}
-                    size='small'
-                  />
-             
+                  <Box flexGrow={1} />
+                </Grid>
               </Grid>
             </Grid>
+            <Stack direction='column' mt={3}>
+              <Typography gutterBottom variant='subtitle1'>
+                Favorite
+              </Typography>
+              <Switch
+                checked={formik.values.favorite}
+                color='primary'
+                edge='end'
+                name='favorite'
+                onChange={formik.handleChange}
+                value={formik.values.favorite}
+                size='small'
+              />
+            </Stack>
+            <Stack
+              direction={{
+                xs: 'column',
+                sm: 'row',
+              }}
+              flexWrap='wrap'
+              spacing={3}
+              mt={3}
+              // sx={{ p: 3 }}
+            >
+              <Button
+                disabled={formik.isSubmitting}
+                type='submit'
+                variant='contained'
+              >
+                Add To Pantry
+              </Button>
+              <Button
+                color='inherit'
+                component={RouterLink}
+                disabled={formik.isSubmitting}
+                href={paths.myPantry.index}
+              >
+                Cancel
+              </Button>
+            </Stack>
           </CardContent>
-          <Stack
-            direction={{
-              xs: 'column',
-              sm: 'row',
-            }}
-            flexWrap='wrap'
-            spacing={3}
-            sx={{ p: 3 }}
-          >
-            <Button
-              disabled={formik.isSubmitting}
-              type='submit'
-              variant='contained'
-            >
-              Add To Pantry
-            </Button>
-            <Button
-              color='inherit'
-              component={RouterLink}
-              disabled={formik.isSubmitting}
-              href={paths.myPantry.index}
-            >
-              Cancel
-            </Button>
-          </Stack>
         </Card>
       </form>
     </>
