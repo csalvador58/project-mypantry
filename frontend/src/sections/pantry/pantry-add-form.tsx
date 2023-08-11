@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
 
 import { RouterLink } from 'src/components/router-link';
 import { useRouter } from 'src/hooks/use-router';
@@ -212,101 +213,103 @@ export const PantryAddForm: FC = () => {
               </Grid>
             </Grid>
 
-            <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
-              <Stack alignItems='center' direction='row' spacing={3}>
-                <Stack spacing={1}>
+            <Grid container spacing={2} xs={8} sm={6} md={4} mt={5}>
+              <Grid xs={6} sm={4} component='div'>
                   <Typography gutterBottom variant='subtitle1'>
                     Pantry 1
                   </Typography>
-                </Stack>
-                <Switch
-                  checked={formik.values.location1}
-                  color='primary'
-                  edge='start'
-                  name='location1'
-                  onChange={formik.handleChange}
-                  value={formik.values.location1}
-                />
-                <Stack spacing={1}>
+                  <Switch
+                    checked={formik.values.location1}
+                    color='primary'
+                    edge='end'
+                    name='location1'
+                    onChange={formik.handleChange}
+                    value={formik.values.location1}
+                    size='small'
+                  />
+              </Grid>
+              <Grid xs={6} sm={4} component='div'>
+                
                   <Typography gutterBottom variant='subtitle1'>
                     Pantry 2
                   </Typography>
-                </Stack>
-                <Switch
-                  checked={formik.values.location2}
-                  color='primary'
-                  edge='start'
-                  name='location2'
-                  onChange={formik.handleChange}
-                  value={formik.values.location2}
-                />
-              </Stack>
-            </Stack>
-
-            <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
-              <Stack alignItems='center' direction='row' spacing={3}>
-                <Stack spacing={1}>
+                  <Switch
+                    checked={formik.values.location2}
+                    color='primary'
+                    edge='end'
+                    name='location2'
+                    onChange={formik.handleChange}
+                    value={formik.values.location2}
+                    size='small'
+                  />
+                
+              </Grid>
+              <Grid xs={6} sm={4} component='div'>
+                
                   <Typography gutterBottom variant='subtitle1'>
                     Pantry 3
                   </Typography>
-                </Stack>
-                <Switch
-                  checked={formik.values.location3}
-                  color='primary'
-                  edge='start'
-                  name='location3'
-                  onChange={formik.handleChange}
-                  value={formik.values.location3}
-                />
-                <Stack spacing={1}>
+                  <Switch
+                    checked={formik.values.location3}
+                    color='primary'
+                    edge='end'
+                    name='location3'
+                    onChange={formik.handleChange}
+                    value={formik.values.location3}
+                    size='small'
+                  />
+               
+              </Grid>
+              <Grid xs={6} sm={4} component='div'>
+                
                   <Typography gutterBottom variant='subtitle1'>
                     Freezer
                   </Typography>
-                </Stack>
-                <Switch
-                  checked={formik.values.location4}
-                  color='primary'
-                  edge='start'
-                  name='location4'
-                  onChange={formik.handleChange}
-                  value={formik.values.location4}
-                />
-              </Stack>
-            </Stack>
-            <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
-              <Stack alignItems='center' direction='row' spacing={3}>
-              <Stack spacing={1}>
+                  <Switch
+                    checked={formik.values.location4}
+                    color='primary'
+                    edge='end'
+                    name='location4'
+                    onChange={formik.handleChange}
+                    value={formik.values.location4}
+                    size='small'
+                  />
+             
+              </Grid>
+              <Grid xs={6} sm={4} component='div'>
+                
                   <Typography gutterBottom variant='subtitle1'>
                     Other
                   </Typography>
-                </Stack>
-                <Switch
-                  checked={formik.values.location5}
-                  color='primary'
-                  edge='start'
-                  name='location5'
-                  onChange={formik.handleChange}
-                  value={formik.values.location5}
-                />
-              </Stack>
-            </Stack>
-            <Stack divider={<Divider />} spacing={3} sx={{ mt: 3 }}>
-              <Stack alignItems='center' direction='row' spacing={3}>
-                <Stack spacing={1}>
+                  <Switch
+                    checked={formik.values.location5}
+                    color='primary'
+                    edge='end'
+                    name='location5'
+                    onChange={formik.handleChange}
+                    value={formik.values.location5}
+                    size='small'
+                  />
+                  <Box flexGrow={1}/>
+           
+              </Grid>
+              <Grid xs={6} sm={4} component='div'>
+                
                   <Typography gutterBottom variant='subtitle1'>
                     Favorite
                   </Typography>
-                </Stack>
-                <Switch
-                  checked={formik.values.favorite}
-                  color='primary'
-                  edge='start'
-                  name='favorite'
-                  onChange={formik.handleChange}
-                  value={formik.values.favorite}
-                />
-              </Stack>
-            </Stack>
+                  <Switch
+                    checked={formik.values.favorite}
+                    color='primary'
+                    edge='end'
+                    name='favorite'
+                    onChange={formik.handleChange}
+                    value={formik.values.favorite}
+                    size='small'
+                  />
+             
+              </Grid>
+            </Grid>
           </CardContent>
           <Stack
             direction={{
