@@ -1,4 +1,4 @@
-import type { ChangeEvent, FC, MouseEvent } from 'react';
+import { useState, type ChangeEvent, type FC, type MouseEvent } from 'react';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
@@ -23,6 +23,7 @@ import { RouterLink } from 'src/components/router-link';
 import { Scrollbar } from 'src/components/scrollbar';
 import { paths } from 'src/paths';
 import { Sales } from 'src/types/sales';
+import Modal from '@mui/material/Modal';
 
 interface SalesListTableProps {
   count?: number;
@@ -42,6 +43,22 @@ interface SalesListTableProps {
   deleteHandler: () => void;
 }
 
+interface OpenMap {
+  [key: string]: boolean;
+}
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 export const SalesListTable: FC<SalesListTableProps> = (props) => {
   const {
     count = 0,
@@ -55,16 +72,33 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
     page = 0,
     rowsPerPage = 0,
     selected = [],
-    deleteHandler = () =>{},
+    deleteHandler = () => {},
   } = props;
 
   const selectedSome = selected.length > 0 && selected.length < items.length;
   const selectedAll = items.length > 0 && selected.length === items.length;
   const enableBulkActions = selected.length > 0;
 
+  const [openMap, setOpenMap] = useState<OpenMap>({});
+ // Function to open the modal for a specific sale item
+ const handleOpen = (saleItemId: string) => {
+  setOpenMap((prevOpenMap) => ({
+    ...prevOpenMap,
+    [saleItemId]: true,
+  }));
+};
+
+// Function to close the modal for a specific sale item
+const handleClose = (saleItemId: string) => {
+  setOpenMap((prevOpenMap) => ({
+    ...prevOpenMap,
+    [saleItemId]: false,
+  }));
+};
+
   const handleDelete = () => {
     deleteHandler();
-  }
+  };
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -109,7 +143,6 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              
               <TableCell>Name</TableCell>
               <TableCell>Notes</TableCell>
               <TableCell>Sale Price</TableCell>
@@ -156,32 +189,48 @@ export const SalesListTable: FC<SalesListTableProps> = (props) => {
               const regPrice = numeral(saleItem.basePrice).format(
                 `${saleItem.currency}0,0.00`
               );
+              console.log('saleItem.imageUrl')
+              console.log(saleItem.imageUrl)
+              console.log('saleItem.id')
+              console.log(saleItem.id)
 
               return (
                 <TableRow hover key={saleItem.id} selected={isSelected}>
                   <TableCell>
                     <Stack alignItems='center' direction='row' spacing={1}>
-                      {/* <Avatar
-                        src={saleItem.avatar}
-                        sx={{
-                          height: 42,
-                          width: 42
-                        }}
-                      >
-                        {getInitials(saleItem.name)}
-                      </Avatar> */}
                       <div>
                         <Link
                           color='inherit'
-                          component={RouterLink}
-                          href={paths.myPantry.details}
+                          // component={RouterLink}
+                          // href={saleItem.imageUrl}
                           variant='subtitle2'
+                          onClick={() => handleOpen(saleItem.id)}
                         >
                           {saleItem.name}
                         </Link>
-                        {/* <Typography color='text.secondary' variant='body2'>
-                          {saleItem.note}
-                        </Typography> */}
+                        <Modal
+                          open={openMap[saleItem.id] || false}
+                          onClose={() => handleClose(saleItem.id)}
+                          aria-labelledby='modal-modal-title'
+                          aria-describedby='modal-modal-description'
+                        >
+                          <Box sx={style}>
+                            <Typography
+                              id='modal-modal-title'
+                              variant='h6'
+                              component='h2'
+                            >
+                              {saleItem.name}
+                            </Typography>
+                            <Typography
+                              id='modal-modal-description'
+                              sx={{ mt: 2 }}
+                            >
+                              {saleItem.note}
+                            </Typography>
+                            <img src={saleItem.imageUrl} alt={saleItem.name}></img>
+                          </Box>
+                        </Modal>
                       </div>
                     </Stack>
                   </TableCell>
