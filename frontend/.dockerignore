@@ -1,9 +1,0 @@
-.git
-.gitignore
-node_modules
-coverage
-yarn.lock
-.env
-.vite
-# Excluding mnt/ to demonstrate mount capability
-mnt/
