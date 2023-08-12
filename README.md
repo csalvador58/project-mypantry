@@ -2,7 +2,8 @@
 
 For test use only:
 
-Deployed At: project-mypantry-frontend-production.up.railway.app
+Deployed At: https://project-mypantry-frontend-production.up.railway.app
+
 See Project Board for status: https://github.com/users/csalvador58/projects/4
 
 
