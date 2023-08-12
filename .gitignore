@@ -31,5 +31,5 @@ yarn-error.log*
 
 mermaidHistory*/
 
-Dockerfile
-.dockerignore
+*/Dockerfile
+*/.dockerignore
